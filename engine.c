@@ -19,11 +19,11 @@ void		malloc_bigmap(t_stuffs *s)
 	int j;
 	int z;
 
-	s->bigmap = malloc(sizeof(t_p2d*) * s->size_x * s->linelen);
+	s->bigmap = pr_malloc(sizeof(t_p2d*) * s->size_x * s->linelen);
 	j = 0;
 	while (j < (s->size_x * s->linelen))
 	{
-		s->bigmap[j] = malloc(sizeof(t_p2d) * s->size_y * s->linelen);
+		s->bigmap[j] = pr_malloc(sizeof(t_p2d) * s->size_y * s->linelen);
 		z = 0;
 		while (z < s->size_y * s->linelen)
 		{
@@ -126,7 +126,7 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 		   midpoint = (t_p2d){
 		   .x = (prevpoint.x + p1.x) /2,
 		   .y = (prevpoint.y + p1.y) /2,
-		   .elev = abs(dpoint.y - p1.y) 
+		   .elev = abs(dpoint.y - p1.y)
 		   };
 		   */
 
@@ -328,7 +328,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 		//while (w <= (stuffs->size_y * stuffs->linelen))
 		while (w <= (9 * stuffs->linelen))
 		{
-	
+
 			if ((stuffs->bigmap)[e][w].elev >= 0 )
 			{
 				int color;
@@ -377,10 +377,10 @@ void	connect_fine_dots(t_stuffs *stuffs)
 			//int k;
 			//scanf("%d\n", &k);
 
-			if (w != stuffs->size_y * stuffs->linelen && 
+			if (w != stuffs->size_y * stuffs->linelen &&
 			1)//(e%stuffs->linelen) > 4	)
 			{
-				if ( 
+				if (
 						(stuffs->bigmap)[e][w].x != 0 &&
 						(stuffs->bigmap)[e][ w + stuffs->linelen - (w % stuffs->linelen)].x != 0 &&
 	(stuffs->bigmap)[e][w].color != -1 &&
@@ -389,9 +389,9 @@ void	connect_fine_dots(t_stuffs *stuffs)
 				   )
 
 				{
-					special_fine_line((stuffs->bigmap)[e][w], 
+					special_fine_line((stuffs->bigmap)[e][w],
 							(stuffs->bigmap)[e][w + stuffs->linelen - (w %stuffs->linelen)],
-							stuffs, 
+							stuffs,
 							(t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = w + stuffs->linelen - (w % stuffs->linelen) });
 
 					/*
@@ -405,7 +405,7 @@ void	connect_fine_dots(t_stuffs *stuffs)
 			if (e != stuffs->size_x &&
 			1)//(w%stuffs->linelen) > 4)
 			{
-				if ( 
+				if (
 						(stuffs->bigmap)[e][w].x != 0 &&
 						(stuffs->bigmap)[e + stuffs->linelen - (e % stuffs->linelen)][ w].x != 0 &&
 				(stuffs->bigmap)[e][w].color != -1 &&
@@ -413,9 +413,9 @@ void	connect_fine_dots(t_stuffs *stuffs)
 
 				   )
 				{
-					special_fine_line((stuffs->bigmap)[e][w], 
+					special_fine_line((stuffs->bigmap)[e][w],
 							(stuffs->bigmap)[e + stuffs->linelen - (e % stuffs->linelen)][w ]
-							, stuffs, 
+							, stuffs,
 							(t_coords){.x1 = e, .y1 = w, .x2 = e + stuffs->linelen - (e % stuffs->linelen), .y2 = w });
 			//		line_col((stuffs->bigmap)[e][w], (stuffs->bigmap)[e + stuffs->linelen - (e % stuffs->linelen)][w], stuffs);
 				}

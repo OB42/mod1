@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   pr_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcluchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: obenazzo <obenazzo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/08 15:15:25 by pcluchet          #+#    #+#             */
-/*   Updated: 2016/11/09 15:13:08 by pcluchet         ###   ########.fr       */
+/*   Created: 2017/11/06 10:54:33 by obenazzo          #+#    #+#             */
+/*   Updated: 2018/03/01 00:56:45 by obenazzo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-char	*ft_strnew(size_t size)
+static	void	print_error(char *err)
 {
-	char *ptr;
+	write(2, err, ft_strlen(err));
+	exit(0);
+}
 
-	ptr = (char*)pr_malloc(sizeof(char) * size + 1);
-	if (ptr != NULL)
-	{
-		bzero(ptr, size + 1);
-		return (ptr);
-	}
-	return (NULL);
+void	*pr_malloc(size_t n)
+{
+	void *t;
+
+	if (!(t = malloc(n)))
+		print_error("malloc error\n");
+	return (t);
 }

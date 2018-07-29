@@ -17,11 +17,11 @@ void	malloc_buffer(int x, int y, t_stuffs *stu)
 	int i;
 	int j;
 
-	stu->buffer = (char**)(malloc(sizeof(char*) * x + 1));
+	stu->buffer = (char**)(pr_malloc(sizeof(char*) * x + 1));
 	i = 0;
 	while (i < x)
 	{
-		stu->buffer[i] = (char*)(malloc(sizeof(char) * y + 1));
+		stu->buffer[i] = (char*)(pr_malloc(sizeof(char) * y + 1));
 		i++;
 	}
 }

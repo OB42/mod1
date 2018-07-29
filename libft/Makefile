@@ -20,6 +20,7 @@ CFLAGS =  -I$(H_DIR) -Wall -Wextra -Werror
 
 C_FILES = ft_atoi.c \
 ft_bzero.c \
+pr_malloc.c \
 ft_count_c.c \
 ft_digits.c \
 ft_digits_un.c \
@@ -132,7 +133,7 @@ clean :
 fclean : clean
 	rm -f $(NAME)
 
-re : 
+re :
 	$(MAKE) fclean
 	$(MAKE) all
 

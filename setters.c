@@ -32,11 +32,11 @@ void	malloc_map(t_stuffs *stu)
 {
 	int i;
 
-	stu->map = (t_p2d**)malloc(sizeof(t_p2d*) * stu->size_x + 1);
+	stu->map = (t_p2d**)pr_malloc(sizeof(t_p2d*) * stu->size_x + 1);
 	i = 0;
 	while (i <= stu->size_x)
 	{
-		stu->map[i] = (t_p2d*)malloc(sizeof(t_p2d) * stu->size_y + 1);
+		stu->map[i] = (t_p2d*)pr_malloc(sizeof(t_p2d) * stu->size_y + 1);
 		i++;
 	}
 }

@@ -13,11 +13,11 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	*ft_memalloc(size_t size)
+void	*ft_mepr_malloc(size_t size)
 {
 	void *ptr;
 
-	ptr = malloc(size);
+	ptr = pr_malloc(size);
 	if (ptr != NULL)
 	{
 		ft_bzero(ptr, size);

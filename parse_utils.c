@@ -29,7 +29,7 @@ int				*acquire_elev(char **fields, int nbfields)
 	int i;
 	int *ret;
 
-	ret = (int*)malloc(sizeof(int) * nbfields + 1);
+	ret = (int*)pr_malloc(sizeof(int) * nbfields + 1);
 	i = 0;
 	while (fields[i])
 	{

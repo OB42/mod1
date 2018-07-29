@@ -48,10 +48,10 @@ static t_fdstuff	*new_fdstuff(int fd)
 {
 	t_fdstuff *fds;
 
-	fds = (t_fdstuff*)malloc(sizeof(t_fdstuff));
+	fds = (t_fdstuff*)pr_malloc(sizeof(t_fdstuff));
 	fds->fd = fd;
 	fds->i = 0;
-	fds->p = (char*)ft_memalloc(BUFF_SIZE + 1);
+	fds->p = (char*)ft_mepr_malloc(BUFF_SIZE + 1);
 	fds->r = BUFF_SIZE;
 	return (fds);
 }
