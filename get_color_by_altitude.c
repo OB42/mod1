@@ -13,7 +13,7 @@
 #include "fdf.h"
 #include <math.h>
 
-int		get_color_by_altitude(int n, float max)
+int		get_color_by_altitude(int n)
 {
 	static int colors[20] = {
 		0x04AF17,

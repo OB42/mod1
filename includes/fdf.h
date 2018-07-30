@@ -19,8 +19,8 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdlib.h>
-# define WINX 800
-# define WINY 600
+# define WINX 2000
+# define WINY 1000
 
 typedef struct	s_li
 {
@@ -71,6 +71,18 @@ typedef struct	s_rgb
 	int			blue;
 }				t_rgb;
 
+
+typedef struct	s_img
+{
+	void			*ptr;
+	char			*img_addr;
+	int				line_size;
+	int				endian;
+	int				bits_per_pixel;
+	int				x;
+	int				y;
+}				t_img;
+
 typedef struct	s_stuffs
 {
 	t_p2d		altinfos;
@@ -87,10 +99,12 @@ typedef struct	s_stuffs
 	char		ogcolors;
 	int			viewpoint;
 	float		coef;
-	int		linelen;
+	int			linelen;
+	t_img		img;
 }				t_stuffs;
 
-int				get_color_by_altitude(int n, float max);
+int				get_color_by_altitude(int n);
+int				initialize(int *linenb, int *gnl, char *filename, int *fd);
 float			get_max_elev(t_stuffs *stuffs);
 int				abs(int x);
 void			malloc_buffer(int x, int y, t_stuffs *stu);
@@ -133,5 +147,4 @@ int				nb_fields(char **fields);
 int				*acquire_colors(char **fields, int nbfields);
 void			free_fields(char **fields, void *to_free);
 void			set_hascol(t_stuffs *stu, int has);
-int				initialize(int *linenb, int *j);
 #endif

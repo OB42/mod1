@@ -56,15 +56,15 @@ void			malloc_ec(t_stuffs *stu)
 	int i;
 
 	ft_printf("Parsing file...\n");
-	stu->elevs = (int**)pr_malloc(stu->size_x * sizeof(int*) + 1);
+	stu->elevs = (int**)pr_malloc(stu->size_x * (sizeof(int*) + 1));
 	if (stu->hascolors)
-		(stu->colors) = (int**)pr_malloc(stu->size_x * sizeof(int*) + 1);
+		(stu->colors) = (int**)pr_malloc(stu->size_x * (sizeof(int*) + 1));
 	i = 1;
 	while (i <= stu->size_x + 1)
 	{
 		if (stu->hascolors)
-			(stu->colors)[i] = (int*)pr_malloc(stu->size_y * sizeof(int) + 1);
-		(stu->elevs)[i] = (int*)pr_malloc(stu->size_y * sizeof(int) + 1);
+			(stu->colors)[i] = (int*)pr_malloc(stu->size_y * (sizeof(int) + 1));
+		(stu->elevs)[i] = (int*)pr_malloc(stu->size_y * (sizeof(int) + 1));
 		i++;
 	}
 }

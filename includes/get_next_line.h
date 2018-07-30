@@ -12,7 +12,7 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 15
+# define BUFF_SIZE 1024
 
 typedef struct	s_fdstuff
 {

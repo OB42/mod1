@@ -12,6 +12,20 @@
 
 #include "fdf.h"
 
+void	init_img(t_stuffs *stuffs)
+{
+	printf("ok\n");
+	stuffs->img.ptr = mlx_new_image(stuffs->co, WINX, WINY);
+	printf("ok\n");
+	stuffs->img.line_size = WINX * 4;
+	stuffs->img.endian = 0;
+	stuffs->img.bits_per_pixel = 32;
+	stuffs->img.y = 0;
+	stuffs->img.x = 0;
+	stuffs->img.img_addr = mlx_get_data_addr(stuffs->img.ptr,
+		&(stuffs->img.bits_per_pixel), &(stuffs->img.line_size), &(stuffs->img.endian));
+}
+
 int	main(int argc, char **argv)
 {
 	t_stuffs	stuffs;
@@ -20,7 +34,6 @@ int	main(int argc, char **argv)
 	stuffs.coef = 1;
 	stuffs.linelen = -1;
 	stuffs.ogcolors = 0;
-	stuffs.x = 0;
 	if (argc != 2)
 	{
 		ft_printf("Usage : ./fdf ./path/to/map/map.fdf\n");
@@ -33,6 +46,7 @@ int	main(int argc, char **argv)
 	malloc_map(&stuffs);
 	stuffs.co = mlx_init();
 	stuffs.win = mlx_new_window(stuffs.co, WINX, WINY, "Test");
+	init_img(&stuffs);
 	stuffs.altinfos.y = INT_MAX;
 	stuffs.altinfos.x = INT_MIN;
 	set_dots(&stuffs);

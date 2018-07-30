@@ -12,6 +12,14 @@
 
 #include "fdf.h"
 
+void	set_pixel(int color, t_stuffs *stuffs)
+{
+	if (stuffs->img.x < WINX && stuffs->img.y < WINY
+		&& stuffs->img.y >= 0 && stuffs->img.x >= 0)
+		*(int *)(stuffs->img.img_addr + ((int)(stuffs->img.y * WINY + stuffs->img.x) * 4)) =
+		mlx_get_color_value(stuffs->co, color);
+}
+
 void	redraw(t_stuffs *stu, int vp)
 {
 	clear(stu);
@@ -41,8 +49,6 @@ void	free_stuffs(t_stuffs *stuffs)
 
 int		hook(int keycode, void *stuffs)
 {
-	printf("hooked\n");
-	((t_stuffs*)stuffs)->x += 50;
 	if (keycode == 53)
 	{
 		free_stuffs(stuffs);

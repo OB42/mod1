@@ -1,5 +1,3 @@
-#include <unistd.h>
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -14,7 +12,7 @@
 
 #include "fdf.h"
 #include <math.h>
-#define M_PI 3.14159265358979323846
+#include <unistd.h>
 
 void		malloc_bigmap(t_stuffs *s)
 {
@@ -40,13 +38,12 @@ void		malloc_bigmap(t_stuffs *s)
 void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 {
 	t_li    val;
-	int             line_len;
 
 	init_line_stuffs(&val, p1, p2);
 	while (1)
 	{
-		if (p1.x + s->x < WINX)
-			mlx_pixel_put(s->co, s->win, p1.x + s->x, p1.y, color);
+		if (p1.x + s->img.x < WINX)
+			mlx_pixel_put(s->co, s->win, p1.x + s->img.x, p1.y, color);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		next_pt_line(&val, &p1);
@@ -60,7 +57,6 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 	int cpt;
 	int color;
 	t_p2d   fto;
-	t_p2d   midpoint;
 	t_p2d   prevpoint;
 	t_p2d   prevcoords;
 
@@ -205,12 +201,10 @@ void	connect_fne_dots(t_stuffs *stuffs)
 {
 		int		e;
 		int		w;
-		float	max_elev;
 		int		color;
 
 		e = 0 * stuffs->linelen;
 		ft_printf("Rendering fine dots..\n");
-	 	int i = 0;
 		while (e < (stuffs->size_x * stuffs->linelen))
 		{
 			w = 0 * stuffs->linelen;
@@ -219,7 +213,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 				if ((stuffs->bigmap)[e][w].elev >= 0 )
 				{
-					color = get_color_by_altitude(stuffs->bigmap[e][w].elev, max_elev);
+					color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
 					t_p2d cheat;
 					cheat = (stuffs->bigmap)[e][w];
 					cheat.y += 8;
