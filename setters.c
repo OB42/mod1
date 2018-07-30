@@ -19,10 +19,10 @@ void	set_props(t_stuffs *stu)
 	float leny2;
 	float lenx;
 
-	len = 391 / (float)stu->size_y;
+	len = 440 / (float)stu->size_y;
 	leny = 220 / (float)stu->size_y;
 	leny2 = 220 / (float)stu->size_x;
-	lenx = 391 / (float)stu->size_x;
+	lenx = 440 / (float)stu->size_x;
 	len = (len < lenx) ? len : lenx;
 	leny2 = (leny < leny2) ? leny : leny2;
 	stu->props = (t_f2d){.x = len, .y = leny2};
