@@ -316,9 +316,12 @@ void             special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 
 void	connect_fne_dots(t_stuffs *stuffs)
 {
-	int e;
-	int w;
+	int		e;
+	int		w;
+	float	max_elev;
+	int		color;
 
+	max_elev = get_max_elev(stuffs);
 	e = 0;
 	ft_printf("Rendering fine dots...\n");
 	//while (e <= (stuffs->size_x * stuffs->linelen))
@@ -331,9 +334,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 			if ((stuffs->bigmap)[e][w].elev >= 0 )
 			{
-				int color;
-				color = get_color(50,stuffs->bigmap[e][w].elev *2,
-						stuffs->bigmap[e][w].elev);
+				color = get_color_by_altitude(stuffs->bigmap[e][w].elev, max_elev);
 				//bigdot((stuffs->bigmap)[e][w],color,stuffs);
 
 		t_p2d cheat;

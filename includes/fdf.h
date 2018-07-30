@@ -90,6 +90,8 @@ typedef struct	s_stuffs
 	int		linelen;
 }				t_stuffs;
 
+int				get_color_by_altitude(int n, float max);
+float			get_max_elev(t_stuffs *stuffs);
 int				abs(int x);
 void			malloc_buffer(int x, int y, t_stuffs *stu);
 void			init_buffer(int x, int y, t_stuffs *stu);
