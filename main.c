@@ -14,9 +14,7 @@
 
 void	init_img(t_stuffs *stuffs)
 {
-	printf("ok\n");
 	stuffs->img.ptr = mlx_new_image(stuffs->co, WINX, WINY);
-	printf("ok\n");
 	stuffs->img.line_size = WINX * 4;
 	stuffs->img.endian = 0;
 	stuffs->img.bits_per_pixel = 32;
@@ -51,6 +49,7 @@ int	main(int argc, char **argv)
 	stuffs.altinfos.x = INT_MIN;
 	set_dots(&stuffs);
 	connect_dots(&stuffs);
+	mlx_put_image_to_window(stuffs.co, stuffs.win, stuffs.img.ptr, 0, 0);
 	mlx_key_hook(stuffs.win, &hook, &stuffs);
 	mlx_loop(stuffs.co);
 	return (0);

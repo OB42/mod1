@@ -12,20 +12,13 @@
 
 #include "fdf.h"
 
-void	set_pixel(int color, t_stuffs *stuffs)
-{
-	if (stuffs->img.x < WINX && stuffs->img.y < WINY
-		&& stuffs->img.y >= 0 && stuffs->img.x >= 0)
-		*(int *)(stuffs->img.img_addr + ((int)(stuffs->img.y * WINY + stuffs->img.x) * 4)) =
-		mlx_get_color_value(stuffs->co, color);
-}
-
 void	redraw(t_stuffs *stu, int vp)
 {
 	clear(stu);
 	stu->viewpoint = vp;
 	set_dots(stu);
 	connect_dots(stu);
+	mlx_put_image_to_window(stu->co, stu->win, stu->img.ptr, 0, 0);
 }
 
 void	free_stuffs(t_stuffs *stuffs)
@@ -57,6 +50,26 @@ int		hook(int keycode, void *stuffs)
 	clear(stuffs);
 	if (keycode == 32)
 		redraw(stuffs, 1);
+	else if (keycode == 0x7C)
+	{
+		((t_stuffs*)stuffs)->img.x += POS_INCREMENT;
+		redraw(stuffs, 1);
+	}
+	else if (keycode == 0x7B)
+	{
+		((t_stuffs*)stuffs)->img.x -= POS_INCREMENT;
+		redraw(stuffs, 1);
+	}
+	else if (keycode == 0x7E)
+	{
+		((t_stuffs*)stuffs)->img.y += POS_INCREMENT;
+		redraw(stuffs, 1);
+	}
+	else if (keycode == 0x7C)
+	{
+		((t_stuffs*)stuffs)->img.y -= POS_INCREMENT;
+		redraw(stuffs, 1);
+	}
 	else if (keycode == 34)
 		redraw(stuffs, 2);
 	else if (keycode == 31)

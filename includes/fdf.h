@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # define WINX 2000
 # define WINY 1000
+# define POS_INCREMENT 42
 
 typedef struct	s_li
 {

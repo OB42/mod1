@@ -14,6 +14,15 @@
 #include <math.h>
 #include <unistd.h>
 
+
+void	set_pixel(int x, int y, int color, t_stuffs *stuffs)
+{
+	if (x < WINX && y < WINY && y >= 0 && x >= 0)
+		{
+			*(int *)(stuffs->img.img_addr + ((int)(y * WINX + x) * 4)) = color;
+		}
+}
+
 void		malloc_bigmap(t_stuffs *s)
 {
 	int j;
@@ -42,8 +51,8 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 	init_line_stuffs(&val, p1, p2);
 	while (1)
 	{
-		if (p1.x + s->img.x < WINX)
-			mlx_pixel_put(s->co, s->win, p1.x + s->img.x, p1.y, color);
+		//	mlx_pixel_put(s->co, s->win, p1.x + s->img.x, p1.y, color);
+		set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		next_pt_line(&val, &p1);
@@ -216,7 +225,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 					color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
 					t_p2d cheat;
 					cheat = (stuffs->bigmap)[e][w];
-					cheat.y += 8;
+					cheat.y += 16;
 					line((stuffs->bigmap)[e][w], cheat, stuffs,color);
 				}
 
@@ -366,7 +375,8 @@ void	clear(t_stuffs *stuffs)
 		j = 0;
 		while (j < WINY)
 		{
-			mlx_pixel_put(stuffs->co, stuffs->win, i, j, 0x000000);
+			set_pixel(i, j, 0x000000, stuffs);
+	//		mlx_pixel_put(stuffs->co, stuffs->win, i, j, 0x000000);
 			j++;
 		}
 		i++;
