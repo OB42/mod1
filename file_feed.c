@@ -56,15 +56,15 @@ void			malloc_ec(t_stuffs *stu)
 	int i;
 
 	ft_printf("Parsing file...\n");
-	stu->elevs = (int**)pr_malloc(stu->size_x * (sizeof(int*) + 1));
+	stu->elevs = (int**)pr_malloc((stu->size_x + 1) * sizeof(int*));
 	if (stu->hascolors)
-		(stu->colors) = (int**)pr_malloc(stu->size_x * (sizeof(int*) + 1));
+		(stu->colors) = (int**)pr_malloc((stu->size_x + 1) * sizeof(int*));
 	i = 1;
-	while (i <= stu->size_x + 1)
+	while (i < stu->size_x + 1)
 	{
 		if (stu->hascolors)
-			(stu->colors)[i] = (int*)pr_malloc(stu->size_y * (sizeof(int) + 1));
-		(stu->elevs)[i] = (int*)pr_malloc(stu->size_y * (sizeof(int) + 1));
+			(stu->colors)[i] = (int*)pr_malloc((stu->size_y + 1) * sizeof(int));
+		(stu->elevs)[i] = (int*)pr_malloc((stu->size_y + 1) * sizeof(int));
 		i++;
 	}
 }
@@ -74,7 +74,7 @@ void			fill_ec(t_stuffs *stu, int **colors, int **elevs, int id)
 	int i;
 
 	i = 0;
-	while (i <= stu->size_y)
+	while (i < stu->size_y)
 	{
 		(stu->hascolors) ? (stu->colors)[id][i + 1] = (*colors)[i] : 0;
 		(stu->elevs)[id][i + 1] = (*elevs)[i];
