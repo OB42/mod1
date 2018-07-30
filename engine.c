@@ -22,7 +22,6 @@ void		malloc_bigmap(t_stuffs *s)
 	int z;
 
 	s->bigmap = pr_malloc(sizeof(t_p2d*) * (s->size_x * s->linelen + 1));
-
 	j = 0;
 	while (j < (s->size_x * s->linelen))
 	{
@@ -74,16 +73,12 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 		s->linelen = line_len;
 		malloc_bigmap(s);
 	}
-	//printf("line len =%d\n",line_len);
 	cpt = 0;
 	t_p2d dpoint;
-
-
 	fto = set_fromto(s, p1, p2);
 	while (1)
 	{
 		float whereami = ((float)cpt/(float)line_len);
-
 		float coef = whereami;
 		float sinuscorrect = -(M_PI/2.0);
 		int elevnow = ((float)p2.elev - (float)p1.elev);
@@ -99,7 +94,6 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 		dpoint.y -=  fabs(sinelev/2.0 * ((float)elevnow));
 		if (p1.elev != 0 &&  p2.elev != 0)
 		{
-
 			if (p2.elev > p1.elev)
 				dpoint.y -=  abs(p1.elev) ;
 			else
@@ -125,15 +119,9 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 				b = (co.y1 - 1) * line_len;
 				a = ((co.x1 - 1) * line_len) + whereami * s->linelen;
 			}
-			if (co.x1 < 2)
-			{
-				//printf("setting big map [%d][%d].elev = %d\n",a,b, dpoint.y - p1.y);
-			}
 			s->bigmap[a][b] = dpoint;
 			s->bigmap[a][b].elev = p1.y - dpoint.y ;//abs(dpoint.y - p1.y);
 		}
-
-
 		float red = fto.y + ((fto.x - fto.y)) * whereami;
 		color = get_color(0, red, 128 - (red/2));
 		if (p1.x == p2.x && p1.y == p2.y)
