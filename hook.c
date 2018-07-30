@@ -41,6 +41,8 @@ void	free_stuffs(t_stuffs *stuffs)
 
 int		hook(int keycode, void *stuffs)
 {
+	printf("hooked\n");
+	((t_stuffs*)stuffs)->x += 50;
 	if (keycode == 53)
 	{
 		free_stuffs(stuffs);

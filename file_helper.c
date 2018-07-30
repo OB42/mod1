@@ -47,9 +47,10 @@ void	set_hascol(t_stuffs *stu, int has)
 	stu->ogcolors = stu->hascolors;
 }
 
-int		initialize(int *linenb, int *j)
+int		initialize(int *linenb, int *gnl, char *filename, int *fd)
 {
 	*linenb = 1;
-	*j = 0;
+	*gnl = 1;
+	*fd = open(filename, O_RDONLY);
 	return (0);
 }

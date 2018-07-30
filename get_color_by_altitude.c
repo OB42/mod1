@@ -38,21 +38,7 @@ int		get_color_by_altitude(int n, float max)
 		0xFFFFFF
 	};
 
-	return (colors[n <= 0 ? 0 : (int)floor(n / max * 19.99)]);
-}
-
-float		get_max_elev(t_stuffs *stuffs)
-{
-	int		max;
-
-	max = -2147483648;
-	for (int x = 0; x < (stuffs->size_x * stuffs->linelen); x++)
-	{
-		for (int y = 0; y < (stuffs->size_x * stuffs->linelen); y++)
-		{
-				if (stuffs->bigmap[x][y].elev > max)
-					max = stuffs->bigmap[x][y].elev;
-		}
-	}
-	return (max);
+	if (n < 100)
+		return (colors[n <= 0 ? 0 : (int)floor(n / 5)]);
+	return (colors[19]);
 }

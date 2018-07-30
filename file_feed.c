@@ -12,30 +12,40 @@
 
 #include "fdf.h"
 
+
+static	void	check_gnl(int gnl, char *err)
+{
+	if (gnl == -1)
+	{
+		write(2, err, ft_strlen(err));
+		exit(0);
+	}
+}
+
 int				file_test(char *filename, t_stuffs *stu)
 {
 	char	*line;
 	char	**fields;
 	int		linenb;
-	int		j;
+	int		gnl;
 	int		fd;
 
-	errno = initialize(&linenb, &j);
-	if (!ft_printf("File Check...\n") || (fd = open(filename, O_RDONLY)) == -1)
+	errno = initialize(&linenb, &gnl, filename, &fd);
+	if (fd == -1)
 		return (-1);
-	while (get_next_line(fd, &line))
+	while ((gnl == get_next_line(fd, &line)) == 1)
 	{
 		if (errno)
 			return (-2);
 		fields = ft_strsplit(line, ' ');
-		if (linenb == 1)
-			stu->size_y = nb_fields(fields);
-		else if (stu->size_y != nb_fields(fields))
+		stu->size_y = (linenb == 1) ? nb_fields(fields) : stu->size_y;
+		if (stu->size_y != nb_fields(fields))
 			return (linenb);
 		if (!(linenb++) || !((stu->size_x = linenb - 1) + 1) || !stu->hascolors)
 			set_hascol(stu, has_color(fields, stu->size_y));
 		free_fields(fields, line);
 	}
+	check_gnl(gnl, "gnl error\n");
 	free(line);
 	close(fd);
 	return (0);

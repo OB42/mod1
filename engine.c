@@ -22,6 +22,7 @@ void		malloc_bigmap(t_stuffs *s)
 	int z;
 
 	s->bigmap = pr_malloc(sizeof(t_p2d*) * (s->size_x * s->linelen + 1));
+
 	j = 0;
 	while (j < (s->size_x * s->linelen))
 	{
@@ -36,7 +37,6 @@ void		malloc_bigmap(t_stuffs *s)
 	}
 }
 
-
 void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 {
 	t_li    val;
@@ -45,7 +45,8 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 	init_line_stuffs(&val, p1, p2);
 	while (1)
 	{
-		mlx_pixel_put(s->co, s->win, p1.x, p1.y, color);
+		if (p1.x + s->x < WINX)
+			mlx_pixel_put(s->co, s->win, p1.x + s->x, p1.y, color);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		next_pt_line(&val, &p1);
@@ -79,6 +80,7 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 	while (1)
 	{
 		float whereami = ((float)cpt/(float)line_len);
+
 		float coef = whereami;
 		float sinuscorrect = -(M_PI/2.0);
 		int elevnow = ((float)p2.elev - (float)p1.elev);
@@ -94,6 +96,7 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 		dpoint.y -=  fabs(sinelev/2.0 * ((float)elevnow));
 		if (p1.elev != 0 &&  p2.elev != 0)
 		{
+
 			if (p2.elev > p1.elev)
 				dpoint.y -=  abs(p1.elev) ;
 			else
@@ -205,16 +208,12 @@ void	connect_fne_dots(t_stuffs *stuffs)
 		float	max_elev;
 		int		color;
 
-		max_elev = get_max_elev(stuffs);
 		e = 0 * stuffs->linelen;
 		ft_printf("Rendering fine dots..\n");
-
-		//while (stuffs->bigmap[e])
 	 	int i = 0;
 		while (e < (stuffs->size_x * stuffs->linelen))
 		{
 			w = 0 * stuffs->linelen;
-	//		while (stuffs->bigmap[e][w])
 			while (w < (stuffs->size_y * stuffs->linelen))
 			{
 
@@ -228,15 +227,10 @@ void	connect_fne_dots(t_stuffs *stuffs)
 				}
 
 				w++;
-				//w += stuffs->linelen;
 			}
-			//e += stuffs->linelen;
 			e++;
 		}
-
-
 		ft_printf("Done %i!\n", stuffs->linelen);
-		//	connect_ufine_dots(stuffs);
 }
 
 void	connect_fine_dots(t_stuffs *stuffs)
@@ -246,10 +240,11 @@ void	connect_fine_dots(t_stuffs *stuffs)
 
 	e = 0;
 	ft_printf("Rendering fine dots...\n");
+	//not sure
 	while (e < ((stuffs->size_x - 1)* stuffs->linelen))
 		{
 			w = 0;
-	//		while (w < (9 * stuffs->linelen))
+			//not sure
 			while ((w < (stuffs->size_y - 1) * stuffs->linelen))
 			{
 				if (w != stuffs->size_y * stuffs->linelen)

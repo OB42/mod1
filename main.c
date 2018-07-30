@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 	stuffs.coef = 1;
 	stuffs.linelen = -1;
 	stuffs.ogcolors = 0;
+	stuffs.x = 0;
 	if (argc != 2)
 	{
 		ft_printf("Usage : ./fdf ./path/to/map/map.fdf\n");
