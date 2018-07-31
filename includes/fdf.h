@@ -150,4 +150,6 @@ int				nb_fields(char **fields);
 int				*acquire_colors(char **fields, int nbfields);
 void			free_fields(char **fields, void *to_free);
 void			set_hascol(t_stuffs *stu, int has);
+void			set_pixel(int x, int y, int color, t_stuffs *stuffs);
+void			connect_dots(t_stuffs *stuffs);
 #endif

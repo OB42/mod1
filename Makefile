@@ -31,11 +31,14 @@ color_utils.c \
 engine.c \
 hook.c \
 line_utils.c \
+mlx_utils.c \
 line_utils2.c \
 point_utils.c \
 parse_utils.c \
 setters.c \
 getters.c \
+set_dots.c \
+connect_dots.c
 
 LIBFT_DIR = ./libft/
 
