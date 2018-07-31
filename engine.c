@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -15,32 +14,19 @@
 #include <math.h>
 #include <unistd.h>
 
-
-void	set_pixel(int x, int y, int color, t_stuffs *stuffs)
-{
-	if (x < WINX && y < WINY && y >= 0 && x >= 0)
-		{
-			*(int *)(stuffs->img.img_addr + ((int)(y * WINX + x) * 4)) = color;
-		}
-}
-
 void		malloc_bigmap(t_stuffs *s)
 {
 	int j;
 	int z;
 
 	s->bigmap = pr_malloc(sizeof(t_p2d*) * (s->size_x * s->linelen + 1));
-
 	j = 0;
 	while (j < (s->size_x * s->linelen))
 	{
 		s->bigmap[j] = pr_malloc(sizeof(t_p2d) * (s->size_y * s->linelen + 1));
 		z = 0;
 		while (z < s->size_y * s->linelen)
-		{
-			s->bigmap[j][z] = (t_p2d){.x = 0, .y = 0, .elev = 0, .color = 0};
-			z++;
-		}
+			s->bigmap[j][z++] = (t_p2d){.x = 0, .y = 0, .elev = 0, .color = 0};
 		j++;
 	}
 }
@@ -52,9 +38,7 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 	init_line_stuffs(&val, p1, p2);
 	while (1)
 	{
-		//	mlx_pixel_put(s->co, s->win, p1.x + s->img.x, p1.y, color);
-		if (s->water)
-			set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
+		set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		next_pt_line(&val, &p1);
@@ -206,179 +190,4 @@ void             special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 		next_pt_line(&val, &p1);
 		cpt++;
 	}
-}
-
-void	connect_fne_dots(t_stuffs *stuffs)
-{
-		int		e;
-		int		w;
-		int		color;
-
-		e = 0 * stuffs->linelen;
-		ft_printf("Rendering fine dots..\n");
-		while (e < (stuffs->size_x * stuffs->linelen))
-		{
-			w = 0 * stuffs->linelen;
-			while (w < (stuffs->size_y * stuffs->linelen))
-			{
-
-				if ((stuffs->bigmap)[e][w].elev >= 0 )
-				{
-					if (stuffs->water && ((stuffs->water->bigmap)[e][w].elev <= 0 || (stuffs->bigmap)[e][w].elev > (stuffs->water->bigmap)[e][w].elev))
-						color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
-					else
-					{
-						color = 0x2389da;
-					}
-					t_p2d cheat;
-					cheat = (stuffs->bigmap)[e][w];
-					cheat.y += 16;
-					if (stuffs->water)
-					{
-						if ((stuffs->bigmap)[e][w].elev >= (stuffs->water->bigmap)[e][w].elev)
-							line((stuffs->bigmap)[e][w], cheat, stuffs, color);
-						//else
-							//line((stuffs->bigmap)[e][w], cheat, stuffs, 0x2389da);
-
-					}
-				}
-
-				w++;
-			}
-			e++;
-		}
-		ft_printf("Done %i!\n", stuffs->linelen);
-}
-
-void	connect_fine_dots(t_stuffs *stuffs)
-{
-	int e;
-	int w;
-
-	e = 0;
-	ft_printf("Rendering fine dots...\n");
-	//not sure
-	while (e < ((stuffs->size_x - 1)* stuffs->linelen))
-		{
-			w = 0;
-			//not sure
-			while ((w < (stuffs->size_y - 1) * stuffs->linelen))
-			{
-				if (w != stuffs->size_y * stuffs->linelen)
-				{
-					if ((stuffs->bigmap)[e][w].x != 0 &&
-							(stuffs->bigmap)[e][ w + stuffs->linelen - (w % stuffs->linelen)].x > 0 &&
-							(stuffs->bigmap)[e][w].color != -1 &&
-							(stuffs->bigmap)[e][ w + stuffs->linelen - (w % stuffs->linelen)].color != -1)
-					{
-						special_fine_line((stuffs->bigmap)[e][w],
-								(stuffs->bigmap)[e][w + stuffs->linelen - (w %stuffs->linelen)],
-								stuffs,
-								(t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = w + stuffs->linelen - (w % stuffs->linelen) });
-					}
-				}
-				if (e != stuffs->size_x)
-				{
-					if (
-							(stuffs->bigmap)[e][w].x != 0 &&
-							(stuffs->bigmap)[e + stuffs->linelen - (e % stuffs->linelen)][ w].x != 0 &&
-					(stuffs->bigmap)[e][w].color != -1 &&
-	(stuffs->bigmap)[e + stuffs->linelen - (e % stuffs->linelen)][ w].color != -1
-
-					   )
-					{
-						special_fine_line((stuffs->bigmap)[e][w],
-								(stuffs->bigmap)[e + stuffs->linelen - (e % stuffs->linelen)][w ]
-								, stuffs,
-								(t_coords){.x1 = e, .y1 = w, .x2 = e + stuffs->linelen - (e % stuffs->linelen), .y2 = w });
-					}
-				}
-				w++;
-			}
-			e++;
-		}
-	ft_printf("Done !\n\n");
-	connect_fne_dots(stuffs);
-}
-
-void	connect_dots(t_stuffs *stuffs)
-{
-	int e;
-	int w;
-
-	e = 1;
-	ft_printf("Rendering dots...\n");
-	while (e <= stuffs->size_x)
-	{
-		w = 1;
-		while (w <= stuffs->size_y)
-		{
-			if (w != stuffs->size_y)
-			{
-				special_line((stuffs->map)[e][w], (stuffs->map)[e][w + 1], stuffs,
-						(t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = w + 1});
-			}
-			if (e != stuffs->size_x)
-			{
-				special_line((stuffs->map)[e][w], (stuffs->map)[e + 1][w], stuffs,
-						(t_coords){.x1 = e, .y1 = w, .x2 = e + 1, .y2 = w });
-			}
-			w++;
-		}
-		e++;
-	}
-	ft_printf("Done !\n\n");
-	connect_fine_dots(stuffs);
-}
-
-void	detailed_point(t_stuffs *s, int ie, int je, t_f2d noww)
-{
-	int		r;
-	t_f2d	temp;
-	int		col;
-
-	col = 0xFFFFFF;
-	r = (float)(s->elevs)[gorx(s, ie)][gory(s, je)] * s->coef;
-	if (s->hascolors)
-		col = (s->colors)[gorx(s, ie)][gory(s, je)];
-	altinfos_set(s, r);
-	temp = (t_f2d){.x = noww.x + s->props.x * je,
-		.y = (noww.y + s->props.y * je) - r, .elev = r};
-	temp.color = col;
-	je++;
-	s->map[ie][je - 1] = f2d_to_p2d(temp);
-}
-
-void	set_dots(t_stuffs *s)
-{
-	int		r;
-	t_p2d	p1;
-	int		nb[3];
-	t_f2d	noww;
-	t_f2d	temp;
-
-	p1 = (t_p2d){.x = 400, .y = 100, .color = 0xFF00FF };
-	nb[0] = 1;
-	ft_printf("Calculating dots...\n");
-	while (nb[0] <= s->size_x)
-	{
-		nb[1] = 1;
-		r = (float)(s->elevs)[gorx(s, nb[0])][gory(s, nb[1])] * s->coef;
-		if (s->hascolors)
-			nb[2] = (s->colors)[gorx(s, nb[0])][gory(s, nb[1])];
-		altinfos_set(s, r);
-		noww = (t_f2d){.x = p1.x - (s->props.x * nb[0]),
-			.y = (p1.y + s->props.y * nb[0]), .elev = 0 };
-		temp = (t_f2d){.x = noww.x, .y = noww.y - r, .elev = r};
-		temp.color = nb[2];
-		s->map[nb[0]][nb[1]] = f2d_to_p2d(temp);
-		while (nb[1] <= s->size_y)
-			detailed_point(s, nb[0], nb[1]++, noww);
-		nb[0]++;
-	}
-}
-
-void	clear(t_stuffs *stuffs)
-{
-	ft_memset(stuffs->img.img_addr, 0, stuffs->img.line_size * WINY);
 }
