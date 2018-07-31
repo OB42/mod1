@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -52,7 +53,8 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 	while (1)
 	{
 		//	mlx_pixel_put(s->co, s->win, p1.x + s->img.x, p1.y, color);
-		set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
+		if (s->water)
+			set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		next_pt_line(&val, &p1);
@@ -222,11 +224,23 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 				if ((stuffs->bigmap)[e][w].elev >= 0 )
 				{
-					color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
+					if (stuffs->water && ((stuffs->water->bigmap)[e][w].elev <= 0 || (stuffs->bigmap)[e][w].elev > (stuffs->water->bigmap)[e][w].elev))
+						color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
+					else
+					{
+						color = 0x2389da;
+					}
 					t_p2d cheat;
 					cheat = (stuffs->bigmap)[e][w];
 					cheat.y += 16;
-					line((stuffs->bigmap)[e][w], cheat, stuffs,color);
+					if (stuffs->water)
+					{
+						if ((stuffs->bigmap)[e][w].elev >= (stuffs->water->bigmap)[e][w].elev)
+							line((stuffs->bigmap)[e][w], cheat, stuffs, color);
+						//else
+							//line((stuffs->bigmap)[e][w], cheat, stuffs, 0x2389da);
+
+					}
 				}
 
 				w++;

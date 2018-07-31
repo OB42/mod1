@@ -12,6 +12,35 @@
 
 #include "fdf.h"
 
+void dirty_water_rising(t_stuffs *stuffs, int level)
+{
+	int e;
+	int w;
+
+	e = 0;
+	while (e < ((stuffs->size_x) * stuffs->linelen))
+	{
+			w = 0;
+			while ((w < (stuffs->size_y) * stuffs->linelen))
+			{
+				stuffs->water->bigmap[e][w].elev = level;
+				w++;
+			}
+			e++;
+	}
+	e = 1;
+	while (e <= stuffs->size_x)
+	{
+		w = 1;
+		while (w <= stuffs->size_y)
+		{
+			stuffs->water->map[e][w].elev = level;
+			w++;
+		}
+		e++;
+	}
+}
+
 void	redraw(t_stuffs *stu, int vp)
 {
 	clear(stu);
@@ -60,12 +89,12 @@ int		hook(int keycode, void *stuffs)
 		((t_stuffs*)stuffs)->img.x -= POS_INCREMENT;
 		redraw(stuffs, 1);
 	}
-	else if (keycode == 0x7E)
+	else if (keycode == 0x7D)
 	{
 		((t_stuffs*)stuffs)->img.y += POS_INCREMENT;
 		redraw(stuffs, 1);
 	}
-	else if (keycode == 0x7C)
+	else if (keycode == 0x7E)
 	{
 		((t_stuffs*)stuffs)->img.y -= POS_INCREMENT;
 		redraw(stuffs, 1);
