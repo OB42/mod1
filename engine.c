@@ -380,19 +380,5 @@ void	set_dots(t_stuffs *s)
 
 void	clear(t_stuffs *stuffs)
 {
-	int i;
-	int j;
-
-	i = 0;
-	while (i < WINX)
-	{
-		j = 0;
-		while (j < WINY)
-		{
-			set_pixel(i, j, 0x000000, stuffs);
-	//		mlx_pixel_put(stuffs->co, stuffs->win, i, j, 0x000000);
-			j++;
-		}
-		i++;
-	}
+	ft_memset(stuffs->img.img_addr, 0, stuffs->img.line_size * WINY);
 }
