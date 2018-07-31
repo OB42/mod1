@@ -55,6 +55,7 @@ typedef struct	s_p2d
 	int			y;
 	int			elev;
 	int			color;
+	int			is_water;
 }				t_p2d;
 
 typedef struct	s_f2d
@@ -102,6 +103,7 @@ typedef struct	s_stuffs
 	float		coef;
 	int			linelen;
 	t_img		img;
+	struct	s_stuffs	*water;
 }				t_stuffs;
 
 int				get_color_by_altitude(int n);
@@ -143,7 +145,7 @@ void			next_pt_line(t_li *li, t_p2d *p1);
 char			has_color(char **fields, int nbfields);
 int				parse_color(char *field);
 unsigned char	twochar_to_byte(char a, char b);
-int				*acquire_elev(char **fields, int nbfields);
+int				*acquire_elev(char **fields, int nbfields, int water);
 int				nb_fields(char **fields);
 int				*acquire_colors(char **fields, int nbfields);
 void			free_fields(char **fields, void *to_free);
