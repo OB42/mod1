@@ -91,7 +91,6 @@ int				file_feed(char *filename, t_stuffs *stu)
 	int		*elevs;
 	int		*colors;
 	int		i[4];
-	static	int	water = 0;
 
 	i[0] = open(filename, O_RDONLY);
 	if ((i[1] = file_test(filename, stu)))
@@ -101,7 +100,7 @@ int				file_feed(char *filename, t_stuffs *stu)
 	while (get_next_line(i[0], &line))
 	{
 		fields = ft_strsplit(line, ' ');
-		elevs = acquire_elev(fields, stu->size_y, water);
+		elevs = acquire_elev(fields, stu->size_y);
 		(stu->hascolors) ? colors = acquire_colors(fields, stu->size_y) : 0;
 		fill_ec(stu, &colors, &elevs, i[3]);
 		free_fields(fields, line);
@@ -111,6 +110,5 @@ int				file_feed(char *filename, t_stuffs *stu)
 	}
 	free(line);
 	close(i[0]);
-	water = 1;
 	return (i[1]);
 }
