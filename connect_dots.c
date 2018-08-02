@@ -28,7 +28,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 			if ((stuffs->bigmap)[e][w].elev >= 0 )
 			{
-				color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
+				color = (stuffs->bigmap)[e][w].is_water ? 0x00ccff : get_color_by_altitude(stuffs->bigmap[e][w].elev);
 				t_p2d cheat;
 				cheat = (stuffs->bigmap)[e][w];
 				cheat.y += 16;

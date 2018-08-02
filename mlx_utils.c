@@ -14,7 +14,7 @@
 
 void	set_pixel(int x, int y, int color, t_stuffs *stuffs)
 {
-	if (x < WINX && y < WINY && y >= 0 && x >= 0)
+	if (stuffs->water && x < WINX && y < WINY && y >= 0 && x >= 0)
 		*(int *)(stuffs->img.img_addr + ((int)(y * WINX + x) * 4)) = color;
 }
 
