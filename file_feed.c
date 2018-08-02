@@ -101,7 +101,7 @@ int				file_feed(char *filename, t_stuffs *stu)
 	{
 		fields = ft_strsplit(line, ' ');
 		elevs = acquire_elev(fields, stu->size_y);
-		(stu->hascolors) ? colors = acquire_colors(fields, stu->size_y) : 0;
+		colors = (stu->hascolors) ? acquire_colors(fields, stu->size_y) : 0;
 		fill_ec(stu, &colors, &elevs, i[3]);
 		free_fields(fields, line);
 		free(elevs);
