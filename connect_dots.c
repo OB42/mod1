@@ -18,7 +18,9 @@ void	connect_fne_dots(t_stuffs *stuffs)
 	int		w;
 	int		color;
 	int		i;
+	static	int rain = 1;
 
+	rain += 3;
 	e = 0 * stuffs->linelen;
 	ft_printf("Rendering fine dots..\n");
 	while (e < (stuffs->size_x * stuffs->linelen))
@@ -34,6 +36,20 @@ void	connect_fne_dots(t_stuffs *stuffs)
 				cheat = (stuffs->bigmap)[e][w];
 				if ((stuffs->bigmap)[e][w].is_water)
 				{
+					if ((stuffs->bigmap)[e][w].x % 4 == 0)
+					{
+						i = 0;
+						while (i < (stuffs->bigmap)[e][w].y)
+						{
+							if (i % 10 == rain % 10)
+							{
+								set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, stuffs->img.y + i - 2, color, stuffs);
+								set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, stuffs->img.y + i - 1, color, stuffs);
+								set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, stuffs->img.y + i, color, stuffs);
+							}
+							i++;
+						}
+					}
 					cheat.y += (stuffs->bigmap)[e][w].elev + 16;
 					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
 				}
@@ -41,6 +57,10 @@ void	connect_fne_dots(t_stuffs *stuffs)
 				{
 					cheat.y += 16;
 					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
+				}
+				else {
+					cheat.y += 16;
+					line((stuffs->bigmap)[e][w], cheat, stuffs, 0);
 				}
 			}
 			w++;
