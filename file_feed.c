@@ -100,7 +100,7 @@ int				file_feed(char *filename, t_stuffs *stu)
 	while (get_next_line(i[0], &line))
 	{
 		fields = ft_strsplit(line, ' ');
-		elevs = acquire_elev(fields, stu->size_y);
+		elevs = acquire_elev(fields, stu->size_y, !(stu->water));
 		colors = (stu->hascolors) ? acquire_colors(fields, stu->size_y) : 0;
 		fill_ec(stu, &colors, &elevs, i[3]);
 		free_fields(fields, line);
