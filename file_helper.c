@@ -18,18 +18,9 @@ void	free_fields(char **fields, void *to_free)
 
 	i = 0;
 	while (fields[i])
-	{
-		free(fields[i]);
-		i++;
-	}
+		free(fields[i++]);
 	free(fields);
 	free(to_free);
-}
-
-void	set_hascol(t_stuffs *stu, int has)
-{
-	stu->hascolors = has;
-	stu->ogcolors = stu->hascolors;
 }
 
 int		initialize(int *linenb, int *gnl, char *filename, int *fd)

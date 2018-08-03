@@ -35,10 +35,7 @@ void	malloc_map(t_stuffs *stu)
 	stu->map = (t_p2d**)pr_malloc(sizeof(t_p2d*) * (stu->size_x + 1));
 	i = 0;
 	while (i <= stu->size_x)
-	{
-		stu->map[i] = (t_p2d*)pr_malloc(sizeof(t_p2d) * (stu->size_y + 1));
-		i++;
-	}
+		stu->map[i++] = (t_p2d*)pr_malloc(sizeof(t_p2d) * (stu->size_y + 1));
 }
 
 void	altinfos_set(t_stuffs *stu, int r)
@@ -80,12 +77,6 @@ void	set_scale(t_stuffs *stuffs)
 	int		inval;
 
 	vals = get_elevlimits(stuffs);
-	if (abs(vals.y) > abs(vals.x))
-		inval = abs(vals.y);
-	else
-		inval = abs(vals.x);
-	if (inval && inval > 120)
-		stuffs->coef = 130 / (float)inval;
-	else
-		stuffs->coef = 1;
+	inval = (abs(vals.y) > abs(vals.x)) ? abs(vals.y) : abs(vals.x);
+	stuffs->coef = (inval > 120) ? (130 / (float)inval) : 1;
 }

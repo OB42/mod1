@@ -41,8 +41,8 @@ int				file_test(char *filename, t_stuffs *stu)
 		stu->size_y = (linenb == 1) ? nb_fields(fields) : stu->size_y;
 		if (stu->size_y != nb_fields(fields))
 			return (linenb);
-		if (!(linenb++) || !((stu->size_x = linenb - 1) + 1) || !stu->hascolors)
-			set_hascol(stu, has_color(fields, stu->size_y));
+		if (linenb++)
+			stu->size_x = linenb - 1;
 		free_fields(fields, line);
 	}
 	check_gnl(gnl, "gnl error\n");
@@ -61,10 +61,7 @@ void			malloc_ec(t_stuffs *stu)
 		(stu->colors) = (int**)pr_malloc((stu->size_x + 1) * sizeof(int*));
 	i = 1;
 	while (i < stu->size_x + 1)
-	{
-		(stu->elevs)[i] = (int*)pr_malloc((stu->size_y + 1) * sizeof(int));
-		i++;
-	}
+		(stu->elevs)[i++] = (int*)pr_malloc((stu->size_y + 1) * sizeof(int));
 }
 
 void			fill_ec(t_stuffs *stu, int **elevs, int id)
@@ -83,7 +80,6 @@ int				file_feed(char *filename, t_stuffs *stu)
 	char	*line;
 	char	**fields;
 	int		*elevs;
-	int		*colors;
 	int		i[4];
 
 	i[0] = open(filename, O_RDONLY);
@@ -95,12 +91,9 @@ int				file_feed(char *filename, t_stuffs *stu)
 	{
 		fields = ft_strsplit(line, ' ');
 		elevs = acquire_elev(fields, stu->size_y, !(stu->water));
-		colors = 0;
-		fill_ec(stu,&elevs, i[3]);
+		fill_ec(stu,&elevs, i[3]++);
 		free_fields(fields, line);
 		free(elevs);
-		free(colors);
-		i[3]++;
 	}
 	free(line);
 	close(i[0]);
