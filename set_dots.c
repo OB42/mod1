@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mod1.h"
 
 void	detailed_point(t_stuffs *s, int ie, int je, t_f2d noww)
 {

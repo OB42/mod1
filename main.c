@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mod1.h"
 
 void	init_img(t_stuffs *stuffs)
 {
@@ -81,7 +81,7 @@ void set_water(t_stuffs *stuffs)
 			 {
 				 	stuffs->map[e][w] = stuffs->water->map[e][w];
 					stuffs->map[e][w].is_water = 1;
-				}
+			}
 			w++;
 		}
 		e++;
@@ -95,7 +95,7 @@ int		main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Usage : ./fdf ./path/to/map/map.fdf\n");
+		ft_printf("Usage : ./mod1 ./path/to/map/map.mod1\n");
 		return (2);
 	}
 	stuffs.water = &water;

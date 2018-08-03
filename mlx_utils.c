@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mod1.h"
 
 void	set_pixel(int x, int y, int color, t_stuffs *stuffs)
 {

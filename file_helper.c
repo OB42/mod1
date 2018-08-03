@@ -10,22 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-
-int		*acquire_colors(char **fields, int nbfields)
-{
-	int i;
-	int *ret;
-
-	ret = (int*)pr_malloc(sizeof(int) * nbfields + 1);
-	i = 0;
-	while (fields[i])
-	{
-		ret[i] = parse_color(fields[i]);
-		i++;
-	}
-	return (ret);
-}
+#include "mod1.h"
 
 void	free_fields(char **fields, void *to_free)
 {

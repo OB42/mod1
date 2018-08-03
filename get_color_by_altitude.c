@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mod1.h"
 #include <math.h>
 
 int		get_color_by_altitude(int n)

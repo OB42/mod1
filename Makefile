@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = mod1
 
 SRC_DIR = ./
 
@@ -30,9 +30,8 @@ get_next_line.c \
 color_utils.c \
 engine.c \
 hook.c \
-line_utils.c \
 mlx_utils.c \
-line_utils2.c \
+line_utils.c \
 point_utils.c \
 parse_utils.c \
 setters.c \

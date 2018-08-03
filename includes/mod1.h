@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   mod1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcluchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef MOD1_H
+# define MOD1_H
 # include "get_next_line.h"
 # include "libft.h"
 # include "mlx.h"
@@ -33,13 +33,6 @@ typedef struct	s_li
 	int			e2;
 }				t_li;
 
-typedef struct	s_p3d
-{
-	int			x;
-	int			y;
-	int			z;
-	int			color;
-}				t_p3d;
 
 typedef struct	s_coords
 {

@@ -10,9 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mod1.h"
 #include <math.h>
 #include <unistd.h>
+
+int		line_count(t_p2d p1, t_p2d p2)
+{
+	t_li	val;
+	int		ct;
+
+	init_line_stuffs(&val, p1, p2);
+	ct = 0;
+	while (1)
+	{
+		ct++;
+		if (p1.x == p2.x && p1.y == p2.y)
+			break ;
+		next_pt_line(&val, &p1);
+	}
+	return (ct);
+}
 
 void		malloc_bigmap(t_stuffs *s)
 {

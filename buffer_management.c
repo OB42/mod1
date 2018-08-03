@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "mod1.h"
 
 void	malloc_buffer(int x, int y, t_stuffs *stu)
 {
