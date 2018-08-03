@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-static	void	print_error(char *err)
+void	print_error(char *err)
 {
 	write(2, err, ft_strlen(err));
-	exit(0);
+	exit(1);
 }
 
 void	*pr_malloc(size_t n)

@@ -12,11 +12,6 @@
 
 #include "mod1.h"
 
-int	abs(int x)
-{
-	return ((x < 0) ? -x : x);
-}
-
 int	gory(t_stuffs *stuffs, int index)
 {
 	if (stuffs->viewpoint == 2 || stuffs->viewpoint == 4)
