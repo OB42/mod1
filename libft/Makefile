@@ -18,7 +18,8 @@ CC = gcc
 
 CFLAGS =  -I$(H_DIR) -Wall -Wextra -Werror
 
-C_FILES = ft_atoi.c \
+C_FILES = get_next_line.c \
+ft_atoi.c \
 ft_bzero.c \
 pr_malloc.c \
 ft_count_c.c \

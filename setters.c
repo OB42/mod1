@@ -19,10 +19,10 @@ void	set_props(t_stuffs *stu)
 	float leny2;
 	float lenx;
 
-	len =  (float)stu->size_y * 3;
-	leny =  (float)stu->size_y * 1.5;
-	leny2 =  (float)stu->size_x * 1.5;
-	lenx =  (float)stu->size_x * 3;
+	len = (float)stu->size_y * 3;
+	leny = (float)stu->size_y * 1.5;
+	leny2 = (float)stu->size_x * 1.5;
+	lenx = (float)stu->size_x * 3;
 	len = (len < lenx) ? len : lenx;
 	leny2 = (leny < leny2) ? leny : leny2;
 	stu->props = (t_f2d){.x = len, .y = leny2};
@@ -36,14 +36,6 @@ void	malloc_map(t_stuffs *stu)
 	i = 0;
 	while (i <= stu->size_x)
 		stu->map[i++] = (t_p2d*)pr_malloc(sizeof(t_p2d) * (stu->size_y + 1));
-}
-
-void	altinfos_set(t_stuffs *stu, int r)
-{
-	if (r < stu->altinfos.y)
-		stu->altinfos.y = r;
-	if (r > stu->altinfos.x)
-		stu->altinfos.x = r;
 }
 
 t_p2d	get_elevlimits(t_stuffs *stuffs)

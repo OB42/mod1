@@ -31,7 +31,7 @@ int				file_test(char *filename, t_stuffs *stu)
 		stu->size_y = (linenb == 1) ? nb_fields(fields) : stu->size_y;
 		if (stu->size_y != nb_fields(fields))
 			return (linenb);
-		stu->size_x = (linenb++);
+		stu->size_x = linenb++;
 		free_fields(fields, line);
 	}
 	if (gnl == -1)
@@ -58,7 +58,10 @@ void			fill_ec(t_stuffs *stu, int **elevs, int id)
 
 	i = 0;
 	while (i < stu->size_y)
-		(stu->elevs)[id][i++ + 1] = (*elevs)[i];
+	{
+		(stu->elevs)[id][i + 1] = (*elevs)[i];
+		i++;
+	}
 }
 
 int				file_feed(char *filename, t_stuffs *stu)

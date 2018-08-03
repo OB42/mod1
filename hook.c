@@ -61,14 +61,10 @@ void	free_stuffs(t_stuffs *stuffs)
 	{
 		free((stuffs->map)[e]);
 		free((stuffs->elevs)[e]);
-		if (stuffs->ogcolors)
-			free((stuffs->colors)[e]);
 		e++;
 	}
 	free(stuffs->map);
 	free(stuffs->elevs);
-	if (stuffs->ogcolors)
-		free(stuffs->colors);
 }
 
 int		hook(int keycode, void *stuffs)
@@ -117,11 +113,7 @@ int		hook(int keycode, void *stuffs)
 	else if (keycode == 35)
 		redraw(stuffs, 4);
 	else if (keycode == 49)
-	{
-		if (((t_stuffs*)stuffs)->ogcolors)
-			((t_stuffs*)stuffs)->hascolors = !((t_stuffs*)stuffs)->hascolors;
 		redraw(stuffs, ((t_stuffs*)stuffs)->viewpoint);
-	}
 	else
 		redraw(stuffs, ((t_stuffs*)stuffs)->viewpoint);
 	return (0);

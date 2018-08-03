@@ -20,10 +20,7 @@ void	malloc_buffer(int x, int y, t_stuffs *stu)
 	stu->buffer = (char**)(pr_malloc(sizeof(char*) * x + 1));
 	i = 0;
 	while (i < x)
-	{
-		stu->buffer[i] = (char*)(pr_malloc(sizeof(char) * y + 1));
-		i++;
-	}
+		stu->buffer[i++] = (char*)(pr_malloc(sizeof(char) * y + 1));
 }
 
 void	init_buffer(int x, int y, t_stuffs *stu)
@@ -36,15 +33,7 @@ void	init_buffer(int x, int y, t_stuffs *stu)
 	{
 		j = 0;
 		while (j < y)
-		{
-			stu->buffer[i][j] = 0;
-			j++;
-		}
+			stu->buffer[i][j++] = 0;
 		i++;
 	}
-}
-
-void	add_pt_buffer(t_stuffs *stu, t_p2d pt)
-{
-	stu->buffer[pt.x][pt.y] = 1;
 }

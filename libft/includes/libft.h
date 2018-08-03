@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <string.h>
 # include <header.h>
+# include "get_next_line.h"
 
 typedef struct		s_list
 {

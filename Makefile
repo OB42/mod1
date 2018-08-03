@@ -22,22 +22,27 @@ CFLAGS =  -I$(LIBFT_DIR)includes/  -I$(H_DIR) -I$(MLX_DIR) $(EXTRAFLAGS)
 
 MLX_FLAGS = -framework OpenGL -framework AppKit
 
-C_FILES = main.c \
-get_color_by_altitude.c \
-file_feed.c \
-file_helper.c \
-get_next_line.c \
-color_utils.c \
-engine.c \
-hook.c \
-mlx_utils.c \
+UTILS = mlx_utils.c \
 line_utils.c \
-point_utils.c \
+color_utils.c \
 parse_utils.c \
-setters.c \
-getters.c \
-set_dots.c \
+point_utils.c \
+
+FILE = file_feed.c \
+file_helper.c
+
+POINTS = set_dots.c \
+gen_point.c \
 connect_dots.c
+
+C_FILES = $(addprefix utils/, $(UTILS)) \
+$(addprefix file/, $(FILE)) \
+$(addprefix points/, $(POINTS)) \
+main.c \
+line.c \
+hook.c \
+setters.c \
+bigmap.c
 
 LIBFT_DIR = ./libft/
 

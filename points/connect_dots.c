@@ -111,11 +111,8 @@ void	check_and_connect(t_stuffs *stuffs, int e, int w, char direction)
 		co = (t_coords){.x1 = e, .y1 = w, .x2 = get_next(e, stuffs), .y2 = w};
 	}
 
-	if ( 	point_from.x != 0 && point_to.x > 0 &&
-		point_from.color != -1 && point_to.color != -1)
-	{
+	if (point_from.x != 0 && point_to.x > 0)
 		special_fine_line(point_from, point_to, stuffs,co);
-	}
 
 }
 
