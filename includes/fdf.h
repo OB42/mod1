@@ -87,6 +87,7 @@ typedef struct	s_img
 
 typedef struct	s_stuffs
 {
+	int			raining;
 	t_p2d		altinfos;
 	t_f2d		props;
 	void		*co;

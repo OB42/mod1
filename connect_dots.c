@@ -11,12 +11,17 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 void	connect_fne_dots(t_stuffs *stuffs)
 {
 	int		e;
 	int		w;
 	int		color;
+	int		i;
+	static	int rain = 0;
 
 	e = 0 * stuffs->linelen;
 	ft_printf("Rendering fine dots..\n");
@@ -31,14 +36,54 @@ void	connect_fne_dots(t_stuffs *stuffs)
 				color = (stuffs->bigmap)[e][w].is_water ? 0x00ccff : get_color_by_altitude(stuffs->bigmap[e][w].elev);
 				t_p2d cheat;
 				cheat = (stuffs->bigmap)[e][w];
-				cheat.y += 16;
-				line((stuffs->bigmap)[e][w], cheat, stuffs, color);
+				if ((stuffs->bigmap)[e][w].is_water)
+				{
+					cheat.y += (stuffs->bigmap)[e][w].elev + 16;
+					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
+				}
+				else if (e + 32 < (stuffs->size_x * stuffs->linelen) && w + 32 < (stuffs->size_y * stuffs->linelen))
+				{
+					cheat.y += 16;
+					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
+				}
+				else {
+					cheat.y += 16;
+					line((stuffs->bigmap)[e][w], cheat, stuffs, 0);
+				}
 			}
 			w++;
 		}
 		e++;
 	}
 	ft_printf("Done %i!\n", stuffs->linelen);
+	if (!(stuffs->raining))
+		return;
+	e = 0;
+	//generating rain effect
+	while (e < (stuffs->size_x * stuffs->linelen))
+	{
+		w = 0 * stuffs->linelen;
+		while (w < (stuffs->size_y * stuffs->linelen))
+		{
+			if (stuffs->img.y + stuffs->bigmap[e][w].y)
+			{
+				int r = rand() % (stuffs->img.y + stuffs->bigmap[e][w].y);
+				int l = rand() % 17 + 3;
+				i = 0;
+				if (w && rand() % 32 == 0)
+				{
+					while (i < l)
+					{
+						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, r - i, 0x00ccff, stuffs);
+						i++;
+					}
+				}
+			}
+			w++;
+		}
+		e++;
+	}
+	rain = 1;
 }
 
 int	get_next(int val, t_stuffs *stuffs)

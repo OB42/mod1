@@ -32,7 +32,7 @@ int	init(t_stuffs *stuffs, char *path)
 	stuffs->ogcolors = 0;
 	stuffs->altinfos.y = INT_MAX;
 	stuffs->altinfos.x = INT_MIN;
-	printf("INIT INIT %p\n", stuffs->water);
+	stuffs->raining = 0;
 	if (exit_msg(file_feed(path, stuffs)))
 		return (1);
 	set_props(stuffs);
@@ -40,14 +40,11 @@ int	init(t_stuffs *stuffs, char *path)
 	malloc_map(stuffs);
 	if (stuffs->water)
 	{
-		printf("yo\n");
 		stuffs->co = mlx_init();
 		stuffs->win = mlx_new_window(stuffs->co, WINX, WINY, "Test");
 		init_img(stuffs);
 	}
-	printf("ya %p\n", stuffs->water);
 	set_dots(stuffs);
-	printf("ye %p\n", stuffs->water);
 	connect_dots(stuffs);
 	return (0);
 }
