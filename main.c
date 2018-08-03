@@ -32,6 +32,7 @@ int	init(t_stuffs *stuffs, char *path)
 	stuffs->ogcolors = 0;
 	stuffs->altinfos.y = INT_MAX;
 	stuffs->altinfos.x = INT_MIN;
+	stuffs->raining = 0;
 	printf("INIT INIT %p\n", stuffs->water);
 	if (exit_msg(file_feed(path, stuffs)))
 		return (1);

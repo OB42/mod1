@@ -103,6 +103,7 @@ int		hook(int keycode, void *stuffs)
 	}
 	else if (keycode == 0x45)
 	{
+		((t_stuffs*)stuffs)->raining = 1;
 		dirty_water_rising(stuffs, 2);
 		set_water(stuffs);
 		redraw(stuffs, 1);
