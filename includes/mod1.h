@@ -19,8 +19,8 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdlib.h>
-#include <math.h>
-#include <unistd.h>
+# include <math.h>
+# include <unistd.h>
 # define WINX 2000
 # define WINY 1000
 # define POS_INCREMENT 42
@@ -81,11 +81,10 @@ typedef struct	s_stuffs
 	int			**elevs;
 	int			size_y;
 	int			size_x;
-	int			viewpoint;
 	float		coef;
 	int			linelen;
 	t_img		img;
-	struct	s_stuffs	*water;
+	struct		s_stuffs	*water;
 }				t_stuffs;
 
 void			malloc_bigmap(t_stuffs *s);
@@ -94,7 +93,6 @@ void			f_fill_bigmap(t_stuffs *s, t_coords co, float whereami,t_p2d pt);
 int				get_color_by_altitude(int n);
 int				initialize(int *linenb, int *gnl, char *filename, int *fd);
 float			get_max_elev(t_stuffs *stuffs);
-int				abs(int x);
 void			malloc_buffer(int x, int y, t_stuffs *stu);
 void			init_buffer(int x, int y, t_stuffs *stu);
 int				line_count(t_p2d p1, t_p2d p2);
@@ -111,13 +109,12 @@ t_p2d			get_elevlimits(t_stuffs *stuffs);
 void			set_scale(t_stuffs *stuffs);
 void			set_dots(t_stuffs *stuffs);
 void			clear(t_stuffs *stuffs);
-void			redraw(t_stuffs *stu, int vp);
+void			redraw(t_stuffs *stu);
 void			free_stuffs(t_stuffs *stuffs);
 int				hook(int keycode, void *stuffs);
 int				exit_msg(int ret_code);
 void			init_line_stuffs(t_li *li, t_p2d p1, t_p2d p2);
 void			next_pt_line(t_li *li, t_p2d *p1);
-unsigned char	twochar_to_byte(char a, char b);
 int				*acquire_elev(char **fields, int nbfields, int is_water);
 int				nb_fields(char **fields);
 void			free_fields(char **fields, void *to_free);

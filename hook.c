@@ -12,10 +12,9 @@
 
 #include "mod1.h"
 
-void	redraw(t_stuffs *stu, int vp)
+void	redraw(t_stuffs *stu)
 {
 	clear(stu);
-	stu->viewpoint = vp;
 	set_dots(stu);
 	connect_dots(stu);
 	mlx_put_image_to_window(stu->co, stu->win, stu->img.ptr, 0, 0);
@@ -69,53 +68,27 @@ void	free_stuffs(t_stuffs *stuffs)
 
 int		hook(int keycode, void *stuffs)
 {
-	static int x = 0;
 	if (keycode == 53)
 	{
 		free_stuffs(stuffs);
 		exit(0);
 	}
 	clear(stuffs);
-	if (keycode == 32)
-		redraw(stuffs, 1);
-	else if (keycode == 0x7C)
-	{
+	if (keycode == 0x7C)
 		((t_stuffs*)stuffs)->img.x += POS_INCREMENT;
-		redraw(stuffs, 1);
-	}
 	else if (keycode == 0x7B)
-	{
 		((t_stuffs*)stuffs)->img.x -= POS_INCREMENT;
-		redraw(stuffs, 1);
-	}
 	else if (keycode == 0x7D)
-	{
 		((t_stuffs*)stuffs)->img.y += POS_INCREMENT;
-		redraw(stuffs, 1);
-	}
 	else if (keycode == 0x7E)
-	{
 		((t_stuffs*)stuffs)->img.y -= POS_INCREMENT;
-		redraw(stuffs, 1);
-	}
 	else if (keycode == 0x45)
 	{
-
 		((t_stuffs*)stuffs)->raining = 1;
 		dirty_water_rising(stuffs, 2);
 		set_water(stuffs);
-		redraw(stuffs, 1);
 	}
-	else if (keycode == 34)
-		redraw(stuffs, 2);
-	else if (keycode == 31)
-		redraw(stuffs, 3);
-	else if (keycode == 35)
-		redraw(stuffs, 4);
-	else if (keycode == 49)
-		redraw(stuffs, ((t_stuffs*)stuffs)->viewpoint);
-	else
-		redraw(stuffs, ((t_stuffs*)stuffs)->viewpoint);
+	redraw(stuffs);
 	return (0);
 }
 

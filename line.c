@@ -39,9 +39,8 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 	while (1)
 	{
 		if (s->raining && !p1.is_water && ((p1.elev + rain) % 2 && p1.x % 4 == rain % 4) && p1.elev)
-			set_pixel(s->img.x + p1.x, s->img.y + p1.y, 0x00ccff, s);//printing droplets on the hills
-		else
-			set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
+			color = 0x00ccff;//printing droplets on the hills
+		set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
 		rain++;
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
@@ -52,8 +51,8 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 {
 	t_li    val;
-	int cpt;
-	float whereami;
+	int		cpt;
+	float	whereami;
 
 	p1.y += p1.elev;
 	p2.y += p2.elev;
@@ -66,7 +65,7 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 	cpt = 0;
 	while (1)
 	{
-		whereami = ((float)cpt/(float)s->linelen);
+		whereami = (float)cpt / (float)s->linelen;
 		fill_bigmap(s, co, whereami, gen_point(p1, p2, whereami));
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
@@ -77,10 +76,10 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 
 void             special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 {
-	t_li    val;
-	int cpt;
-	float whereami;
-	t_p2d dpoint;
+	t_li	val;
+	int		cpt;
+	float	whereami;
+	t_p2d	dpoint;
 
 	p1.y += p1.elev;
 	p2.y += p2.elev;
@@ -88,8 +87,8 @@ void             special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 	cpt = 0;
 	while (1)
 	{
-		whereami = ((float)cpt/(float)s->linelen);
-		dpoint =  gen_point(p1, p2, whereami);
+		whereami = (float)cpt / (float)s->linelen;
+		dpoint = gen_point(p1, p2, whereami);
 		f_fill_bigmap(s, co, whereami, dpoint);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
