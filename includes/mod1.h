@@ -49,7 +49,6 @@ typedef struct	s_p2d
 	int			x;
 	int			y;
 	int			elev;
-	int			is_water;
 }				t_p2d;
 
 typedef struct	s_f2d

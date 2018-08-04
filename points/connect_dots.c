@@ -22,6 +22,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 	int		color;
 	int		i;
 	static	int rain = 0;
+	int		water;
 
 	e = 0 * stuffs->linelen;
 	ft_printf("Rendering fine dots..\n");
@@ -33,10 +34,11 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 			if ((stuffs->bigmap)[e][w].elev >= 0 )
 			{
-				color = (stuffs->bigmap)[e][w].is_water ? 0x00ccff : get_color_by_altitude(stuffs->bigmap[e][w].elev);
+				water = (stuffs->water && stuffs->water->bigmap && stuffs->water->bigmap[e][w].elev >= stuffs->bigmap[e][w].elev);
+				color = water ? 0x00ccff : get_color_by_altitude(stuffs->bigmap[e][w].elev);
 				t_p2d cheat;
 				cheat = (stuffs->bigmap)[e][w];
-				if ((stuffs->bigmap)[e][w].is_water)
+				if (water)
 				{
 					cheat.y += (stuffs->bigmap)[e][w].elev + 16;
 					line((stuffs->bigmap)[e][w], cheat, stuffs, color);

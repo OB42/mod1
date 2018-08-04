@@ -19,6 +19,5 @@ t_p2d	f2d_to_p2d(t_f2d floatpoint)
 	ret.x = (int)floatpoint.x;
 	ret.y = (int)floatpoint.y;
 	ret.elev = floatpoint.elev;
-	ret.is_water = 0;
 	return (ret);
 }

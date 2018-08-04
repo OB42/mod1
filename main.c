@@ -58,10 +58,7 @@ void set_water(t_stuffs *stuffs)
 			while ((w < (stuffs->size_y) * stuffs->linelen))
 			{
 				if (stuffs->water->bigmap[e][w].elev > stuffs->bigmap[e][w].elev)
-				{
 					stuffs->bigmap[e][w] = stuffs->water->bigmap[e][w];
-					stuffs->bigmap[e][w].is_water = 1;
-				}
 				w++;
 			}
 			e++;
@@ -74,10 +71,7 @@ void set_water(t_stuffs *stuffs)
 		while (w <= stuffs->size_y)
 		{
 			 if ((stuffs->water->map)[e][w].elev > (stuffs->map)[e][w].elev)
-			 {
-				 	stuffs->map[e][w] = stuffs->water->map[e][w];
-					stuffs->map[e][w].is_water = 1;
-			}
+			 	stuffs->map[e][w] = stuffs->water->map[e][w];
 			w++;
 		}
 		e++;
