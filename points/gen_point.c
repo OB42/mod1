@@ -33,7 +33,7 @@ t_p2d		gen_point(t_p2d p1, t_p2d p2, float whereami)
 	ret = p1;
 	ret.y -=  fabs(sinelev/2.0 * ((float)elevnow));
 	if (p1.elev != 0 &&  p2.elev != 0)
-		ret.y -=  (p2.elev > p1.elev) ? abs(p1.elev) : abs(p2.elev);
-	ret.elev =  abs(p1.y - ret.y);
+		ret.y -=  (p2.elev > p1.elev) ? fabsf(p1.elev) : fabsf(p2.elev);
+	ret.elev = abs(p1.y - ret.y);
 	return (ret);
 }

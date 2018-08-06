@@ -69,6 +69,6 @@ void	set_scale(t_stuffs *stuffs)
 	int		inval;
 
 	vals = get_elevlimits(stuffs);
-	inval = (fabsf(vals.y) > fabsf(vals.x)) ? fabsf(vals.y) : fabsf(vals.x);
+	inval = (abs(vals.y) > abs(vals.x)) ? abs(vals.y) : abs(vals.x);
 	stuffs->coef = (inval > 120) ? (130 / (float)inval) : 1;
 }

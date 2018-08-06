@@ -63,9 +63,17 @@ void	spread_water(t_stuffs *stuffs)
 	t_p2d	max;
 	int		z = 0;
 	static int r = 0;
+	int i;
 	static	float	**previous = 0;
 	static	float	**current = 0;
+	static t_p2d n[4] = {
+		(t_p2d){.x = 0, .y = 1},
+		(t_p2d){.x = 0, .y = -1},
+		(t_p2d){.x = 1, .y = 0},
+		(t_p2d){.x = -1, .y = 0},
+	};
 	float temp = 0;
+
 	if (!previous)
 	{
 		previous = pr_malloc(sizeof(float*) * (stuffs->size_x * stuffs->linelen + 1));
@@ -100,78 +108,65 @@ void	spread_water(t_stuffs *stuffs)
 		}
 		e++;
 	}
+	int dec = 1;
 	e = 0;
-	while (z < 1)
+	while (e < ((stuffs->size_x) * stuffs->linelen))
 	{
-		e = 0;
-		while (e < ((stuffs->size_x) * stuffs->linelen))
+		w = 0;
+		while (w < (stuffs->size_y) * stuffs->linelen)
 		{
-			w = 0;
-			while (w < (stuffs->size_y) * stuffs->linelen)
+			if (stuffs->water->bigmap[e][w].elev > dec * 0.99)
 			{
-				if (stuffs->water->bigmap[e][w].elev > 0)
+				max.y = -1;
+				max.x = -1;
+				max.elev = 0;
+				i = 0;
+				while (i < 4)
 				{
-					max.y = -1;
-					max.x = -1;
-					max.elev = 0;
-					int sum = 0;
-					x = -1;
-					while (x < 2) {
-						y = -1;
-						while (y < 2) {
-							if (!(!y && !x) && e + x > -1 && w + y > -1 && e + x < (stuffs->size_x) * stuffs->linelen && w + y < (stuffs->size_y) * stuffs->linelen)
-							{
-								if ((x == 0 && y == -1) || (x == -1 && y == 0) || (x == 0 && y == 1) || (x == 1 && y == 0))
-								{
-									temp = (stuffs->bigmap[e][w].elev + current[e][w]) - (stuffs->bigmap[e + x][w + y].elev + current[e + x][w + y]);
-									if (temp > max.elev)
-									{
-										max.x = e + x;
-										max.y = w + y;
-										max.elev = temp * 0.99;
-									}
-								}
-							}
-							y++;
-						}
-						x++;
-					}
-					x = -1;
-					if (max.elev > 0.1)
+					x = n[i].x + e;
+					y = n[i].y + w;
+					if (x > -1 && y > -1 && x < (stuffs->size_x) * stuffs->linelen && y < (stuffs->size_y) * stuffs->linelen)
 					{
-						while (x < 2) {
-							y = -1;
-							while (y < 2) {
-								if (!(!y && !x) && e + x > -1 && w + y > -1 && e + x < (stuffs->size_x) * stuffs->linelen && w + y < (stuffs->size_y) * stuffs->linelen)
-								{
-									if ((x == 0 && y == -1) || (x == -1 && y == 0) || (x == 0 && y == 1) || (x == 1 && y == 0))
-									{
-										temp = (stuffs->bigmap[e][w].elev + current[e][w]) - (stuffs->bigmap[e + x][w + y].elev + current[e + x][w + y]);
-										if (temp >= max.elev)
-										{
-											move_water(stuffs, &(stuffs->water->bigmap[e][w]), &(stuffs->water->bigmap[e + x][w + y]), 1);
-										}
-									}
-								}
-								y++;
-							}
-							x++;
+						temp = (stuffs->bigmap[e][w].elev + current[e][w]) - (stuffs->bigmap[x][y].elev + current[x][y]);
+						if (temp * 0.99 > max.elev)
+						{
+							max.x = x;
+							max.y = y;
+							max.elev = temp;
 						}
 					}
-
-				//	stuffs->bigmap[e][w].y
+					i++;
 				}
-				w++;
+				if (max.elev > dec * 0.99)
+				{
+					i = 0;
+					while (i < 4)
+					{
+						x = n[i].x + e;
+						y = n[i].y + w;
+						if (x > -1 && y > -1 && x < (stuffs->size_x) * stuffs->linelen && y < (stuffs->size_y) * stuffs->linelen)
+						{
+							temp = (stuffs->bigmap[e][w].elev + current[e][w]) - (stuffs->bigmap[x][y].elev + current[x][y]);
+							if (temp > max.elev * 0.99)
+								move_water(stuffs, &(stuffs->water->bigmap[e][w]), &(stuffs->water->bigmap[x][y]), dec);
+							if (max.elev < dec * 0.99)
+							{
+								break;
+							}
+						}
+						i++;
+					}
+				}
 			}
-			e++;
+			w++;
 		}
-		z++;
+		e++;
 	}
 }
 
 int water_loop(void *stuffs)
 {
-	((t_stuffs *)stuffs)->raining = 1;
+//	((t_stuffs *)stuffs)->raining = 1;
 	// add_water(stuffs);
 	int i = 0;
 	while (i < 100)
