@@ -48,14 +48,14 @@ typedef struct	s_p2d
 {
 	int			x;
 	int			y;
-	int			elev;
+	float			elev;
 }				t_p2d;
 
 typedef struct	s_f2d
 {
 	float		x;
 	float		y;
-	int			elev;
+	float			elev;
 }				t_f2d;
 
 typedef struct	s_img

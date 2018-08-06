@@ -45,37 +45,142 @@ int	init(t_stuffs *stuffs, char *path)
 	return (0);
 }
 
-void set_water(t_stuffs *stuffs)
+void	move_water(t_stuffs *stuffs, t_p2d *from, t_p2d *to, float quantity)
 {
-	int e;
-	int w;
 
-	e = 0;
-	printf("ok %i %i %i\n", stuffs->size_x, stuffs->size_y, stuffs->linelen);
-	while (e < ((stuffs->size_x) * stuffs->linelen))
+	from->elev -= quantity;
+	// from->y += quantity * stuffs->coef;
+	to->elev++;
+	// to->y -= quantity * stuffs->coef;
+}
+
+void	spread_water(t_stuffs *stuffs)
+{
+	int		e;
+	int		w;
+	int		x;
+	int		y;
+	t_p2d	max;
+	int		z = 0;
+	static int r = 0;
+	static	float	**previous = 0;
+	static	float	**current = 0;
+	float temp = 0;
+	if (!previous)
 	{
+		previous = pr_malloc(sizeof(float*) * (stuffs->size_x * stuffs->linelen + 1));
+		current = pr_malloc(sizeof(float*) * (stuffs->size_x * stuffs->linelen + 1));
+		e = 0;
+		while (e < ((stuffs->size_x) * stuffs->linelen))
+		{
+			previous[e] = pr_malloc(sizeof(float) * (stuffs->size_y * stuffs->linelen + 1));
+			current[e] = pr_malloc(sizeof(float) * (stuffs->size_y * stuffs->linelen + 1));
 			w = 0;
-			while ((w < (stuffs->size_y) * stuffs->linelen))
+			while (w < 100)
 			{
-				if (stuffs->water->bigmap[e][w].elev > stuffs->bigmap[e][w].elev)
-					stuffs->bigmap[e][w] = stuffs->water->bigmap[e][w];
+				stuffs->water->bigmap[e][w].elev += 25;
 				w++;
 			}
 			e++;
+		}
 	}
-
-	e = 1;
-	while (e <= stuffs->size_x)
+	e = 0;
+	while (e < ((stuffs->size_x) * stuffs->linelen))
 	{
-		w = 1;
-		while (w <= stuffs->size_y)
+		w = 0;
+		while ((w < (stuffs->size_y) * stuffs->linelen))
 		{
-			 if ((stuffs->water->map)[e][w].elev > (stuffs->map)[e][w].elev)
-			 	stuffs->map[e][w] = stuffs->water->map[e][w];
+			// if (rand() % 16 == 0)
+			// {
+			// 	stuffs->water->bigmap[e][w].elev += 1;
+			// }
+			// previous[e][w] = stuffs->water->bigmap[e][w].elev;
+			current[e][w] = stuffs->water->bigmap[e][w].elev;
 			w++;
 		}
 		e++;
 	}
+	e = 0;
+	while (z < 1)
+	{
+		e = 0;
+		while (e < ((stuffs->size_x) * stuffs->linelen))
+		{
+			w = 0;
+			while (w < (stuffs->size_y) * stuffs->linelen)
+			{
+				if (stuffs->water->bigmap[e][w].elev > 0)
+				{
+					max.y = -1;
+					max.x = -1;
+					max.elev = 0;
+					int sum = 0;
+					x = -1;
+					while (x < 2) {
+						y = -1;
+						while (y < 2) {
+							if (!(!y && !x) && e + x > -1 && w + y > -1 && e + x < (stuffs->size_x) * stuffs->linelen && w + y < (stuffs->size_y) * stuffs->linelen)
+							{
+								if ((x == 0 && y == -1) || (x == -1 && y == 0) || (x == 0 && y == 1) || (x == 1 && y == 0))
+								{
+									temp = (stuffs->bigmap[e][w].elev + current[e][w]) - (stuffs->bigmap[e + x][w + y].elev + current[e + x][w + y]);
+									if (temp > max.elev)
+									{
+										max.x = e + x;
+										max.y = w + y;
+										max.elev = temp * 0.99;
+									}
+								}
+							}
+							y++;
+						}
+						x++;
+					}
+					x = -1;
+					if (max.elev > 0.1)
+					{
+						while (x < 2) {
+							y = -1;
+							while (y < 2) {
+								if (!(!y && !x) && e + x > -1 && w + y > -1 && e + x < (stuffs->size_x) * stuffs->linelen && w + y < (stuffs->size_y) * stuffs->linelen)
+								{
+									if ((x == 0 && y == -1) || (x == -1 && y == 0) || (x == 0 && y == 1) || (x == 1 && y == 0))
+									{
+										temp = (stuffs->bigmap[e][w].elev + current[e][w]) - (stuffs->bigmap[e + x][w + y].elev + current[e + x][w + y]);
+										if (temp >= max.elev)
+										{
+											move_water(stuffs, &(stuffs->water->bigmap[e][w]), &(stuffs->water->bigmap[e + x][w + y]), 1);
+										}
+									}
+								}
+								y++;
+							}
+							x++;
+						}
+					}
+
+				//	stuffs->bigmap[e][w].y
+				}
+				w++;
+			}
+			e++;
+		}
+		z++;
+	}
+}
+
+int water_loop(void *stuffs)
+{
+	((t_stuffs *)stuffs)->raining = 1;
+	// add_water(stuffs);
+	int i = 0;
+	while (i < 100)
+	{
+		spread_water(stuffs);
+		i++;
+	}
+	redraw(stuffs);
+	return (0);
 }
 
 int		main(int argc, char **argv)
@@ -96,9 +201,9 @@ int		main(int argc, char **argv)
 	water.win = stuffs.win;
 	if (init(&water, argv[1]))
 		return (1);
-	set_water(&stuffs);
 	mlx_put_image_to_window(stuffs.co, stuffs.win, stuffs.img.ptr, 0, 0);
-	mlx_key_hook(stuffs.win, &hook, &stuffs);
+	mlx_loop_hook(stuffs.co, water_loop, &stuffs);
+	// mlx_key_hook(stuffs.win, water_loop, &stuffs);
 	mlx_loop(stuffs.co);
 	return (0);
 }

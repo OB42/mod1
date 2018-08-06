@@ -34,14 +34,24 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 			if ((stuffs->bigmap)[e][w].elev >= 0 )
 			{
-				water = (stuffs->water && stuffs->water->bigmap && stuffs->water->bigmap[e][w].elev >= stuffs->bigmap[e][w].elev);
+				water = (stuffs->water && stuffs->water->bigmap && stuffs->water->bigmap[e][w].elev > 0.1);
 				color = water ? 0x00ccff : get_color_by_altitude(stuffs->bigmap[e][w].elev);
 				t_p2d cheat;
 				cheat = (stuffs->bigmap)[e][w];
-				if (water)
+				if (e + 32 >= (stuffs->size_x * stuffs->linelen) || w + 32 >= (stuffs->size_y * stuffs->linelen))
 				{
-					cheat.y += (stuffs->bigmap)[e][w].elev + 16;
-					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
+					cheat.y += 16;
+					line((stuffs->bigmap)[e][w], cheat, stuffs, 0x0);
+				}
+				else if (water)
+				{
+					t_p2d temp = (stuffs->bigmap)[e][w];
+					temp.elev += (stuffs->water->bigmap)[e][w].elev;
+					temp.y -= (stuffs->water->bigmap)[e][w].elev * stuffs->coef;
+					cheat = temp;
+				//	printf("%i\n", stuffs->water->bigmap[e][w].elev);
+					cheat.y += temp.elev + 16;
+					line(temp, cheat, stuffs, color);
 				}
 				else if (e + 32 < (stuffs->size_x * stuffs->linelen) && w + 32 < (stuffs->size_y * stuffs->linelen))
 				{
@@ -69,10 +79,10 @@ void	connect_fne_dots(t_stuffs *stuffs)
 		{
 			if (stuffs->img.y + stuffs->bigmap[e][w].y)
 			{
-				int r = rand() % (stuffs->img.y + stuffs->bigmap[e][w].y);
-				int l = rand() % 17 + 3;
+				int r = rand() % (int)(stuffs->img.y + stuffs->bigmap[e][w].y);
+				int l = rand() % 7 + 3;
 				i = 0;
-				if (w && rand() % 32 == 0)
+				if (w && rand() % 128 == 0)
 				{
 					while (i < l)
 					{

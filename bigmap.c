@@ -64,6 +64,7 @@ void		f_fill_bigmap(t_stuffs *s, t_coords co, float whereami, t_p2d pt)
 		b = co.y1;
 		a = co.x1 + whereami * s->linelen;
 	}
+	// printf("%i %i\n", a, b);
 	if (s->bigmap[a][b].x == 0)
 		s->bigmap[a][b] = pt;
 }
