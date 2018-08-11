@@ -38,8 +38,6 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 	init_line_stuffs(&val, p1, p2);
 	while (1)
 	{
-		// if (s->raining && (((int)p1.elev + rain) % 2 && (int)p1.x % 4 == rain % 4) && p1.elev)
-			// color = 0x00ccff;//printing droplets on the hills
 		set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
 		rain++;
 		if (p1.x == p2.x && p1.y == p2.y)

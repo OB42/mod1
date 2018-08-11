@@ -24,7 +24,9 @@
 # define WINX 2000
 # define WINY 1000
 # define POS_INCREMENT 42
-
+# define	WAVE 0
+# define	RAIN 1
+# define	RISING_WATER 2
 typedef struct	s_li
 {
 	int			dy;
@@ -71,6 +73,7 @@ typedef struct	s_img
 
 typedef struct	s_stuffs
 {
+	int			scenario;
 	int			raining;
 	t_f2d		props;
 	void		*co;
