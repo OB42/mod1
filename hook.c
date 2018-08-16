@@ -73,7 +73,6 @@ int		hook(int keycode, void *stuffs)
 		free_stuffs(stuffs);
 		exit(0);
 	}
-	clear(stuffs);
 	if (keycode == 0x7C)
 		((t_stuffs*)stuffs)->img.x += POS_INCREMENT;
 	else if (keycode == 0x7B)
@@ -84,11 +83,16 @@ int		hook(int keycode, void *stuffs)
 		((t_stuffs*)stuffs)->img.y -= POS_INCREMENT;
 	else if (keycode == 0x45)
 	{
-		((t_stuffs*)stuffs)->raining = 1;
-		// dirty_water_rising(stuffs, 2);
-		// set_water(stuffs);
+		((t_stuffs*)stuffs)->raining_intensity -= RAIN_INCREMENT;
+		if (((t_stuffs*)stuffs)->raining_intensity < RAIN_INCREMENT)
+			((t_stuffs*)stuffs)->raining_intensity = RAIN_INCREMENT;
 	}
-	redraw(stuffs);
+	else if (keycode == 0x4E)
+	{
+		((t_stuffs*)stuffs)->raining_intensity += RAIN_INCREMENT;
+		if (((t_stuffs*)stuffs)->raining_intensity > 100)
+			((t_stuffs*)stuffs)->raining_intensity = 100;
+	}
 	return (0);
 }
 

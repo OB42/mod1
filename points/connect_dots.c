@@ -31,11 +31,11 @@ void	rain_effect(t_stuffs *stuffs)
 		{
 			if (stuffs->img.y + stuffs->bigmap[e][w].y)
 			{
-				r = rand() % (int)(stuffs->img.y + stuffs->bigmap[e][w].y);
-				l = rand() % 7 + 3;
-				i = 0;
-				if (w && rand() % 128 == 0)
+				if (w && rand() % stuffs->raining_intensity == 0)
 				{
+					r = rand() % (int)(stuffs->img.y + stuffs->bigmap[e][w].y);
+					l = rand() % 7 + 3;
+					i = 0;
 					while (i < l)
 					{
 						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, r - i, 0x00ccff, stuffs);

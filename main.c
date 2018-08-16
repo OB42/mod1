@@ -26,6 +26,7 @@ void	init_img(t_stuffs *stuffs)
 
 int	init(t_stuffs *stuffs, char *path)
 {
+	stuffs->raining_intensity = 100;
 	stuffs->coef = 1;
 	stuffs->raining = 0;
 	stuffs->linelen = -1;
@@ -171,7 +172,7 @@ void	raining(t_stuffs *stuffs)
 			w = 0;
 			while ((w < (stuffs->size_y) * stuffs->linelen))
 			{
-				if (rand() % 128 == 0)
+				if (stuffs->raining_intensity && rand() % (stuffs->raining_intensity / 2 + 1) == 0)
 					stuffs->water->bigmap[e][w].elev += 1;
 				w++;
 			}
