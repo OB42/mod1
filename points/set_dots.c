@@ -36,7 +36,7 @@ void	set_dots(t_stuffs *s)
 
 	p1 = (t_p2d){.x = 400, .y = 100};
 	nb[0] = 1;
-	ft_printf("Calculating dots...\n");
+	// ft_printf("Calculating dots...\n");
 	while (nb[0] <= s->size_x)
 	{
 		nb[1] = 1;

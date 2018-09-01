@@ -93,6 +93,16 @@ int		hook(int keycode, void *stuffs)
 		if (((t_stuffs*)stuffs)->raining_intensity > 100)
 			((t_stuffs*)stuffs)->raining_intensity = 100;
 	}
+	else if (keycode == 0x4E)
+	{
+		((t_stuffs*)stuffs)->raining_intensity += RAIN_INCREMENT;
+		if (((t_stuffs*)stuffs)->raining_intensity > 100)
+			((t_stuffs*)stuffs)->raining_intensity = 100;
+	}
+	else if (keycode == 0x12)
+	{
+		((t_stuffs*)stuffs)->scenario = 1;
+	}
 	return (0);
 }
 

@@ -53,14 +53,15 @@ typedef struct	s_p2d
 {
 	int			x;
 	int			y;
-	float			elev;
+	float		elev;
+	int			changed;
 }				t_p2d;
 
 typedef struct	s_f2d
 {
-	float		x;
-	float		y;
-	float			elev;
+	int		x;
+	int		y;
+	int			elev;
 }				t_f2d;
 
 typedef struct	s_img

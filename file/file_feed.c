@@ -45,7 +45,7 @@ void			malloc_ec(t_stuffs *stu)
 {
 	int i;
 
-	ft_printf("Parsing file...\n");
+	// ft_printf("Parsing file...\n");
 	stu->elevs = (int**)pr_malloc((stu->size_x + 1) * sizeof(int*));
 	i = 1;
 	while (i < stu->size_x + 1)
