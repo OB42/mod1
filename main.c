@@ -12,6 +12,11 @@
 
 #include "mod1.h"
 
+//OPTI BENCHMARK
+//to remove
+#include <sys/time.h>
+/////////////////////
+
 void	init_img(t_stuffs *stuffs)
 {
 	stuffs->img.ptr = mlx_new_image(stuffs->co, WINX, WINY);
@@ -21,7 +26,7 @@ void	init_img(t_stuffs *stuffs)
 	stuffs->img.y = 0;
 	stuffs->img.x = 0;
 	stuffs->img.img_addr = mlx_get_data_addr(stuffs->img.ptr,
-		&(stuffs->img.bits_per_pixel), &(stuffs->img.line_size), &(stuffs->img.endian));
+			&(stuffs->img.bits_per_pixel), &(stuffs->img.line_size), &(stuffs->img.endian));
 }
 
 int	init(t_stuffs *stuffs, char *path)
@@ -191,18 +196,116 @@ void	rising_water(t_stuffs *stuffs)
 	static int r = 0;
 
 	i = 0;
-
-	e = 16;
-	w = 1;
-	while ((w < (stuffs->size_y) * stuffs->linelen) - 1)
+	e = 0;
+	/*
+	if (!r)
 	{
-		stuffs->water->bigmap[0][w].elev += 5;
-		stuffs->water->bigmap[stuffs->size_x * stuffs->linelen - 1][w].elev += 5;
-		w++;
+		while (e < ((stuffs->size_x) * stuffs->linelen))
+		{
+			w = 0;
+			while (w < ((stuffs->size_y) * stuffs->linelen))
+			{
+				int	k =  1;
+				//				if (stuffs->bigmap[e][w].elev >= k)
+				//				stuffs->bigmap[e][w].elev -= k;
+				w++;
+			}
+			e++;
+		}
+		r = 1;
 	}
-	while (i++ < 42)
+	//	if ((r++) % 2 == 0)
+	*/
+	{
+		e = 0;
+		//stuffs->water->bigmap[(stuffs->size_x) * stuffs->linelen - 32 - 1][0].elev += 100;
+		//	 	stuffs->water->bigmap[0][0].elev += 10;
+
+		while (e < ((stuffs->size_x) * stuffs->linelen))
+		{
+			w = 0;
+
+
+			while (w < ((stuffs->size_y) * stuffs->linelen)  ||  stuffs->water->bigmap[e][w].elev > 0.1)
+			{
+
+				/*
+				int sr = 0;
+				if (r %4 == 0)
+					sr = 5;
+				*/
+
+				//if (r % 5 == 0 && r <= 200)
+				//stuffs->water->bigmap[e][w].elev += 1;
+				if ((r < 5) || (stuffs->bigmap[e][w].elev < (r % 100)))
+				{
+					if (w < (5 * r) || e < 90 || e > ((stuffs->size_x) * stuffs->linelen) - 90 )
+					stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+
+				}
+
+
+				w++;
+			}
+
+			w = ((stuffs->size_y) * stuffs->linelen) - 90;
+			while (w > 0 && w > (((stuffs->size_y) * stuffs->linelen) - 5 * r) ||  stuffs->water->bigmap[e][w].elev > 0.1)
+			{
+
+				/*
+				int sr = 0;
+				if (r %4 == 0)
+					sr = 5;
+				*/
+
+				//if (r % 5 == 0 && r <= 200)
+				//stuffs->water->bigmap[e][w].elev += 1;
+				if (r < 5 || (stuffs->bigmap[e][w].elev < (r % 100)))
+				stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+
+				w--;
+			}
+
+			e++;
+		}
+	}
+	
+
+	r++;
+	while (i++ < 50)
 		spread_water(stuffs);
+		
+	e = 0;
+	// if ((r++) % 4 == 0)
+
+
+
 	redraw(stuffs);
+
+}
+
+char water_nearby(t_stuffs *stuffs, int e, int w, int waterlevel)
+{
+	int i;
+	int j;	
+
+	i = e - 90;
+	while (i > 0 && i < ((stuffs->size_x) * stuffs->linelen) && i < e + 90)
+	{
+		j = w - 90;
+		while (j > 0 && j < ((stuffs->size_y) * stuffs->linelen) && j < w + 90)
+		{
+			if (stuffs->bigmap[i][j].elev > waterlevel)
+				break;
+
+			if (stuffs->water->bigmap[i][j].elev >= 1)
+				return (1);
+			j++;
+		}
+			i++;
+	}
+	return (0);
+
 }
 
 void	wave(t_stuffs *stuffs)
@@ -214,6 +317,7 @@ void	wave(t_stuffs *stuffs)
 
 	i = 0;
 	e = 0;
+	/*
 	if (!r)
 	{
 		while (e < ((stuffs->size_x) * stuffs->linelen))
@@ -222,33 +326,49 @@ void	wave(t_stuffs *stuffs)
 			while (w < ((stuffs->size_y) * stuffs->linelen))
 			{
 				int	k =  1;
-//				if (stuffs->bigmap[e][w].elev >= k)
-	//				stuffs->bigmap[e][w].elev -= k;
+				//				if (stuffs->bigmap[e][w].elev >= k)
+				//				stuffs->bigmap[e][w].elev -= k;
 				w++;
 			}
 			e++;
 		}
 		r = 1;
 	}
-//	if ((r++) % 2 == 0)
+	//	if ((r++) % 2 == 0)
+	*/
 	{
 		e = 0;
-			//stuffs->water->bigmap[(stuffs->size_x) * stuffs->linelen - 32 - 1][0].elev += 100;
-	//	 	stuffs->water->bigmap[0][0].elev += 10;
+		//stuffs->water->bigmap[(stuffs->size_x) * stuffs->linelen - 32 - 1][0].elev += 100;
+		//	 	stuffs->water->bigmap[0][0].elev += 10;
 
 		while (e < ((stuffs->size_x) * stuffs->linelen))
 		{
 			w = 0;
-			while (w < 5 ||  stuffs->water->bigmap[e][w].elev > 0.1)
+			while (w < ((stuffs->size_y) * stuffs->linelen) && w < (5 * r) ||  stuffs->water->bigmap[e][w].elev > 0.1)
 			{
-				stuffs->water->bigmap[e][w].elev += 1;
+
+				/*
+				int sr = 0;
+				if (r %4 == 0)
+					sr = 5;
+				*/
+
+				//if (r % 5 == 0 && r <= 200)
+				//stuffs->water->bigmap[e][w].elev += 1;
+				if (r < 5 || (stuffs->bigmap[e][w].elev < (r % 100)))
+				stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+
 				w++;
 			}
 			e++;
 		}
 	}
-	while (i++ < 1000)
+	
+
+	r++;
+	while (i++ < 50)
 		spread_water(stuffs);
+		
 	e = 0;
 	// if ((r++) % 4 == 0)
 
@@ -258,12 +378,36 @@ void	wave(t_stuffs *stuffs)
 }
 int	water_loop(void *stuffs)
 {
+	//opti
+	////////////////////////////
+	struct timeval time;
+	gettimeofday(&time, NULL);
+	long start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+
 	if (((t_stuffs *)stuffs)->scenario == WAVE)
 		wave(stuffs);
 	else if (((t_stuffs *)stuffs)->scenario == RAIN)
 		raining(stuffs);
 	else if (((t_stuffs *)stuffs)->scenario == RISING_WATER)
 		rising_water(stuffs);
+
+
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	long end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	
+
+	long spent = end - start;
+	printf("Loop took %ld ms\n", spent);
+	/////////////////////////////
+
+
+
 	return (0);
 }
 
