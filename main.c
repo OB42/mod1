@@ -280,7 +280,7 @@ void	rising_water(t_stuffs *stuffs)
 
 
 
-	redraw(stuffs);
+	redraw_water(stuffs);
 
 }
 
@@ -317,25 +317,15 @@ void	wave(t_stuffs *stuffs)
 
 	i = 0;
 	e = 0;
-	/*
-	if (!r)
-	{
-		while (e < ((stuffs->size_x) * stuffs->linelen))
-		{
-			w = 0;
-			while (w < ((stuffs->size_y) * stuffs->linelen))
-			{
-				int	k =  1;
-				//				if (stuffs->bigmap[e][w].elev >= k)
-				//				stuffs->bigmap[e][w].elev -= k;
-				w++;
-			}
-			e++;
-		}
-		r = 1;
-	}
-	//	if ((r++) % 2 == 0)
-	*/
+
+
+	//opti
+	////////////////////////////
+	struct timeval time;
+	gettimeofday(&time, NULL);
+	long start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
 	{
 		e = 0;
 		//stuffs->water->bigmap[(stuffs->size_x) * stuffs->linelen - 32 - 1][0].elev += 100;
@@ -356,25 +346,77 @@ void	wave(t_stuffs *stuffs)
 				//if (r % 5 == 0 && r <= 200)
 				//stuffs->water->bigmap[e][w].elev += 1;
 				if (r < 5 || (stuffs->bigmap[e][w].elev < (r % 100)))
-				stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+				{
+					stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+					stuffs->water_lvl = (r % 100);
+				}
 
 				w++;
 			}
 			e++;
 		}
 	}
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	long end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	
+
+	long spent = end - start;
+	printf("water propag took %ld ms\n", spent);
+	/////////////////////////////
+
+
+
+
+
+	
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
 
 	r++;
 	while (i++ < 50)
 		spread_water(stuffs);
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	
+
+	spent = end - start;
+	printf("water spread took %ld ms\n", spent);
+	/////////////////////////////
+
 		
 	e = 0;
 	// if ((r++) % 4 == 0)
 
 
 
-	redraw(stuffs);
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+	redraw_water(stuffs);
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	
+
+	spent = end - start;
+	printf("redraw took %ld ms\n", spent);
+	/////////////////////////////
+
+	
 }
 int	water_loop(void *stuffs)
 {
@@ -437,6 +479,7 @@ int		main(int argc, char **argv)
 	else
 		usage();
 	stuffs.water = &water;
+	stuffs.water_lvl = 0;
 	water.water = 0;
 	if (init(&stuffs, argv[1]))
 		return (1);

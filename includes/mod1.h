@@ -87,12 +87,14 @@ typedef struct	s_stuffs
 	int			**elevs;
 	int			size_y;
 	int			size_x;
+	int			water_lvl;
 	float		coef;
 	int			linelen;
 	t_img		img;
 	struct		s_stuffs	*water;
 }				t_stuffs;
 
+int     		get_pixel(int x, int y, t_stuffs *stuffs);
 void			malloc_bigmap(t_stuffs *s);
 void			fill_bigmap(t_stuffs *s, t_coords co, float whereami,t_p2d pt);
 void			f_fill_bigmap(t_stuffs *s, t_coords co, float whereami,t_p2d pt);
@@ -116,6 +118,7 @@ void			set_scale(t_stuffs *stuffs);
 void			set_dots(t_stuffs *stuffs);
 void			clear(t_stuffs *stuffs);
 void			redraw(t_stuffs *stu);
+void			redraw_water(t_stuffs *stu);
 void			free_stuffs(t_stuffs *stuffs);
 int				hook(int keycode, void *stuffs);
 int				exit_msg(int ret_code);
@@ -131,4 +134,5 @@ void			special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co);
 void			special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co);
 t_p2d			gen_point(t_p2d p1, t_p2d p2, float whereami);
 void			set_water(t_stuffs *stuffs);
+void    		connect_water_dots(t_stuffs *stuffs);
 #endif

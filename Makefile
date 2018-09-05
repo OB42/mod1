@@ -33,7 +33,8 @@ file_helper.c
 
 POINTS = set_dots.c \
 gen_point.c \
-connect_dots.c
+connect_dots.c\
+connect_water_dots.c\
 
 C_FILES = $(addprefix utils/, $(UTILS)) \
 $(addprefix file/, $(FILE)) \

@@ -14,11 +14,174 @@
 
 void	redraw(t_stuffs *stu)
 {
+	//opti
+	////////////////////////////
+	struct timeval time;
+	gettimeofday(&time, NULL);
+	long start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
 	clear(stu);
+
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	long end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	long spent = end - start;
+	printf("\t clear took %ld ms\n", spent);
+	/////////////////////////////
+
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+
 	set_dots(stu);
+
+
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	spent = end - start;
+	printf("\t set_dots took %ld ms\n", spent);
+	/////////////////////////////
+
+
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+
 	connect_dots(stu);
+
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	spent = end - start;
+	printf("\t connect_dots took %ld ms\n", spent);
+	/////////////////////////////
+
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+
+
+
 	mlx_put_image_to_window(stu->co, stu->win, stu->img.ptr, 0, 0);
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	spent = end - start;
+	printf("\t img to win took %ld ms\n", spent);
+	/////////////////////////////
+
+
 }
+
+
+void	redraw_water(t_stuffs *stu)
+{
+	//opti
+	////////////////////////////
+	struct timeval time;
+	gettimeofday(&time, NULL);
+	long start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+	//clear(stu);
+
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	long end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	long spent = end - start;
+	printf("\t clear took %ld ms\n", spent);
+	/////////////////////////////
+
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+
+	set_dots(stu);
+
+
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	spent = end - start;
+	printf("\t set_dots took %ld ms\n", spent);
+	/////////////////////////////
+
+
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+
+	connect_water_dots(stu);
+
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	spent = end - start;
+	printf("\t connect_dots took %ld ms\n", spent);
+	/////////////////////////////
+
+	//opti
+	////////////////////////////
+	gettimeofday(&time, NULL);
+	start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	///////////////////////////
+
+
+
+
+
+	mlx_put_image_to_window(stu->co, stu->win, stu->img.ptr, 0, 0);
+
+	//opti
+	//////////////////////////////
+	gettimeofday(&time, NULL);
+	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	spent = end - start;
+	printf("\t img to win took %ld ms\n", spent);
+	/////////////////////////////
+
+
+}
+
+
 
 void	dirty_water_rising(t_stuffs *stuffs, int level)
 {
@@ -28,14 +191,14 @@ void	dirty_water_rising(t_stuffs *stuffs, int level)
 	e = 0;
 	while (e < ((stuffs->size_x) * stuffs->linelen))
 	{
-			w = 0;
-			while ((w < (stuffs->size_y) * stuffs->linelen))
-			{
-				stuffs->water->bigmap[e][w].elev += level;
-				stuffs->water->bigmap[e][w].y -= level * stuffs->coef;
-				w++;
-			}
-			e++;
+		w = 0;
+		while ((w < (stuffs->size_y) * stuffs->linelen))
+		{
+			stuffs->water->bigmap[e][w].elev += level;
+			stuffs->water->bigmap[e][w].y -= level * stuffs->coef;
+			w++;
+		}
+		e++;
 	}
 	e = 1;
 	while (e <= stuffs->size_x)
