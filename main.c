@@ -250,7 +250,7 @@ void	rising_water(t_stuffs *stuffs)
 			}
 
 			w = ((stuffs->size_y) * stuffs->linelen) - 90;
-			while (w > 0 && w > (((stuffs->size_y) * stuffs->linelen) - 5 * r) ||  stuffs->water->bigmap[e][w].elev > 0.1)
+			while ((w > 0 && w > (((stuffs->size_y) * stuffs->linelen) - 5 * r)) ||  stuffs->water->bigmap[e][w].elev > 0.1)
 			{
 
 				/*
@@ -356,20 +356,20 @@ float    highest_point(t_stuffs *stuffs, t_p2d coords)
 
 
 
-float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
+float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, float water_lvl)
 {
 	int from;
 	int to;
 	int other;
 	int i;
-	int cpt;
+	float cpt;
 
 
 
 	//if ((int)highest_point(stuffs, coords) > water_lvl)
 	//	return 0.0;
 
-	cpt = 0;
+	cpt = 0.0;
 	if (dir == 'S')
 	{
 		from = (coords.x - 1) * (stuffs->linelen);
@@ -382,7 +382,9 @@ float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
 			while (i < to && other < (stuffs->size_x * stuffs->linelen))
 			{
 				if (stuffs->bigmap[i][other].elev < water_lvl)
-					cpt++;
+				{
+					cpt +=	water_lvl - stuffs->bigmap[i][other].elev;
+				}
 				i++;
 			}
 		}
@@ -401,7 +403,10 @@ float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
 			while (i < to && other < (stuffs->size_x * stuffs->linelen))
 			{
 				if (stuffs->bigmap[i][other].elev < water_lvl)
-					cpt++;
+				{
+					cpt +=	water_lvl - stuffs->bigmap[i][other].elev;
+				}
+
 				i++;
 			}
 		}
@@ -420,7 +425,9 @@ float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
 			while (i < to )
 			{
 				if (stuffs->bigmap[other][i].elev < water_lvl)
-					cpt++;
+				{
+					cpt +=	water_lvl - stuffs->bigmap[other][i].elev;
+				}
 				i++;
 			}
 		}
@@ -439,7 +446,9 @@ float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
 			while (i < to )
 			{
 				if (stuffs->bigmap[other][i].elev < water_lvl)
-					cpt++;
+				{
+					cpt +=	water_lvl - stuffs->bigmap[other][i].elev;
+				}
 				i++;
 			}
 		}
@@ -449,22 +458,22 @@ float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
 
 
 
-	printf("between coef : %f\n", ((float)cpt)/(stuffs->linelen) );
-	return ((float)cpt)/(stuffs->linelen);
+	//printf("between coef : %f\n", (cpt)/(stuffs->linelen) );
+	return ((float)cpt)/(((float)stuffs->linelen) * water_lvl);
 }
 
-float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
+float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, float water_lvl)
 {
 	//return (1.0);
 	t_p2d from;
-	int cpt;
+	float cpt;
 	int i;
 
 	//return 0.0;
 	//
 	
 
-	cpt = 0;
+	cpt = 0.0;
 	if (fromto.x == 'N')
 	{
 		if (fromto.y == 'E')		
@@ -479,8 +488,12 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			 from.y + i < (stuffs->size_y * stuffs->linelen)  
 			      )
 			{
-				if (stuffs->bigmap[from.x + i][from.y + i].elev < water_lvl)
-						cpt++;
+				if (stuffs->bigmap[from.x + i][from.y + i].elev < water_lvl )
+				{
+					cpt += water_lvl - stuffs->bigmap[from.x + i][from.y + i].elev;
+		
+				}
+						//cpt+=   water_lvl stuffs->bigmap[from.x + i][from.y + i].elev;
 				i++;
 			}
 		}
@@ -503,7 +516,10 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			      )
 			{
 				if (stuffs->bigmap[from.x - i][from.y + i].elev < water_lvl)
-						cpt++;
+						{
+					cpt += water_lvl - stuffs->bigmap[from.x - i][from.y + i].elev;
+				//	cpt++;
+				}
 				i++;
 			}
 		}
@@ -523,7 +539,10 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			      )
 			{
 				if (stuffs->bigmap[from.x - i][from.y - i].elev < water_lvl)
-						cpt++;
+						{
+					cpt += water_lvl - stuffs->bigmap[from.x - i][from.y - i].elev;
+				//	cpt++;
+				}
 				i++;
 			}
 		}
@@ -539,7 +558,10 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			      )
 			{
 				if (stuffs->bigmap[from.x - i][from.y + i].elev < water_lvl)
-						cpt++;
+						{
+					cpt += water_lvl - stuffs->bigmap[from.x - i][from.y + i].elev;
+				
+				}
 				i++;
 			}
 		}
@@ -561,7 +583,10 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			      )
 			{
 				if (stuffs->bigmap[from.x + i][from.y - i].elev < water_lvl)
-						cpt++;
+						{
+					cpt += water_lvl - stuffs->bigmap[from.x + i][from.y - i].elev;
+				
+				}
 				i++;
 			}
 		}
@@ -577,7 +602,10 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			      )
 			{
 				if (stuffs->bigmap[from.x + i][from.y + i].elev < water_lvl)
-						cpt++;
+						{
+					cpt += water_lvl - stuffs->bigmap[from.x + i][from.y + i].elev;
+				
+				}
 				i++;
 			}
 		}
@@ -598,7 +626,10 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			      )
 			{
 				if (stuffs->bigmap[from.x + i][from.y - i].elev < water_lvl)
-						cpt++;
+						{
+					cpt += water_lvl - stuffs->bigmap[from.x + i][from.y - i].elev;
+				
+				}
 				i++;
 			}
 		}
@@ -619,7 +650,10 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			      )
 			{
 				if (stuffs->bigmap[from.x - i][from.y - i].elev < water_lvl)
-						cpt++;
+						{
+					cpt += water_lvl - stuffs->bigmap[from.x - i][from.y - i].elev;
+				
+				}
 				i++;
 			}
 		}
@@ -627,11 +661,13 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 
 
 	printf("case [%d][%d] -> cpt = %d\n",coords.x, coords.y, cpt);
-	float ret = ( ((float)cpt)/ (stuffs->linelen / 2.0) - 0.0);
+	float ret =  ((float)cpt)/ (((float)stuffs->linelen / 2.0) * water_lvl) ;
 	if (ret < 0)
 		ret = 0.0;
+	/*
 	if (ret > 0.12)
 		ret = 1.0;
+		*/
 
 
 	printf("coef : %f\n",  ret  );
@@ -1028,8 +1064,9 @@ void	wave(t_stuffs *stuffs)
 	///////////////////////////
 
 	r++;
+	//wave
 	   while (i++ < 50)
-	   spread_water(stuffs);
+	   	spread_water(stuffs);
 
 	//opti
 	//////////////////////////////
@@ -1076,6 +1113,7 @@ int	water_loop(void *stuffs)
 	long start = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	///////////////////////////
 
+	//usleep(300000);
 
 
 	if (((t_stuffs *)stuffs)->scenario == WAVE)
