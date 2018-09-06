@@ -388,12 +388,74 @@ float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
 		}
 
 	}
+
+	if (dir == 'N')
+	{
+		from = (coords.x - 1) * (stuffs->linelen);
+		to = (coords.x ) * (stuffs->linelen);
+		other = (coords.y - 1) * (stuffs->linelen);
+
+		if (other < (stuffs->size_y * stuffs->linelen) && (to < (stuffs->size_x * stuffs->linelen)))
+		{
+			i = from;
+			while (i < to && other < (stuffs->size_x * stuffs->linelen))
+			{
+				if (stuffs->bigmap[i][other].elev < water_lvl)
+					cpt++;
+				i++;
+			}
+		}
+
+	}
+
+	if (dir == 'W')
+	{
+		from = (coords.y - 1) * (stuffs->linelen);
+		to = (coords.y ) * (stuffs->linelen);
+		other = (coords.x) * (stuffs->linelen);
+
+		if (other < (stuffs->size_x * stuffs->linelen) && (to < (stuffs->size_y * stuffs->linelen)))
+		{
+			i = from;
+			while (i < to )
+			{
+				if (stuffs->bigmap[other][i].elev < water_lvl)
+					cpt++;
+				i++;
+			}
+		}
+
+	}
+
+	if (dir == 'E')
+	{
+		from = (coords.y - 1) * (stuffs->linelen);
+		to = (coords.y ) * (stuffs->linelen);
+		other = (coords.x - 1) * (stuffs->linelen);
+
+		if (other < (stuffs->size_x * stuffs->linelen) && (to < (stuffs->size_y * stuffs->linelen)))
+		{
+			i = from;
+			while (i < to )
+			{
+				if (stuffs->bigmap[other][i].elev < water_lvl)
+					cpt++;
+				i++;
+			}
+		}
+
+	}
+
+
+
+
 	printf("between coef : %f\n", ((float)cpt)/(stuffs->linelen) );
 	return ((float)cpt)/(stuffs->linelen);
 }
 
 float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 {
+	//return (1.0);
 	t_p2d from;
 	int cpt;
 	int i;
@@ -449,8 +511,7 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 	if (fromto.x == 'W')
 	{
 
-	printf("TO SOUTHi FROM WEST");
-		if (fromto.y == 'S')		
+		if (fromto.y == 'S')	
 		{
 			from.x = (coords.x ) * stuffs->linelen;
 			from.y = (coords.y ) * stuffs->linelen;
@@ -466,6 +527,23 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 				i++;
 			}
 		}
+		if (fromto.y == 'N')		
+		{
+			from.x = (coords.x ) * stuffs->linelen;
+			from.y = (coords.y - 1) * stuffs->linelen;
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+			 from.x - i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.y + i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x - i][from.y + i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+
 	}
 	if (fromto.x == 'E')
 	{
@@ -487,12 +565,74 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 				i++;
 			}
 		}
+		if (fromto.y == 'N')		
+		{
+			from.x = (coords.x - 1) * stuffs->linelen;
+			from.y = (coords.y - 1) * stuffs->linelen;
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+			 from.x + i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.y + i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x + i][from.y + i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+
 	}
+
+	if (fromto.x == 'S')
+	{
+		if (fromto.y == 'E')		
+		{
+			from.x = (coords.x - 1) * stuffs->linelen;
+			from.y = (coords.y ) * stuffs->linelen;
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+			 from.x + i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.y - i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x + i][from.y - i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+		else if (fromto.y == 'W')
+		{
+			//return (0.0);
+			//
+
+			from.x = (coords.x) * stuffs->linelen;
+			from.y = (coords.y) * stuffs->linelen;
+
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+
+			 from.x - i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.y - i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x - i][from.y - i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+	}
+
 
 	printf("case [%d][%d] -> cpt = %d\n",coords.x, coords.y, cpt);
 	float ret = ( ((float)cpt)/ (stuffs->linelen / 2.0) - 0.0);
 	if (ret < 0)
 		ret = 0.0;
+	if (ret > 0.12)
+		ret = 1.0;
+
 
 	printf("coef : %f\n",  ret  );
 	return (ret);
@@ -523,8 +663,6 @@ float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 }
 
 
-
-
 void    wave_watermap(t_stuffs *stuffs)
 {
 	static char k = 0;
@@ -532,7 +670,7 @@ void    wave_watermap(t_stuffs *stuffs)
 	int w;
 	float oldelev;
 	float temp;
-	sleep(1);
+	//sleep(1);
 
 	//reset_xwatermap(stuffs);
 
@@ -541,39 +679,106 @@ void    wave_watermap(t_stuffs *stuffs)
 	{
 		while (e <= stuffs->size_x)
 		{
-			stuffs->watermap[e][1].N_elev =  10;
+			stuffs->watermap[e][1].N_elev =  0.1;
 			e++;
 		}
 		k = 1;
 	}
 	else
 	{
-		while (e < stuffs->size_x)
+		
+		while (e <= stuffs->size_x)
 		{
 
+			stuffs->watermap[e][1].N_elev +=  1;
 			w = 1;
 			while (w <= stuffs->size_y)
 			{
 				//if (stuffs->watermap[e][w].N_elev > 0)
 				{
-					stuffs->watermap[e][w].E_elev += 
-				stuffs->watermap[e][w].N_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'N', .y = 'E'}, stuffs->watermap[e][w].N_elev);
-					if ( stuffs->watermap[e][w].E_elev > stuffs->watermap[e][w].N_elev  )
-						stuffs->watermap[e][w].E_elev = stuffs->watermap[e][w].N_elev;  
-
+					if (stuffs->watermap[e][w].W_elev < stuffs->watermap[e][w].N_elev)
+					{
 					stuffs->watermap[e][w].W_elev += 
-				stuffs->watermap[e][w].N_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'N', .y = 'W'}, stuffs->watermap[e][w].N_elev);
-					if ( stuffs->watermap[e][w].W_elev > stuffs->watermap[e][w].N_elev  )
-						stuffs->watermap[e][w].W_elev = stuffs->watermap[e][w].N_elev;  
+				(stuffs->watermap[e][w].N_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'N', .y = 'W'}, stuffs->watermap[e][w].N_elev));
+					if ( stuffs->watermap[e][w].W_elev > stuffs->watermap[e][w].N_elev )
+						stuffs->watermap[e][w].W_elev = stuffs->watermap[e][w].N_elev; 
+					}
 
+					if (stuffs->watermap[e][w].W_elev < stuffs->watermap[e][w].S_elev)
+					{
+					stuffs->watermap[e][w].W_elev += 
+				(stuffs->watermap[e][w].S_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'S', .y = 'W'}, stuffs->watermap[e][w].S_elev));
+					if ( stuffs->watermap[e][w].W_elev > stuffs->watermap[e][w].S_elev )
+						stuffs->watermap[e][w].W_elev = stuffs->watermap[e][w].S_elev; 
+					}
+
+
+
+				//+ (stuffs->watermap[e][w].S_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'S', .y = 'W'}, stuffs->watermap[e][w].S_elev));
+				//	if ( stuffs->watermap[e][w].W_elev > stuffs->watermap[e][w].N_elev || stuffs->watermap[e][w].W_elev > stuffs->watermap[e][w].S_elev )
+				//		stuffs->watermap[e][w].W_elev = fmax(stuffs->watermap[e][w].N_elev, stuffs->watermap[e][w].S_elev);  
+					if (stuffs->watermap[e][w].S_elev < stuffs->watermap[e][w].E_elev)
+					{
 					stuffs->watermap[e][w].S_elev +=  
-				(stuffs->watermap[e][w].E_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'E', .y = 'S'}, stuffs->watermap[e][w].E_elev))
-				+( stuffs->watermap[e][w].W_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'W', .y = 'S'}, stuffs->watermap[e][w].W_elev)) ;
-					if ( stuffs->watermap[e][w].S_elev > stuffs->watermap[e][w].E_elev  )
-						stuffs->watermap[e][w].S_elev = fmax(stuffs->watermap[e][w].E_elev, stuffs->watermap[e][w].W_elev);  
+				(stuffs->watermap[e][w].E_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'E', .y = 'S'}, stuffs->watermap[e][w].E_elev));
+				if ( (stuffs->watermap[e][w].S_elev > stuffs->watermap[e][w].E_elev) )
+						stuffs->watermap[e][w].S_elev = stuffs->watermap[e][w].E_elev; 
+					}
 
+					if (stuffs->watermap[e][w].S_elev < stuffs->watermap[e][w].W_elev)
+					{
+					stuffs->watermap[e][w].S_elev +=  
+				(stuffs->watermap[e][w].W_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'W', .y = 'S'}, stuffs->watermap[e][w].W_elev));
+				if ( (stuffs->watermap[e][w].S_elev > stuffs->watermap[e][w].W_elev) )
+						stuffs->watermap[e][w].S_elev = stuffs->watermap[e][w].W_elev; 
+					}
+
+				//+( stuffs->watermap[e][w].W_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'W', .y = 'S'}, stuffs->watermap[e][w].W_elev)) ;
+				//if ( (stuffs->watermap[e][w].S_elev > stuffs->watermap[e][w].E_elev) || (stuffs->watermap[e][w].S_elev > stuffs->watermap[e][w].W_elev)  )
+				//		stuffs->watermap[e][w].S_elev = fmax(stuffs->watermap[e][w].E_elev, stuffs->watermap[e][w].W_elev);  
+				if (stuffs->watermap[e][w].E_elev < stuffs->watermap[e][w].N_elev)
+				{
+					stuffs->watermap[e][w].E_elev += 
+				(stuffs->watermap[e][w].N_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'N', .y = 'E'}, stuffs->watermap[e][w].N_elev));
+				if ( stuffs->watermap[e][w].E_elev > stuffs->watermap[e][w].N_elev )
+						stuffs->watermap[e][w].E_elev = stuffs->watermap[e][w].N_elev;
 
 				}
+
+				if (stuffs->watermap[e][w].E_elev < stuffs->watermap[e][w].S_elev)
+				{
+					stuffs->watermap[e][w].E_elev += 
+				(stuffs->watermap[e][w].S_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'S', .y = 'E'}, stuffs->watermap[e][w].S_elev));
+				if ( stuffs->watermap[e][w].E_elev > stuffs->watermap[e][w].S_elev )
+						stuffs->watermap[e][w].E_elev = stuffs->watermap[e][w].S_elev;
+
+				}
+
+				//+(stuffs->watermap[e][w].S_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'S', .y = 'E'}, stuffs->watermap[e][w].S_elev)) ;
+				//if ( stuffs->watermap[e][w].E_elev > stuffs->watermap[e][w].N_elev  || stuffs->watermap[e][w].E_elev > stuffs->watermap[e][w].S_elev)
+				//		stuffs->watermap[e][w].E_elev = fmax(stuffs->watermap[e][w].N_elev, stuffs->watermap[e][w].S_elev);  
+
+				if (stuffs->watermap[e][w].N_elev < stuffs->watermap[e][w].E_elev)
+				{
+					stuffs->watermap[e][w].N_elev +=  
+				(stuffs->watermap[e][w].E_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'E', .y = 'N'}, stuffs->watermap[e][w].E_elev));
+				if ( (stuffs->watermap[e][w].N_elev > stuffs->watermap[e][w].E_elev) )
+						stuffs->watermap[e][w].N_elev = stuffs->watermap[e][w].E_elev;  
+				}
+				if (stuffs->watermap[e][w].N_elev < stuffs->watermap[e][w].W_elev)
+				{
+					stuffs->watermap[e][w].N_elev +=  
+				(stuffs->watermap[e][w].W_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'W', .y = 'N'}, stuffs->watermap[e][w].W_elev));
+				if ( (stuffs->watermap[e][w].N_elev > stuffs->watermap[e][w].W_elev) )
+						stuffs->watermap[e][w].N_elev = stuffs->watermap[e][w].W_elev;  
+				}
+
+				//+( stuffs->watermap[e][w].W_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'W', .y = 'N'}, stuffs->watermap[e][w].W_elev)) ;
+				//if ( (stuffs->watermap[e][w].N_elev > stuffs->watermap[e][w].E_elev) || (stuffs->watermap[e][w].N_elev > stuffs->watermap[e][w].W_elev)  )
+				//		stuffs->watermap[e][w].N_elev = fmax(stuffs->watermap[e][w].E_elev, stuffs->watermap[e][w].W_elev);  
+				}
+
+
 
 
 					if ( w + 1 <= stuffs->size_y)
@@ -582,15 +787,74 @@ void    wave_watermap(t_stuffs *stuffs)
 						//		stuffs->watermap[e][w].elev )
 
 						{
+							if ( stuffs->watermap[e][w + 1].N_elev < stuffs->watermap[e][w].S_elev)
+							{
 							stuffs->watermap[e][w + 1].N_elev += 
 								stuffs->watermap[e][w].S_elev * 
 								coef_between(stuffs, (t_p2d){.x = e, .y = w},'S', stuffs->watermap[e][w].S_elev);
 							if ( stuffs->watermap[e][w + 1].N_elev > stuffs->watermap[e][w].S_elev )
 								stuffs->watermap[e][w + 1].N_elev = stuffs->watermap[e][w].S_elev;
+							}
 							//stuffs->watermap[e][w + 1].x = 1;
 						}
 
 					}
+
+					if ( w - 1 > 0)
+					{
+						//if (stuffs->bigmap[((e) * stuffs->linelen) - 50][ ((w) * stuffs->linelen) - 50].elev <
+						//		stuffs->watermap[e][w].elev )
+
+						{
+							if ( stuffs->watermap[e][w - 1].S_elev < stuffs->watermap[e][w].N_elev)
+							{
+							stuffs->watermap[e][w - 1].S_elev += 
+								stuffs->watermap[e][w].N_elev * 
+								coef_between(stuffs, (t_p2d){.x = e, .y = w},'N', stuffs->watermap[e][w].N_elev);
+							if ( stuffs->watermap[e][w - 1].S_elev > stuffs->watermap[e][w].N_elev )
+								stuffs->watermap[e][w - 1].S_elev = stuffs->watermap[e][w].N_elev;
+							}
+							//stuffs->watermap[e][w + 1].x = 1;
+						}
+
+					}
+
+					if ( e + 1 < stuffs->size_x)
+					{
+
+						//if (stuffs->bigmap[((e) * stuffs->linelen) - 50][ ((w) * stuffs->linelen) - 50].elev <
+						//		stuffs->watermap[e][w].elev )
+
+						{
+							if (stuffs->watermap[e + 1][w].E_elev < stuffs->watermap[e][w].W_elev )
+							{
+							stuffs->watermap[e + 1][w].E_elev += stuffs->watermap[e][w].W_elev 
+								* coef_between(stuffs, (t_p2d){.x = e, .y = w},'W', stuffs->watermap[e][w].W_elev);
+							if ( stuffs->watermap[e + 1][w].E_elev > stuffs->watermap[e][w].W_elev )
+								stuffs->watermap[e + 1][w].E_elev = stuffs->watermap[e][w].W_elev;
+							}
+							//stuffs->watermap[e][w + 1].x = 1;
+						}
+
+					}
+					if ( e - 1 > 0 && e != stuffs->size_x)
+					{
+
+						//if (stuffs->bigmap[((e) * stuffs->linelen) - 50][ ((w) * stuffs->linelen) - 50].elev <
+						//		stuffs->watermap[e][w].elev )
+
+						if ( stuffs->watermap[e - 1][w].W_elev <  stuffs->watermap[e][w].E_elev )
+						{
+							stuffs->watermap[e - 1][w].W_elev += stuffs->watermap[e][w].E_elev 
+								* coef_between(stuffs, (t_p2d){.x = e, .y = w},'E', stuffs->watermap[e][w].E_elev);
+							if ( stuffs->watermap[e - 1][w].W_elev > stuffs->watermap[e][w].E_elev )
+								stuffs->watermap[e - 1][w].W_elev = stuffs->watermap[e][w].E_elev;
+							//stuffs->watermap[e][w + 1].x = 1;
+						}
+
+					}
+
+
 				w++;
 			}
 			e++;

@@ -71,8 +71,9 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 
 				//disp lignes
-				if ( (e % 100 == 0) || (w % 100 == 0))
-					color = 0xFF0000;
+				//
+				//if ( (e % 100 == 0) || (w % 100 == 0))
+				//	color = 0xFF0000;
 				/////////////////////////////////
 
 
@@ -104,7 +105,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 					cheat = temp;
 				//	printf("%i\n", stuffs->water->bigmap[e][w].elev);
 					cheat.y += temp.elev + 16;
-					line(temp, cheat, stuffs, 0x8000ccff );
+					line(temp, cheat, stuffs, 0x00ccff );
 				}
 				/*
 				else if (e < (stuffs->size_x * stuffs->linelen) && w < (stuffs->size_y * stuffs->linelen))
