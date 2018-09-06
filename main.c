@@ -1109,6 +1109,7 @@ void	usage()
 	ft_printf("0: Wave\n");
 	ft_printf("1: Rain\n");
 	ft_printf("2: Rising water\n");
+	ft_printf("3: No water\n");
 	exit(2);
 }
 
@@ -1125,6 +1126,8 @@ int		main(int argc, char **argv)
 		stuffs.scenario = RAIN;
 	else if (argv[2][0] == '2')
 		stuffs.scenario = RISING_WATER;
+	else if (argv[2][0] == '3')
+		stuffs.scenario = -1;
 	else
 		usage();
 	stuffs.water = &water;
