@@ -40,6 +40,7 @@ int	init(t_stuffs *stuffs, char *path)
 	set_props(stuffs);
 	set_scale(stuffs);
 	malloc_map(stuffs);
+	malloc_watermap(stuffs);
 	if (stuffs->water)
 	{
 		stuffs->co = mlx_init();
@@ -198,21 +199,21 @@ void	rising_water(t_stuffs *stuffs)
 	i = 0;
 	e = 0;
 	/*
-	if (!r)
-	{
-		while (e < ((stuffs->size_x) * stuffs->linelen))
-		{
-			w = 0;
-			while (w < ((stuffs->size_y) * stuffs->linelen))
-			{
-				int	k =  1;
-				//				if (stuffs->bigmap[e][w].elev >= k)
-				//				stuffs->bigmap[e][w].elev -= k;
-				w++;
-			}
-			e++;
-		}
-		r = 1;
+	   if (!r)
+	   {
+	   while (e < ((stuffs->size_x) * stuffs->linelen))
+	   {
+	   w = 0;
+	   while (w < ((stuffs->size_y) * stuffs->linelen))
+	   {
+	   int	k =  1;
+	//				if (stuffs->bigmap[e][w].elev >= k)
+	//				stuffs->bigmap[e][w].elev -= k;
+	w++;
+	}
+	e++;
+	}
+	r = 1;
 	}
 	//	if ((r++) % 2 == 0)
 	*/
@@ -230,17 +231,17 @@ void	rising_water(t_stuffs *stuffs)
 			{
 
 				/*
-				int sr = 0;
-				if (r %4 == 0)
-					sr = 5;
-				*/
+				   int sr = 0;
+				   if (r %4 == 0)
+				   sr = 5;
+				   */
 
 				//if (r % 5 == 0 && r <= 200)
 				//stuffs->water->bigmap[e][w].elev += 1;
 				if ((r < 5) || (stuffs->bigmap[e][w].elev < (r % 100)))
 				{
 					if (w < (5 * r) || e < 90 || e > ((stuffs->size_x) * stuffs->linelen) - 90 )
-					stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+						stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
 
 				}
 
@@ -253,15 +254,15 @@ void	rising_water(t_stuffs *stuffs)
 			{
 
 				/*
-				int sr = 0;
-				if (r %4 == 0)
-					sr = 5;
-				*/
+				   int sr = 0;
+				   if (r %4 == 0)
+				   sr = 5;
+				   */
 
 				//if (r % 5 == 0 && r <= 200)
 				//stuffs->water->bigmap[e][w].elev += 1;
 				if (r < 5 || (stuffs->bigmap[e][w].elev < (r % 100)))
-				stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+					stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
 
 				w--;
 			}
@@ -269,12 +270,12 @@ void	rising_water(t_stuffs *stuffs)
 			e++;
 		}
 	}
-	
+
 
 	r++;
 	while (i++ < 50)
 		spread_water(stuffs);
-		
+
 	e = 0;
 	// if ((r++) % 4 == 0)
 
@@ -302,10 +303,315 @@ char water_nearby(t_stuffs *stuffs, int e, int w, int waterlevel)
 				return (1);
 			j++;
 		}
-			i++;
+		i++;
 	}
 	return (0);
 
+}
+
+
+void    reset_xwatermap(t_stuffs *stuffs)
+{
+	int e;
+	int w;
+
+	e = 1;
+	while (e <= stuffs->size_x)
+	{
+		w = 1;
+		while (w <= stuffs->size_y)
+		{
+			stuffs->watermap[e][w].x = 0;
+			w++;
+		}
+		e++;
+	}
+}
+
+
+float    highest_point(t_stuffs *stuffs, t_p2d coords)
+{
+	int e;
+	float max;
+	int w;
+
+
+	max = 0.0;
+	e = (coords.x - 1) * 100;
+	while (e < (coords.x ) * 100 && e < (stuffs->size_x * stuffs->linelen) )
+	{
+		w = (coords.y - 1) * 100;
+		while (w < (coords.y ) * 100 && w < (stuffs->size_y * stuffs->linelen))
+		{
+			if (stuffs->bigmap[e][w].elev > max)
+			{
+				max = stuffs->bigmap[e][w].elev; 
+			}
+			w++;
+		}
+		e++;
+	}
+	return max;
+}
+
+
+
+float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl)
+{
+	int from;
+	int to;
+	int other;
+	int i;
+	int cpt;
+
+
+
+	//if ((int)highest_point(stuffs, coords) > water_lvl)
+	//	return 0.0;
+
+	cpt = 0;
+	if (dir == 'S')
+	{
+		from = (coords.x - 1) * (stuffs->linelen);
+		to = (coords.x ) * (stuffs->linelen);
+		other = (coords.y) * (stuffs->linelen);
+
+		if (other < (stuffs->size_y * stuffs->linelen) && (to < (stuffs->size_x * stuffs->linelen)))
+		{
+			i = from;
+			while (i < to && other < (stuffs->size_x * stuffs->linelen))
+			{
+				if (stuffs->bigmap[i][other].elev < water_lvl)
+					cpt++;
+				i++;
+			}
+		}
+
+	}
+	printf("between coef : %f\n", ((float)cpt)/(stuffs->linelen) );
+	return ((float)cpt)/(stuffs->linelen);
+}
+
+float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
+{
+	t_p2d from;
+	int cpt;
+	int i;
+
+	//return 0.0;
+	//
+	
+
+	cpt = 0;
+	if (fromto.x == 'N')
+	{
+		if (fromto.y == 'E')		
+		{
+		printf("TO EAST FROM NORTH");
+			from.x = (coords.x - 1) * stuffs->linelen;
+			from.y = (coords.y - 1) * stuffs->linelen;
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+			 from.x + i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.y + i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x + i][from.y + i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+		else if (fromto.y == 'W')
+		{
+			//return (0.0);
+			//
+		printf("TO WEST FROM NORTH");
+
+			from.x = (coords.x) * stuffs->linelen;
+			from.y = (coords.y - 1) * stuffs->linelen;
+
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+
+			 from.x - i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.x - i > 0  &&  
+			 from.y + i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x - i][from.y + i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+	}
+	if (fromto.x == 'W')
+	{
+
+	printf("TO SOUTHi FROM WEST");
+		if (fromto.y == 'S')		
+		{
+			from.x = (coords.x ) * stuffs->linelen;
+			from.y = (coords.y ) * stuffs->linelen;
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+			 from.x - i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.y - i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x - i][from.y - i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+	}
+	if (fromto.x == 'E')
+	{
+
+	printf("TO SOUTH FROM EAST");
+		if (fromto.y == 'S')		
+		{
+			from.x = (coords.x - 1) * stuffs->linelen;
+			from.y = (coords.y) * stuffs->linelen;
+
+			i = 0;
+			while ( (i < (stuffs->linelen / 2)) &&
+			 from.x + i < (stuffs->size_x * stuffs->linelen)  &&  
+			 from.y - i < (stuffs->size_y * stuffs->linelen)  
+			      )
+			{
+				if (stuffs->bigmap[from.x + i][from.y - i].elev < water_lvl)
+						cpt++;
+				i++;
+			}
+		}
+	}
+
+	printf("case [%d][%d] -> cpt = %d\n",coords.x, coords.y, cpt);
+	float ret = ( ((float)cpt)/ (stuffs->linelen / 2.0) - 0.0);
+	if (ret < 0)
+		ret = 0.0;
+
+	printf("coef : %f\n",  ret  );
+	return (ret);
+
+/*
+	cpt = 0;
+	if (dir == 'S')
+	{
+		from = (coords.x - 1) * 100;
+		to = (coords.x ) * 100;
+		other = (coords.y) * 100;
+
+		if (other < (stuffs->size_y * stuffs->linelen) && (to < (stuffs->size_x * stuffs->linelen)))
+		{
+			i = from;
+			while (i < to && other < (stuffs->size_x * stuffs->linelen))
+			{
+				if (stuffs->bigmap[i][other].elev < water_lvl)
+					cpt++;
+				i++;
+			}
+		}
+
+	}
+	printf("coef : %f\n", ((float)cpt)/100.0 );
+	return ((float)cpt)/100.0;
+*/
+}
+
+
+
+
+void    wave_watermap(t_stuffs *stuffs)
+{
+	static char k = 0;
+	int e;
+	int w;
+	float oldelev;
+	float temp;
+	sleep(1);
+
+	//reset_xwatermap(stuffs);
+
+	e = 1;
+	if (!k)
+	{
+		while (e <= stuffs->size_x)
+		{
+			stuffs->watermap[e][1].N_elev =  10;
+			e++;
+		}
+		k = 1;
+	}
+	else
+	{
+		while (e < stuffs->size_x)
+		{
+
+			w = 1;
+			while (w <= stuffs->size_y)
+			{
+				//if (stuffs->watermap[e][w].N_elev > 0)
+				{
+					stuffs->watermap[e][w].E_elev += 
+				stuffs->watermap[e][w].N_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'N', .y = 'E'}, stuffs->watermap[e][w].N_elev);
+					if ( stuffs->watermap[e][w].E_elev > stuffs->watermap[e][w].N_elev  )
+						stuffs->watermap[e][w].E_elev = stuffs->watermap[e][w].N_elev;  
+
+					stuffs->watermap[e][w].W_elev += 
+				stuffs->watermap[e][w].N_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'N', .y = 'W'}, stuffs->watermap[e][w].N_elev);
+					if ( stuffs->watermap[e][w].W_elev > stuffs->watermap[e][w].N_elev  )
+						stuffs->watermap[e][w].W_elev = stuffs->watermap[e][w].N_elev;  
+
+					stuffs->watermap[e][w].S_elev +=  
+				(stuffs->watermap[e][w].E_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'E', .y = 'S'}, stuffs->watermap[e][w].E_elev))
+				+( stuffs->watermap[e][w].W_elev * coef_inside(stuffs, (t_p2d){.x = e, .y = w}, (t_p2d){.x = 'W', .y = 'S'}, stuffs->watermap[e][w].W_elev)) ;
+					if ( stuffs->watermap[e][w].S_elev > stuffs->watermap[e][w].E_elev  )
+						stuffs->watermap[e][w].S_elev = fmax(stuffs->watermap[e][w].E_elev, stuffs->watermap[e][w].W_elev);  
+
+
+				}
+
+
+					if ( w + 1 <= stuffs->size_y)
+					{
+						//if (stuffs->bigmap[((e) * stuffs->linelen) - 50][ ((w) * stuffs->linelen) - 50].elev <
+						//		stuffs->watermap[e][w].elev )
+
+						{
+							stuffs->watermap[e][w + 1].N_elev += 
+								stuffs->watermap[e][w].S_elev * 
+								coef_between(stuffs, (t_p2d){.x = e, .y = w},'S', stuffs->watermap[e][w].S_elev);
+							if ( stuffs->watermap[e][w + 1].N_elev > stuffs->watermap[e][w].S_elev )
+								stuffs->watermap[e][w + 1].N_elev = stuffs->watermap[e][w].S_elev;
+							//stuffs->watermap[e][w + 1].x = 1;
+						}
+
+					}
+				w++;
+			}
+			e++;
+		}
+
+	}
+}
+
+
+char point_inside_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c)
+{
+	int as_x = s.x - a.x;
+	int as_y = s.y - a.y;
+
+	char s_ab = (b.x-a.x)*as_y-(b.y-a.y)*as_x > 0;
+
+	if((c.x-a.x)*as_y-(c.y-a.y)*as_x > 0 == s_ab) return 0;
+
+	if((c.x-b.x)*(s.y-b.y)-(c.y-b.y)*(s.x-b.x) > 0 != s_ab) return 0;
+
+	return 1;
 }
 
 void	wave(t_stuffs *stuffs)
@@ -331,37 +637,116 @@ void	wave(t_stuffs *stuffs)
 		//stuffs->water->bigmap[(stuffs->size_x) * stuffs->linelen - 32 - 1][0].elev += 100;
 		//	 	stuffs->water->bigmap[0][0].elev += 10;
 
+		/*
+		   while (e < ((stuffs->size_x) * stuffs->linelen))
+		   {
+		   w = 0;
+		   while (w < ((stuffs->size_y) * stuffs->linelen) && w < (5 * r) ||  stuffs->water->bigmap[e][w].elev > 0.1)
+		   {
+
+
+		//if (r % 5 == 0 && r <= 200)
+		//stuffs->water->bigmap[e][w].elev += 1;
+		if (r < 5 || (stuffs->bigmap[e][w].elev < (r % 100)))
+		{
+		stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+		stuffs->water_lvl = (r % 100);
+		}
+
+		w++;
+		}
+		e++;
+		}
+		*/
+
+
+		//stuffs->watermap[1][2].elev = 10;
+
+		wave_watermap(stuffs);
+
 		while (e < ((stuffs->size_x) * stuffs->linelen))
 		{
 			w = 0;
-			while (w < ((stuffs->size_y) * stuffs->linelen) && w < (5 * r) ||  stuffs->water->bigmap[e][w].elev > 0.1)
+			while (w < ((stuffs->size_y) * stuffs->linelen))
 			{
 
-				/*
-				int sr = 0;
-				if (r %4 == 0)
-					sr = 5;
-				*/
+				//NORTH TRIANGLE
+				if (point_inside_triangle( (t_p2d){.x = e, .y = w}, 
+							(t_p2d){.x = (e - (e % stuffs->linelen)), .y = (w - (w % stuffs->linelen))},
+							(t_p2d){.x = (e + (stuffs->linelen - (e % stuffs->linelen))), .y = (w - (w % stuffs->linelen))},
+							(t_p2d){.x = (e - (e % stuffs->linelen) +  (stuffs->linelen / 2)), .y = (w - (w % stuffs->linelen) +  (stuffs->linelen / 2))}
+							))
+				{
 
+					stuffs->water->bigmap[e][w].elev = stuffs->watermap[(e/stuffs->linelen) + 1][(w/stuffs->linelen) + 1].N_elev  - stuffs->bigmap[e][w].elev;
+				}
+
+				//SOUTH TRIANGLE
+				else if (point_inside_triangle( (t_p2d){.x = e, .y = w}, 
+							(t_p2d){.x = (e - (e % stuffs->linelen)), .y = (w + (stuffs->linelen - (w % stuffs->linelen)))},
+							(t_p2d){.x = (e + (stuffs->linelen - (e % stuffs->linelen))), .y = (w + (stuffs->linelen -(w % stuffs->linelen)))},
+							(t_p2d){.x = (e - (e % stuffs->linelen) +  (stuffs->linelen / 2)), .y = (w - (w % stuffs->linelen) +  (stuffs->linelen / 2))}
+							))
+				{
+
+					stuffs->water->bigmap[e][w].elev = stuffs->watermap[(e/stuffs->linelen) + 1][(w/stuffs->linelen) + 1].S_elev  - stuffs->bigmap[e][w].elev;
+				}
+
+				//EAST TRIANGLE
+				else if (point_inside_triangle( (t_p2d){.x = e, .y = w}, 
+							(t_p2d){.x = (e - (e % stuffs->linelen)), .y = (w - (w % stuffs->linelen))},
+							(t_p2d){.x = (e - (e % stuffs->linelen)), .y = (w + (stuffs->linelen - (w % stuffs->linelen)))},
+							(t_p2d){.x = (e - (e % stuffs->linelen) +  (stuffs->linelen / 2)), .y = (w - (w % stuffs->linelen) +  (stuffs->linelen / 2))}
+							))
+				{
+
+					stuffs->water->bigmap[e][w].elev = stuffs->watermap[(e/stuffs->linelen) + 1][(w/stuffs->linelen) + 1].E_elev  - stuffs->bigmap[e][w].elev;
+				}
+
+				//WEST TRIANGLE
+				else if (point_inside_triangle( (t_p2d){.x = e, .y = w}, 
+							(t_p2d){.x = (e + (stuffs->linelen - (e % stuffs->linelen))), .y = (w - (w % stuffs->linelen))},
+							(t_p2d){.x = (e + (stuffs->linelen - (e % stuffs->linelen))), .y = (w + (stuffs->linelen -(w % stuffs->linelen)))},
+							(t_p2d){.x = (e - (e % stuffs->linelen) +  (stuffs->linelen / 2)), .y = (w - (w % stuffs->linelen) +  (stuffs->linelen / 2))}
+							))
+				{
+
+					stuffs->water->bigmap[e][w].elev = stuffs->watermap[(e/stuffs->linelen) + 1][(w/stuffs->linelen) + 1].W_elev  - stuffs->bigmap[e][w].elev;
+				}
+
+
+
+				/*
+				   if ((stuffs->bigmap[e][w].elev < stuffs->watermap[(e/stuffs->linelen) + 1][(w/stuffs->linelen) + 1].elev))
+				   {
+				   stuffs->water->bigmap[e][w].elev = stuffs->watermap[(e/stuffs->linelen) + 1][(w/stuffs->linelen) + 1].elev - stuffs->bigmap[e][w].elev;
+				   }
+
+
+*/
+
+				/*
 				//if (r % 5 == 0 && r <= 200)
 				//stuffs->water->bigmap[e][w].elev += 1;
 				if (r < 5 || (stuffs->bigmap[e][w].elev < (r % 100)))
 				{
-					stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
-					stuffs->water_lvl = (r % 100);
+				stuffs->water->bigmap[e][w].elev = (r % 100) -  stuffs->bigmap[e][w].elev;//(r % 100) ;
+				stuffs->water_lvl = (r % 100);
 				}
+				*/
 
 				w++;
 			}
 			e++;
 		}
+
 	}
 
 	//opti
 	//////////////////////////////
 	gettimeofday(&time, NULL);
 	long end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	
+
 
 	long spent = end - start;
 	printf("water propag took %ld ms\n", spent);
@@ -371,7 +756,7 @@ void	wave(t_stuffs *stuffs)
 
 
 
-	
+
 	//opti
 	////////////////////////////
 	gettimeofday(&time, NULL);
@@ -379,20 +764,20 @@ void	wave(t_stuffs *stuffs)
 	///////////////////////////
 
 	r++;
-	while (i++ < 50)
-		spread_water(stuffs);
+	   while (i++ < 50)
+	   spread_water(stuffs);
 
 	//opti
 	//////////////////////////////
 	gettimeofday(&time, NULL);
 	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	
+
 
 	spent = end - start;
 	printf("water spread took %ld ms\n", spent);
 	/////////////////////////////
 
-		
+
 	e = 0;
 	// if ((r++) % 4 == 0)
 
@@ -410,13 +795,13 @@ void	wave(t_stuffs *stuffs)
 	//////////////////////////////
 	gettimeofday(&time, NULL);
 	end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	
+
 
 	spent = end - start;
 	printf("redraw took %ld ms\n", spent);
 	/////////////////////////////
 
-	
+
 }
 int	water_loop(void *stuffs)
 {
@@ -442,7 +827,7 @@ int	water_loop(void *stuffs)
 	//////////////////////////////
 	gettimeofday(&time, NULL);
 	long end = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	
+
 
 	long spent = end - start;
 	printf("Loop took %ld ms\n", spent);

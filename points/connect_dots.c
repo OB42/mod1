@@ -68,6 +68,14 @@ void	connect_fne_dots(t_stuffs *stuffs)
 			{
 				water = (stuffs->water && stuffs->water->bigmap && stuffs->water->bigmap[e][w].elev > 0.1);
 				color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
+
+
+				//disp lignes
+				if ( (e % 100 == 0) || (w % 100 == 0))
+					color = 0xFF0000;
+				/////////////////////////////////
+
+
 				t_p2d cheat;
 				cheat = stuffs->bigmap[e][w];
 				if ((e + 1 < stuffs->size_x * stuffs->linelen && !(stuffs->bigmap[e + 1][w].x)) ||

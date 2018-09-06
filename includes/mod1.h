@@ -56,6 +56,18 @@ typedef struct	s_p2d
 	float			elev;
 }				t_p2d;
 
+typedef struct	s_4triangles
+{
+	int			x;
+	int			y;
+	float			N_elev;
+	float			E_elev;
+	float			S_elev;
+	float			W_elev;
+}				t_4triangles;
+
+
+
 typedef struct	s_f2d
 {
 	float		x;
@@ -83,6 +95,7 @@ typedef struct	s_stuffs
 	void		*co;
 	void		*win;
 	t_p2d		**map;
+	t_4triangles		**watermap;
 	t_p2d		**bigmap;
 	int			**elevs;
 	int			size_y;
@@ -112,6 +125,7 @@ void			line_col(t_p2d p1, t_p2d p2, t_stuffs *stuffs);
 t_p2d			f2d_to_p2d(t_f2d floatpoint);
 void			set_props(t_stuffs *stu);
 void			malloc_map(t_stuffs *stu);
+void			malloc_watermap(t_stuffs *stu);
 void			connect_dots(t_stuffs *stuffs);
 t_p2d			get_elevlimits(t_stuffs *stuffs);
 void			set_scale(t_stuffs *stuffs);
