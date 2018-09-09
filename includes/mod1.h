@@ -30,6 +30,14 @@
 # define	RISING_WATER 2
 
 
+typedef struct s_inside
+{
+	int			fromx;
+	int			fromy;
+	int			loopx;
+	int			loopy;
+}				t_inside;
+
 typedef struct	s_li
 {
 	int			dy;
@@ -107,6 +115,7 @@ typedef struct	s_stuffs
 	struct		s_stuffs	*water;
 }				t_stuffs;
 
+float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl);
 int     		get_pixel(int x, int y, t_stuffs *stuffs);
 void			malloc_bigmap(t_stuffs *s);
 void			fill_bigmap(t_stuffs *s, t_coords co, float whereami,t_p2d pt);

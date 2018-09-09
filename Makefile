@@ -43,6 +43,7 @@ main.c \
 line.c \
 hook.c \
 setters.c \
+coef_inside.c \
 bigmap.c
 
 LIBFT_DIR = ./libft/
