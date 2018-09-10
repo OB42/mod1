@@ -38,6 +38,15 @@ typedef struct s_inside
 	int			loopy;
 }				t_inside;
 
+typedef struct s_between
+{
+	int			from;
+	int			to;
+	int			other;
+}				t_between;
+
+
+
 typedef struct	s_li
 {
 	int			dy;
@@ -115,6 +124,11 @@ typedef struct	s_stuffs
 	struct		s_stuffs	*water;
 }				t_stuffs;
 
+
+void    gen_watermap(t_stuffs *stuffs, char mode);
+void    more_water(t_stuffs *stuffs, char mode);
+char 	point_inside_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c);
+float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl);
 float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl);
 int     		get_pixel(int x, int y, t_stuffs *stuffs);
 void			malloc_bigmap(t_stuffs *s);

@@ -44,6 +44,7 @@ line.c \
 hook.c \
 setters.c \
 coef_inside.c \
+coef_between.c \
 bigmap.c
 
 LIBFT_DIR = ./libft/
