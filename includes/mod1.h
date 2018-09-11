@@ -29,6 +29,13 @@
 # define	RAIN 1
 # define	RISING_WATER 2
 
+typedef struct s_cardinals
+{
+	int			n;
+	int			s;
+	int			e;
+	int			w;
+}				t_cardinals;
 
 typedef struct s_inside
 {
@@ -44,8 +51,6 @@ typedef struct s_between
 	int			to;
 	int			other;
 }				t_between;
-
-
 
 typedef struct	s_li
 {

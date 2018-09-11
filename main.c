@@ -288,53 +288,69 @@ void	more_water(t_stuffs *stuffs, char mode)
 	}
 }
 
+t_cardinals	to_calc_between(t_stuffs *stuffs, int e, int w)
+{
+	t_cardinals cars;
+
+	cars = (t_cardinals){.n = 0, .s = 0, .e = 0, .w = 0};
+	if ( w + 1 <= stuffs->size_y && stuffs->watermap[e][w + 1].N_elev < stuffs->watermap[e][w].S_elev)
+		cars.s = 1;
+	if ( w - 1 > 0 && stuffs->watermap[e][w - 1].S_elev < stuffs->watermap[e][w].N_elev)
+		cars.n = 1;
+	if ( e + 1 < stuffs->size_x && stuffs->watermap[e + 1][w].E_elev < stuffs->watermap[e][w].W_elev )
+		cars.w = 1;
+	if ( e - 1 > 0 && e != stuffs->size_x && stuffs->watermap[e - 1][w].W_elev <  stuffs->watermap[e][w].E_elev )
+		cars.e = 1;
+	return (cars);
+}
+
+#define WM_S stuffs->watermap[e][w].S_elev
+#define WM_N stuffs->watermap[e][w].N_elev
+#define WM_W stuffs->watermap[e][w].W_elev
+#define WM_E stuffs->watermap[e][w].E_elev
+
+
 void	water_between (t_stuffs *stuffs, int e, int w)
 {
-	if ( w + 1 <= stuffs->size_y)
+	t_cardinals cars;
+
+	cars = to_calc_between(stuffs, e, w);
+
+	if (cars.s)
 	{
-		if ( stuffs->watermap[e][w + 1].N_elev < stuffs->watermap[e][w].S_elev)
-		{
-			stuffs->watermap[e][w + 1].N_elev += 
-				stuffs->watermap[e][w].S_elev * 
-				coef_between(stuffs, (t_p2d){.x = e, .y = w},'S', stuffs->watermap[e][w].S_elev);
-			if ( stuffs->watermap[e][w + 1].N_elev > stuffs->watermap[e][w].S_elev )
-				stuffs->watermap[e][w + 1].N_elev = stuffs->watermap[e][w].S_elev;
-		}
+		stuffs->watermap[e][w + 1].N_elev += 
+			stuffs->watermap[e][w].S_elev * 
+			coef_between(stuffs, (t_p2d){.x = e, .y = w},'S', stuffs->watermap[e][w].S_elev);
+		if ( stuffs->watermap[e][w + 1].N_elev > stuffs->watermap[e][w].S_elev )
+			stuffs->watermap[e][w + 1].N_elev = stuffs->watermap[e][w].S_elev;
 	}
 
-	if ( w - 1 > 0)
+	if (cars.n)
 	{
-		if ( stuffs->watermap[e][w - 1].S_elev < stuffs->watermap[e][w].N_elev)
-		{
-			stuffs->watermap[e][w - 1].S_elev += 
-				stuffs->watermap[e][w].N_elev * 
-				coef_between(stuffs, (t_p2d){.x = e, .y = w},'N', stuffs->watermap[e][w].N_elev);
-			if ( stuffs->watermap[e][w - 1].S_elev > stuffs->watermap[e][w].N_elev )
-				stuffs->watermap[e][w - 1].S_elev = stuffs->watermap[e][w].N_elev;
-		}
+		stuffs->watermap[e][w - 1].S_elev += 
+			stuffs->watermap[e][w].N_elev * 
+			coef_between(stuffs, (t_p2d){.x = e, .y = w},'N', stuffs->watermap[e][w].N_elev);
+		if ( stuffs->watermap[e][w - 1].S_elev > stuffs->watermap[e][w].N_elev )
+			stuffs->watermap[e][w - 1].S_elev = stuffs->watermap[e][w].N_elev;
+
 	}
 
-	if ( e + 1 < stuffs->size_x)
+	if (cars.w)
 	{
-		if (stuffs->watermap[e + 1][w].E_elev < stuffs->watermap[e][w].W_elev )
-		{
-			stuffs->watermap[e + 1][w].E_elev += stuffs->watermap[e][w].W_elev 
-				* coef_between(stuffs, (t_p2d){.x = e, .y = w},'W', stuffs->watermap[e][w].W_elev);
-			if ( stuffs->watermap[e + 1][w].E_elev > stuffs->watermap[e][w].W_elev )
-				stuffs->watermap[e + 1][w].E_elev = stuffs->watermap[e][w].W_elev;
-		}
+		stuffs->watermap[e + 1][w].E_elev += stuffs->watermap[e][w].W_elev 
+			* coef_between(stuffs, (t_p2d){.x = e, .y = w},'W', stuffs->watermap[e][w].W_elev);
+		if ( stuffs->watermap[e + 1][w].E_elev > stuffs->watermap[e][w].W_elev )
+			stuffs->watermap[e + 1][w].E_elev = stuffs->watermap[e][w].W_elev;
 	}
 
-	if ( e - 1 > 0 && e != stuffs->size_x)
+	if (cars.e)
 	{
-		if ( stuffs->watermap[e - 1][w].W_elev <  stuffs->watermap[e][w].E_elev )
-		{
-			stuffs->watermap[e - 1][w].W_elev += stuffs->watermap[e][w].E_elev 
-				* coef_between(stuffs, (t_p2d){.x = e, .y = w},'E', stuffs->watermap[e][w].E_elev);
-			if ( stuffs->watermap[e - 1][w].W_elev > stuffs->watermap[e][w].E_elev )
-				stuffs->watermap[e - 1][w].W_elev = stuffs->watermap[e][w].E_elev;
-		}
+		stuffs->watermap[e - 1][w].W_elev += stuffs->watermap[e][w].E_elev 
+			* coef_between(stuffs, (t_p2d){.x = e, .y = w},'E', stuffs->watermap[e][w].E_elev);
+		if ( stuffs->watermap[e - 1][w].W_elev > stuffs->watermap[e][w].E_elev )
+			stuffs->watermap[e - 1][w].W_elev = stuffs->watermap[e][w].E_elev;
 	}
+
 }
 
 void	water_inside(t_stuffs *stuffs, int e, int w)
@@ -428,17 +444,17 @@ void    gen_watermap(t_stuffs *stuffs, char mode)
 
 	e = 1;
 	more_water(stuffs, mode);
-		while (e <= stuffs->size_x)
+	while (e <= stuffs->size_x)
+	{
+		w = 1;
+		while (w <= stuffs->size_y)
 		{
-			w = 1;
-			while (w <= stuffs->size_y)
-			{
-				water_inside(stuffs, e, w);
-				water_between(stuffs, e, w);
-				w++;
-			}
-			e++;
+			water_inside(stuffs, e, w);
+			water_between(stuffs, e, w);
+			w++;
 		}
+		e++;
+	}
 }
 
 char point_inside_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c)
@@ -612,7 +628,7 @@ int	water_loop(void *stuffs)
 	long spent = end - start;
 	printf("Loop took %ld ms\n", spent);
 	/////////////////////////////
-	
+
 	return (0);
 }
 
