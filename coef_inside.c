@@ -23,7 +23,7 @@ t_inside	get_coefs(t_p2d f)
 		coefs = (t_inside){.fromx = 0, .fromy = 0, .loopx = -1, .loopy = -1 };
 	if ((f.x == 'E' && f.y == 'S') || (f.x == 'S' && f.y == 'E'))
 		coefs = (t_inside){.fromx = 1, .fromy = 0, .loopx = 1, .loopy = -1 };
-	return coefs;
+	return (coefs);
 }
 
 float	coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
