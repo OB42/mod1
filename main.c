@@ -11,12 +11,8 @@
 /* ************************************************************************** */
 
 #include "mod1.h"
-// OPTI BENCHMARK
-// to remove
-#include <sys/time.h>
-/////////////////////
 
-void	init_img(t_stuffs * stuffs)
+void	init_img(t_stuffs *stuffs)
 {
 	stuffs->img.ptr = mlx_new_image(stuffs->co, WINX, WINY);
 	stuffs->img.line_size = WINX * 4;
@@ -29,7 +25,7 @@ void	init_img(t_stuffs * stuffs)
 			&(stuffs->img.endian));
 }
 
-int		init(t_stuffs * stuffs, char * path)
+int		init(t_stuffs *stuffs, char *path)
 {
 	stuffs->raining_intensity = 100;
 	stuffs->coef = 1;
@@ -52,7 +48,7 @@ int		init(t_stuffs * stuffs, char * path)
 	return (0);
 }
 
-int	water_loop(void * stuffs)
+int		water_loop(void *stuffs)
 {
 	if (((t_stuffs *)stuffs)->scenario == WAVE)
 		wave(stuffs);
@@ -63,7 +59,7 @@ int	water_loop(void * stuffs)
 	return (0);
 }
 
-void	usage()
+void	usage(void)
 {
 	ft_printf("Usage : ./ mod1 ./ path / to / map / map.mod1 [scenario]\n");
 	ft_printf("Scenarios:\n");
@@ -74,7 +70,7 @@ void	usage()
 	exit(2);
 }
 
-int		main(int argc, char ** argv)
+int		main(int argc, char **argv)
 {
 	t_stuffs	stuffs;
 	t_stuffs	water;
@@ -92,12 +88,8 @@ int		main(int argc, char ** argv)
 		stuffs.scenario = -1;
 	else
 		usage();
-	water.water = 0;
-	if (init(&stuffs, argv[1]))
-		return (1);
-	water.co = stuffs.co;
-	water.win = stuffs.win;
-	if (init(&water, argv[1]))
+	water = (t_stuffs){.water = 0, .co = stuffs.co, .win = stuffs.win};
+	if (init(&stuffs, argv[1]) || init(&water, argv[1]))
 		return (1);
 	mlx_put_image_to_window(stuffs.co, stuffs.win, stuffs.img.ptr, 0, 0);
 	mlx_loop_hook(stuffs.co, water_loop, &stuffs);

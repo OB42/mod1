@@ -38,7 +38,7 @@ void	w_rain_effect(t_stuffs *stuffs)
 					i = 0;
 					while (i < l)
 					{
-						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, r - i, 0x00ccff, stuffs);
+						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, r - i, WATER, stuffs);
 						i++;
 					}
 				}
@@ -177,7 +177,7 @@ void	w_connect_fine_dots(t_stuffs *stuffs)
 		//not sure
 		while ((w < (stuffs->size_y) * stuffs->linelen))
 		{
-			if (stuffs->water->bigmap[e][w].elev > 1 && 
+			if (stuffs->water->bigmap[e][w].elev > 1 &&
 			 stuffs->water->bigmap[e][w].elev +100 < stuffs->water_lvl)
 			{
 				if (w < (stuffs->size_y * stuffs->linelen))

@@ -12,35 +12,35 @@
 
 #include "mod1.h"
 
-void	raining(t_stuffs *stuffs)
+void	raining(t_stuffs *s)
 {
 	int			i;
 	int			e;
 	int			w;
-	static int r = 0;
+	static int	r = 0;
 
 	i = 0;
 	while (i++ < 100)
-		spread_water(stuffs);
+		spread_water(s);
 	e = 0;
 	{
-		while (e < ((stuffs->size_x) * stuffs->linelen))
+		while (e < ((s->size_x) * s->linelen))
 		{
 			w = 0;
-			while ((w < (stuffs->size_y) * stuffs->linelen))
+			while ((w < (s->size_y) * s->linelen))
 			{
-				if (stuffs->raining_intensity
-				&& rand() % (stuffs->raining_intensity / 2 + 1) == 0)
-					stuffs->water->bigmap[e][w].elev += 1;
+				if (s->raining_intensity
+				&& rand() % (s->raining_intensity / 2 + 1) == 0)
+					s->water->bigmap[e][w].elev += 1;
 				w++;
 			}
 			e++;
 		}
 	}
-	redraw(stuffs);
+	redraw(s);
 }
 
-void	rain_effect(t_stuffs *stuffs)
+void	rain_effect(t_stuffs *s)
 {
 	int	r;
 	int	l;
@@ -49,25 +49,19 @@ void	rain_effect(t_stuffs *stuffs)
 	int	i;
 
 	e = 0;
-	while (e < (stuffs->size_x * stuffs->linelen))
+	while (e < (s->size_x * s->linelen))
 	{
 		w = 0;
-		while (w < (stuffs->size_y * stuffs->linelen))
+		while (w < (s->size_y * s->linelen))
 		{
-			if (stuffs->img.y + stuffs->bigmap[e][w].y)
+			if (s->img.y + s->bigmap[e][w].y
+				&& w && rand() % s->raining_intensity == 0)
 			{
-				if (w && rand() % stuffs->raining_intensity == 0)
-				{
-					r = rand() % (int)(stuffs->img.y + stuffs->bigmap[e][w].y);
-					l = rand() % 7 + 3;
-					i = 0;
-					while (i < l)
-					{
-						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, r - i,
-							0x00ccff, stuffs);
-						i++;
-					}
-				}
+				r = rand() % (int)(s->img.y + s->bigmap[e][w].y);
+				l = rand() % 7 + 3;
+				i = 0;
+				while (i < l)
+					set_pixel(s->img.x + s->bigmap[e][w].x, r - i++, WATER, s);
 			}
 			w++;
 		}

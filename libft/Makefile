@@ -16,7 +16,7 @@ SRC_DIR = ./
 
 CC = gcc
 
-CFLAGS =  -I$(H_DIR) -Wall -Wextra -Werror
+CFLAGS = -I$(H_DIR) -Wall -Wextra -Werror
 
 C_FILES = get_next_line.c \
 ft_atoi.c \

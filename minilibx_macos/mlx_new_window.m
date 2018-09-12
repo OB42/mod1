@@ -19,10 +19,10 @@ NSOpenGLPixelFormatAttribute pfa_attrs[] =
 
 static const GLfloat pixel_vertexes[8] =
   {
-    -1.0 , -1.0,
+   -1.0 , -1.0,
     1.0, -1.0,
     1.0, 1.0,
-    -1.0, 1.0
+   -1.0, 1.0
   };
 
 
@@ -111,7 +111,7 @@ int get_mouse_button(NSEventType eventtype)
 
   flag = [theEvent modifierFlags];
   //  printf("Key flag changed: %x => %x\n", keyflag, flag);
-  //  printf("**mlx flag low part : %d  - %x\n", flag&0xFFFF, flag&0xFFFF);
+  //  printf("**mlx flag low part : %d - %x\n", flag&0xFFFF, flag&0xFFFF);
 
   if (!(val = (keyflag|flag)&(~(keyflag&flag))))
     return ;   // no change - can happen when loosing focus on special key pressed, then re-pressed later

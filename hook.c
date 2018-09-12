@@ -18,9 +18,7 @@ void	redraw(t_stuffs *stu)
 	set_dots(stu);
 	connect_dots(stu);
 	mlx_put_image_to_window(stu->co, stu->win, stu->img.ptr, 0, 0);
-
 }
-
 
 void	redraw_water(t_stuffs *stu)
 {
@@ -42,15 +40,13 @@ void	free_stuffs(t_stuffs *stuffs)
 	}
 	free(stuffs->map);
 	free(stuffs->elevs);
+	exit(0);
 }
 
 int		hook(int keycode, void *stuffs)
 {
 	if (keycode == 53)
-	{
 		free_stuffs(stuffs);
-		exit(0);
-	}
 	if (keycode == 0x7C)
 		((t_stuffs*)stuffs)->img.x += POS_INCREMENT;
 	else if (keycode == 0x7B)

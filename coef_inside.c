@@ -14,24 +14,26 @@
 
 t_inside	get_coefs(t_p2d f)
 {
-	t_inside coefs;
+	t_inside	coefs;
+
 	if ((f.x == 'N' && f.y == 'E') || (f.x == 'E' && f.y == 'N'))
-		coefs = (t_inside){.fromx = 1, .fromy = 1, .loopx = 1, .loopy = 1 };
+		coefs = (t_inside){.fromx = 1, .fromy = 1, .loopx = 1, .loopy = 1};
 	if ((f.x == 'W' && f.y == 'N') || (f.x == 'N' && f.y == 'W'))
-		coefs = (t_inside){.fromx = 0, .fromy = 1, .loopx = -1, .loopy = 1 };
+		coefs = (t_inside){.fromx = 0, .fromy = 1, .loopx = -1, .loopy = 1};
 	if ((f.x == 'S' && f.y == 'W') || (f.x == 'W' && f.y == 'S'))
-		coefs = (t_inside){.fromx = 0, .fromy = 0, .loopx = -1, .loopy = -1 };
+		coefs = (t_inside){.fromx = 0, .fromy = 0, .loopx = -1, .loopy = -1};
 	if ((f.x == 'E' && f.y == 'S') || (f.x == 'S' && f.y == 'E'))
-		coefs = (t_inside){.fromx = 1, .fromy = 0, .loopx = 1, .loopy = -1 };
+		coefs = (t_inside){.fromx = 1, .fromy = 0, .loopx = 1, .loopy = -1};
 	return (coefs);
 }
 
-float	coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
+float		coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto,
+	int water_lvl)
 {
-	t_p2d from;
-	t_inside coefs;
-	float cpt;
-	int i;
+	t_p2d		from;
+	t_inside	coefs;
+	float		cpt;
+	int			i;
 
 	coefs = get_coefs(fromto);
 	cpt = 0.0;
@@ -47,7 +49,7 @@ float	coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl)
 			cpt++;
 		i++;
 	}
-	cpt = (((float)cpt)/ (stuffs->linelen / 2.0) - 0.0);
+	cpt = (((float)cpt) / (stuffs->linelen / 2.0) - 0.0);
 	cpt = (cpt > 0.5) ? 1.0 : cpt;
 	return ((cpt > 0) ? cpt : 0.0);
 }

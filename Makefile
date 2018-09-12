@@ -42,7 +42,8 @@ wave.c
 
 WATER = spread_water.c \
 gen_watermap.c \
-ft_triangle.c
+ft_triangle.c \
+watermap.c
 
 C_FILES = $(addprefix utils/, $(UTILS)) \
 $(addprefix file/, $(FILE)) \

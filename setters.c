@@ -38,42 +38,6 @@ void	malloc_map(t_stuffs *stu)
 		stu->map[i++] = (t_p2d*)pr_malloc(sizeof(t_p2d) * (stu->size_y + 1));
 }
 
-void    init_watermap(t_stuffs *stuffs)
-{
-	int e;
-	int w;
-
-	e = 1;
-	while (e <= stuffs->size_x)
-	{
-		w = 1;
-		while (w <= stuffs->size_y)
-		{
-			stuffs->watermap[e][w].N_elev = 0;
-			stuffs->watermap[e][w].W_elev = 0;
-			stuffs->watermap[e][w].E_elev = 0;
-			stuffs->watermap[e][w].S_elev = 0;
-			stuffs->watermap[e][w].x = 0;
-			stuffs->watermap[e][w].y = 0;
-			w++;
-		}
-		e++;
-	}
-}
-
-void	malloc_watermap(t_stuffs *stu)
-{
-	int i;
-
-	stu->watermap = (t_4triangles**)pr_malloc(sizeof(t_4triangles*) * (stu->size_x + 1));
-	i = 0;
-	while (i <= stu->size_x)
-		stu->watermap[i++] = (t_4triangles*)pr_malloc(sizeof(t_4triangles) * (stu->size_y + 1));
-	init_watermap(stu);
-}
-
-
-
 t_p2d	get_elevlimits(t_stuffs *stuffs)
 {
 	int		i;
@@ -106,5 +70,5 @@ void	set_scale(t_stuffs *stuffs)
 
 	vals = get_elevlimits(stuffs);
 	inval = (abs(vals.y) > abs(vals.x)) ? abs(vals.y) : abs(vals.x);
-	stuffs->coef = 1;//(inval > 120) ? (130 / (float)inval) : 1;
+	stuffs->coef = 1;
 }

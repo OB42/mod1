@@ -12,7 +12,7 @@
 
 #include "mod1.h"
 
-void	wave(t_stuffs * stuffs)
+void	wave(t_stuffs *stuffs)
 {
 	int	i;
 	int	e;

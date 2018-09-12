@@ -24,9 +24,9 @@ void	connect_fne_dots(t_stuffs *stuffs)
 	int		i;
 	static	int rain = 0;
 	int		water;
+	t_p2d	cheat;
 
 	e = 0;
-	ft_printf("Rendering fine dots..\n");
 	while (e < (stuffs->size_x * stuffs->linelen))
 	{
 		w = 0;
@@ -36,16 +36,6 @@ void	connect_fne_dots(t_stuffs *stuffs)
 			{
 				water = (stuffs->water && stuffs->water->bigmap && stuffs->water->bigmap[e][w].elev > 0.1);
 				color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
-
-
-				//disp lignes
-				//
-				//if ((e % 100 == 0) || (w % 100 == 0))
-				//	color = 0xFF0000;
-				/////////////////////////////////
-
-
-				t_p2d cheat;
 				cheat = stuffs->bigmap[e][w];
 				if ((e + 1 < stuffs->size_x * stuffs->linelen && !(stuffs->bigmap[e + 1][w].x)) ||
 				(w + 1 < stuffs->size_y * stuffs->linelen && !(stuffs->bigmap[e][w +1 ].x)))
@@ -59,40 +49,22 @@ void	connect_fne_dots(t_stuffs *stuffs)
 						i++;
 					}
 				}
-				{
-					cheat.y += 16;
-					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
-
-				}
-
+				cheat.y += 16;
+				line((stuffs->bigmap)[e][w], cheat, stuffs, color);
 				if (water && (stuffs->bigmap)[e][w].y)
 				{
 					t_p2d temp = (stuffs->bigmap)[e][w];
 					temp.elev += (stuffs->water->bigmap)[e][w].elev;
 					temp.y -= (stuffs->water->bigmap)[e][w].elev * stuffs->coef;
 					cheat = temp;
-				//	printf("%i\n", stuffs->water->bigmap[e][w].elev);
 					cheat.y += temp.elev + 16;
 					line(temp, cheat, stuffs, 0x00ccff);
 				}
-				/*
-				else if (e < (stuffs->size_x * stuffs->linelen) && w < (stuffs->size_y * stuffs->linelen))
-				{
-					cheat.y += 16;
-					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
-				}
-				*/
-				// else {
-				// 	cheat.y += 16;
-				// 	line((stuffs->bigmap)[e][w], cheat, stuffs, 0);
-				// }
 			}
 			w++;
 		}
 		e++;
 	}
-	w = 0;
-
 	if (stuffs->scenario == RAIN)
 		rain_effect(stuffs);
 }
@@ -143,25 +115,15 @@ void	connect_fine_dots(t_stuffs *stuffs)
 
 	e = 0;
 	ft_printf("Rendering fine dots...\n");
-	//not sure
 	while (e < ((stuffs->size_x) * stuffs->linelen))
 	{
 		w = 0;
-		//not sure
 		while ((w < (stuffs->size_y) * stuffs->linelen))
 		{
 			if (w < (stuffs->size_y * stuffs->linelen))
-			{
-				// printf("a\n");
 				check_and_connect(stuffs, e, w, 'y');
-				// printf("b\n");
-			}
 			if (e < (stuffs->size_x * stuffs->linelen))
-			{
-				// printf("c\n");
 				check_and_connect(stuffs, e, w, 'x');
-				// printf("d\n");
-			}
 			w++;
 		}
 		e++;
@@ -196,7 +158,5 @@ void	connect_dots(t_stuffs *stuffs)
 		}
 		e++;
 	}
-	ft_printf("Done !\n\n");
 	connect_fine_dots(stuffs);
-	w = (stuffs->size_y * stuffs->linelen);
 }
