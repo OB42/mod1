@@ -6,7 +6,7 @@
 /*   By: pcluchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 00:58:13 by pcluchet          #+#    #+#             */
-/*   Updated: 2017/02/17 11:07:14 by pcluchet         ###   ########.fr       */
+/*   Updated: 2018/09/12 16:06:29 by pcluchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct	s_stuffs
 }				t_stuffs;
 
 
+void    water_inside(t_stuffs *stuffs, int e, int w);
 void    		gen_watermap(t_stuffs *stuffs, char mode);
 void			more_water(t_stuffs *stuffs, char mode);
 char			point_in_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c);

@@ -6,7 +6,7 @@
 #    By: pcluchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 10:47:39 by pcluchet          #+#    #+#              #
-#    Updated: 2017/02/17 10:57:45 by pcluchet         ###   ########.fr        #
+#    Updated: 2018/09/12 16:05:25 by pcluchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ wave.c
 WATER = spread_water.c \
 gen_watermap.c \
 ft_triangle.c \
+spread_inside.c \
 watermap.c
 
 C_FILES = $(addprefix utils/, $(UTILS)) \
