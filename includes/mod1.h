@@ -190,4 +190,5 @@ void			rain_effect(t_stuffs *stuffs);
 void			wave(t_stuffs * stuffs);
 void			rising_water(t_stuffs * stuffs);
 void			ft_triangle(t_stuffs *s, int e, int w);
+void			draw_dot(t_stuffs *s, t_p2d p);
 #endif

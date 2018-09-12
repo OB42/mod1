@@ -15,15 +15,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 void	connect_fne_dots(t_stuffs *s)
 {
 	int		e;
 	int		w;
-	int		i;
-	int		is_water;
-	t_p2d	cheat;
-	t_p2d	temp;
 
 	e = 0;
 	while (e < (s->size_x * s->linelen))
@@ -32,33 +27,7 @@ void	connect_fne_dots(t_stuffs *s)
 		while (w < (s->size_y * s->linelen))
 		{
 			if ((s->bigmap)[e][w].elev >= 0)
-			{
-				is_water = (s->water && s->water->bigmap && s->water->bigmap[e][w].elev > 0.1);
-				cheat = s->bigmap[e][w];
-				if ((e + 1 < s->size_x * s->linelen && !(s->bigmap[e + 1][w].x))
-				|| (w + 1 < s->size_y * s->linelen && !(s->bigmap[e][w +1 ].x)))
-				{
-					i = 1;
-					while (i < 100)
-					{
-						set_pixel(s->img.x + s->bigmap[e][w].x - 1, s->img.y + s->bigmap[e][w].y + i, 0, s);
-						set_pixel(s->img.x + s->bigmap[e][w].x + 1, s->img.y + s->bigmap[e][w].y + i, 0, s);
-						set_pixel(s->img.x + s->bigmap[e][w].x, s->img.y + s->bigmap[e][w].y + i, 0, s);
-						i++;
-					}
-				}
-				cheat.y += 16;
-				line((s->bigmap)[e][w], cheat, s, get_color_by_altitude(s->bigmap[e][w].elev));
-				if (is_water && (s->bigmap)[e][w].y)
-				{
-					temp = (s->bigmap)[e][w];
-					temp.elev += (s->water->bigmap)[e][w].elev;
-					temp.y -= (s->water->bigmap)[e][w].elev * s->coef;
-					cheat = temp;
-					cheat.y += temp.elev + 16;
-					line(temp, cheat, s, WATER);
-				}
-			}
+				draw_dot(s, (t_p2d){.x = e, .y = w});
 			w++;
 		}
 		e++;
@@ -80,31 +49,24 @@ void	check_and_connect(t_stuffs *s, int e, int w, char direction)
 	int			temp;
 
 	point_from = (s->bigmap)[e][w];
-
-	if (direction == 'y')
+	if (direction == 'y' && (temp = get_next(w, s)) < (s->size_y * s->linelen))
 	{
-		temp = get_next(w, s);
-		if (temp < (s->size_y * s->linelen))
-		{
-			point_to = (s->bigmap)[e][get_next(w, s)];
-			co = (t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = get_next(w, s)};
-			if (point_from.x != 0 && point_to.x > 0)
-				special_fine_line(point_from, point_to, s,co);
-		}
+		point_to = (s->bigmap)[e][get_next(w, s)];
+		co = (t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = get_next(w, s)};
+		if (point_from.x != 0 && point_to.x > 0)
+			special_fine_line(point_from, point_to, s, co);
 	}
 	else
 	{
-		temp = get_next(e, s);
-		if (temp < (s->size_x * s->linelen))
+		if ((temp = get_next(e, s)) < (s->size_x * s->linelen))
 		{
 			point_to = (s->bigmap)[get_next(e, s)][w];
 			co = (t_coords){.x1 = e, .y1 = w, .x2 = get_next(e, s), .y2 = w};
 			if (point_from.x != 0 && point_to.x > 0)
-				special_fine_line(point_from, point_to, s,co);
+				special_fine_line(point_from, point_to, s, co);
 		}
 	}
 }
-
 
 void	connect_fine_dots(t_stuffs *s)
 {

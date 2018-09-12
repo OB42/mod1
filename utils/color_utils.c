@@ -34,8 +34,7 @@ int		get_color_by_altitude(int n)
 		0xF2DECC,
 		0xF8EEE5,
 		0xFFFFEE,
-		0xFFFFFF
-	};
+		0xFFFFFF};
 
 	if (n < 100)
 		return (colors[n <= 0 ? 0 : (int)floor(n / 5)]);

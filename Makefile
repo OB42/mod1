@@ -33,7 +33,8 @@ file_helper.c
 
 POINTS = set_dots.c \
 gen_point.c \
-connect_dots.c\
+connect_dots.c \
+draw_dot.c \
 connect_water_dots.c
 
 SCENARIOS = raining.c \

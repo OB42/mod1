@@ -20,7 +20,7 @@ void	inside_west(t_stuffs *stuffs, int e, int w)
 	float	*elv2;
 
 	coo.y = 'W';
-	where = (t_p2d){.x = e, .y = w}; 
+	where = (t_p2d){.x = e, .y = w};
 	elv = &(stuffs->watermap[e][w].W_elev);
 	if (*(elv) < stuffs->watermap[e][w].N_elev)
 	{
@@ -48,7 +48,7 @@ void	inside_east(t_stuffs *stuffs, int e, int w)
 	float	*elv2;
 
 	coo.y = 'E';
-	where = (t_p2d){.x = e, .y = w}; 
+	where = (t_p2d){.x = e, .y = w};
 	elv = &(stuffs->watermap[e][w].E_elev);
 	if (*(elv) < stuffs->watermap[e][w].N_elev)
 	{
@@ -76,7 +76,7 @@ void	inside_north(t_stuffs *stuffs , int e, int w)
 	float	*elv2;
 
 	coo.y = 'N';
-	where = (t_p2d){.x = e, .y = w}; 
+	where = (t_p2d){.x = e, .y = w};
 	elv = &(stuffs->watermap[e][w].N_elev);
 	if (*(elv) < stuffs->watermap[e][w].E_elev)
 	{
@@ -104,7 +104,7 @@ void	inside_south(t_stuffs *stuffs, int e, int w)
 	float	*elv2;
 
 	coo.y = 'S';
-	where = (t_p2d){.x = e, .y = w}; 
+	where = (t_p2d){.x = e, .y = w};
 	elv = &(stuffs->watermap[e][w].S_elev);
 	if (*(elv) < stuffs->watermap[e][w].E_elev)
 	{
