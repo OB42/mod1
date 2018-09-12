@@ -30,7 +30,5 @@ void	rising_water(t_stuffs *stuffs)
 		e++;
 	}
 	e = 0;
-	while (e++ < 50)
-		spread_water(stuffs);
 	redraw_water(stuffs);
 }
