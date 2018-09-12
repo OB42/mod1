@@ -132,7 +132,7 @@ typedef struct	s_stuffs
 
 void    		gen_watermap(t_stuffs *stuffs, char mode);
 void			more_water(t_stuffs *stuffs, char mode);
-char			point_inside_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c);
+char			point_in_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c);
 float			coef_between(t_stuffs *stuffs, t_p2d coords, char dir,
 	int water_lvl);
 float			coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto,
@@ -187,4 +187,5 @@ void			spread_water(t_stuffs *stuffs);
 void			rain_effect(t_stuffs *stuffs);
 void			wave(t_stuffs * stuffs);
 void			rising_water(t_stuffs * stuffs);
+void			ft_triangle(t_stuffs *s, int e, int w);
 #endif

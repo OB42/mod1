@@ -18,7 +18,7 @@ CC = gcc
 
 EXTRAFLAGS = -Ofast #-fsanitize=address #-Wall -Wextra -Werror
 
-CFLAGS =  -I$(LIBFT_DIR)includes/  -I$(H_DIR) -I$(MLX_DIR) $(EXTRAFLAGS)
+CFLAGS = -I$(LIBFT_DIR)includes/ -I$(H_DIR) -I$(MLX_DIR) $(EXTRAFLAGS)
 
 MLX_FLAGS = -framework OpenGL -framework AppKit
 
@@ -42,7 +42,7 @@ wave.c
 
 WATER = spread_water.c \
 gen_watermap.c \
-point_inside_triangle.c
+ft_triangle.c
 
 C_FILES = $(addprefix utils/, $(UTILS)) \
 $(addprefix file/, $(FILE)) \
