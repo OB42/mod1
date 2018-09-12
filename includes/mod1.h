@@ -24,13 +24,13 @@
 # define WINX 2000
 # define WINY 1000
 # define POS_INCREMENT 42
-# define	RAIN_INCREMENT 10
-# define	WAVE 0
-# define	RAIN 1
-# define	RISING_WATER 2
-# define	WATER 0x00ccff
+# define RAIN_INCREMENT 10
+# define WAVE 0
+# define RAIN 1
+# define RISING_WATER 2
+# define WATER 0x00ccff
 
-typedef struct s_cardinals
+typedef struct	s_cardinals
 {
 	int			n;
 	int			s;
@@ -38,7 +38,7 @@ typedef struct s_cardinals
 	int			w;
 }				t_cardinals;
 
-typedef struct s_inside
+typedef struct	s_inside
 {
 	int			fromx;
 	int			fromy;
@@ -46,7 +46,7 @@ typedef struct s_inside
 	int			loopy;
 }				t_inside;
 
-typedef struct s_between
+typedef struct	s_between
 {
 	int			from;
 	int			to;
@@ -63,7 +63,6 @@ typedef struct	s_li
 	int			e2;
 }				t_li;
 
-
 typedef struct	s_coords
 {
 	int			x1;
@@ -76,70 +75,67 @@ typedef struct	s_p2d
 {
 	int			x;
 	int			y;
-	float			elev;
+	float		elev;
 }				t_p2d;
 
 typedef struct	s_4triangles
 {
 	int			x;
 	int			y;
-	float			N_elev;
-	float			E_elev;
-	float			S_elev;
-	float			W_elev;
+	float		n_elev;
+	float		e_elev;
+	float		s_elev;
+	float		w_elev;
 }				t_4triangles;
-
-
 
 typedef struct	s_f2d
 {
 	float		x;
 	float		y;
-	float			elev;
+	float		elev;
 }				t_f2d;
 
 typedef struct	s_img
 {
-	void			*ptr;
-	char			*img_addr;
-	int				line_size;
-	int				endian;
-	int				bits_per_pixel;
-	int				x;
-	int				y;
+	void		*ptr;
+	char		*img_addr;
+	int			line_size;
+	int			endian;
+	int			bits_per_pixel;
+	int			x;
+	int			y;
 }				t_img;
 
 typedef struct	s_stuffs
 {
-	int			raining_intensity;
-	int			scenario;
-	int			raining;
-	t_f2d		props;
-	void		*co;
-	void		*win;
-	t_p2d		**map;
+	int					raining_intensity;
+	int					scenario;
+	int					raining;
+	t_f2d				props;
+	void				*co;
+	void				*win;
+	t_p2d				**map;
 	t_4triangles		**watermap;
-	t_p2d		**bigmap;
-	int			**elevs;
-	int			size_y;
-	int			size_x;
-	int			water_lvl;
-	float		coef;
-	int			linelen;
-	t_img		img;
-	struct		s_stuffs	*water;
+	t_p2d				**bigmap;
+	int					**elevs;
+	int					size_y;
+	int					size_x;
+	int					water_lvl;
+	float				coef;
+	int					linelen;
+	t_img				img;
+	struct s_stuffs		*water;
 }				t_stuffs;
 
-
-void    water_inside(t_stuffs *stuffs, int e, int w);
-void    		gen_watermap(t_stuffs *stuffs, char mode);
+void			water_inside(t_stuffs *stuffs, int e, int w);
+void			gen_watermap(t_stuffs *stuffs, char mode);
 void			more_water(t_stuffs *stuffs, char mode);
 char			point_in_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c);
 float			coef_between(t_stuffs *stuffs, t_p2d coords, char dir,
 	int water_lvl);
 float			coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto,
 	int water_lvl);
-int     		get_pixel(int x, int y, t_stuffs *stuffs);
+int				get_pixel(int x, int y, t_stuffs *stuffs);
 void			malloc_bigmap(t_stuffs *s);
 void			fill_bigmap(t_stuffs *s, t_coords co, float whereami,
 	t_p2d pt);
@@ -182,13 +178,14 @@ void			special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co);
 void			special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co);
 t_p2d			gen_point(t_p2d p1, t_p2d p2, float whereami);
 void			set_water(t_stuffs *stuffs);
-void    		connect_water_dots(t_stuffs *stuffs);
+void			connect_water_dots(t_stuffs *stuffs);
 void			raining(t_stuffs *stuffs);
 void			gen_watermap(t_stuffs *stuffs, char mode);
 void			spread_water(t_stuffs *stuffs);
 void			rain_effect(t_stuffs *stuffs);
-void			wave(t_stuffs * stuffs);
-void			rising_water(t_stuffs * stuffs);
+void			wave(t_stuffs *stuffs);
+void			rising_water(t_stuffs *stuffs);
 void			ft_triangle(t_stuffs *s, int e, int w);
 void			draw_dot(t_stuffs *s, t_p2d p, int color);
+void			more_water(t_stuffs *stuffs, char mode);
 #endif

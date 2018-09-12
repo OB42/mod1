@@ -12,32 +12,6 @@
 
 #include "mod1.h"
 
-void	more_water(t_stuffs *stuffs, char mode)
-{
-	int e;
-	int w;
-
-	e = 1;
-	while (e <= stuffs->size_x)
-	{
-		if (mode == 'R')
-		{
-			stuffs->watermap[e][1].N_elev +=  0.15;
-			stuffs->watermap[e][stuffs->size_y - 1].S_elev +=  0.15;
-		}
-		else
-			stuffs->watermap[e][1].N_elev +=  0.8;
-		w = 1;
-		while (w <= stuffs->size_y && mode == 'R')
-		{
-			stuffs->watermap[1][w].E_elev +=  0.15;
-			stuffs->watermap[stuffs->size_x - 1][w].E_elev +=  0.15;
-			w++;
-		}
-		e++;
-	}
-}
-
 t_cardinals	to_calc_between(t_stuffs *stuffs, int e, int w)
 {
 	t_cardinals cars;
@@ -64,12 +38,12 @@ t_cardinals	to_calc_between(t_stuffs *stuffs, int e, int w)
 	return (cars);
 }
 
-void	between_vertical (t_stuffs *stuffs, int e, int w, char dir)
+void		between_vertical(t_stuffs *stuffs, int e, int w, char dir)
 {
-	int cc;
-	float *c1;
-	float *c2;
-	t_p2d coo;
+	int		cc;
+	float	*c1;
+	float	*c2;
+	t_p2d	coo;
 
 	cc = 0;
 	coo = (t_p2d){.x = e, .y = w};
@@ -85,17 +59,17 @@ void	between_vertical (t_stuffs *stuffs, int e, int w, char dir)
 		c1 = &(stuffs->watermap[e][w + cc].S_elev);
 		c2 = &(stuffs->watermap[e][w].N_elev);
 	}
-		*(c1) += *(c2) * coef_between(stuffs, coo, dir, *(c2));
-		if (*(c1) > *(c2))
-			*(c1) = *(c2);
+	*(c1) += *(c2) * coef_between(stuffs, coo, dir, *(c2));
+	if (*(c1) > *(c2))
+		*(c1) = *(c2);
 }
 
-void	between_horiz (t_stuffs *stuffs, int e, int w, char dir)
+void		between_horiz(t_stuffs *stuffs, int e, int w, char dir)
 {
-	int cc;
-	float *c1;
-	float *c2;
-	t_p2d coo;
+	int		cc;
+	float	*c1;
+	float	*c2;
+	t_p2d	coo;
 
 	cc = 0;
 	coo = (t_p2d){.x = e, .y = w};
@@ -111,27 +85,27 @@ void	between_horiz (t_stuffs *stuffs, int e, int w, char dir)
 		c1 = &(stuffs->watermap[e + cc][w].W_elev);
 		c2 = &(stuffs->watermap[e][w].E_elev);
 	}
-		*(c1) += *(c2) * coef_between(stuffs, coo, dir, *(c2));
-		if (*(c1) > *(c2))
-			*(c1) = *(c2);
+	*(c1) += *(c2) * coef_between(stuffs, coo, dir, *(c2));
+	if (*(c1) > *(c2))
+		*(c1) = *(c2);
 }
 
-void	water_between (t_stuffs *stuffs, int e, int w)
+void		water_between(t_stuffs *stuffs, int e, int w)
 {
 	t_cardinals cars;
 
 	cars = to_calc_between(stuffs, e, w);
 	if (cars.s)
-		between_vertical (stuffs, e, w, 'S');
+		between_vertical(stuffs, e, w, 'S');
 	if (cars.n)
-		between_vertical (stuffs, e, w, 'N');
+		between_vertical(stuffs, e, w, 'N');
 	if (cars.w)
-		between_horiz (stuffs, e, w, 'W');
+		between_horiz(stuffs, e, w, 'W');
 	if (cars.e)
-		between_horiz (stuffs, e, w, 'E');
+		between_horiz(stuffs, e, w, 'E');
 }
 
-void    gen_watermap(t_stuffs *stuffs, char mode)
+void		gen_watermap(t_stuffs *stuffs, char mode)
 {
 	int		e;
 	int		w;

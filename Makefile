@@ -45,6 +45,7 @@ WATER = spread_water.c \
 gen_watermap.c \
 ft_triangle.c \
 spread_inside.c \
+more_water.c \
 watermap.c
 
 SRC = main.c \
