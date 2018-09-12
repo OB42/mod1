@@ -58,7 +58,8 @@ t_cardinals	to_calc_between(t_stuffs *stuffs, int e, int w)
 	{
 		cars.w = 1;
 	}
-	if (e - 1 > 0 && e != stuffs->size_x && stuffs->watermap[e - 1][w].W_elev <  stuffs->watermap[e][w].E_elev)
+	if (e - 1 > 0 && e != stuffs->size_x
+		&& stuffs->watermap[e - 1][w].W_elev < stuffs->watermap[e][w].E_elev)
 		cars.e = 1;
 	return (cars);
 }
@@ -71,7 +72,7 @@ void	between_vertical (t_stuffs *stuffs, int e, int w, char dir)
 	t_p2d coo;
 
 	cc = 0;
-	coo = (t_p2d){.x = e, .y = w}; 
+	coo = (t_p2d){.x = e, .y = w};
 	if (dir == 'S')
 	{
 		cc = 1;
@@ -97,7 +98,7 @@ void	between_horiz (t_stuffs *stuffs, int e, int w, char dir)
 	t_p2d coo;
 
 	cc = 0;
-	coo = (t_p2d){.x = e, .y = w}; 
+	coo = (t_p2d){.x = e, .y = w};
 	if (dir == 'W')
 	{
 		cc = 1;

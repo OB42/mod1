@@ -27,7 +27,7 @@ void	connect_fne_dots(t_stuffs *s)
 		while (w < (s->size_y * s->linelen))
 		{
 			if ((s->bigmap)[e][w].elev >= 0)
-				draw_dot(s, (t_p2d){.x = e, .y = w});
+				draw_dot(s, (t_p2d){.x = e, .y = w}, WATER);
 			w++;
 		}
 		e++;

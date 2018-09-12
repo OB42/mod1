@@ -14,8 +14,8 @@
 
 void	inside_west(t_stuffs *stuffs, int e, int w)
 {
-	t_p2d coo;
-	t_p2d where;
+	t_p2d	coo;
+	t_p2d	where;
 	float	*elv;
 	float	*elv2;
 
@@ -42,8 +42,8 @@ void	inside_west(t_stuffs *stuffs, int e, int w)
 
 void	inside_east(t_stuffs *stuffs, int e, int w)
 {
-	t_p2d coo;
-	t_p2d where;
+	t_p2d	coo;
+	t_p2d	where;
 	float	*elv;
 	float	*elv2;
 
@@ -68,10 +68,10 @@ void	inside_east(t_stuffs *stuffs, int e, int w)
 	}
 }
 
-void	inside_north(t_stuffs *stuffs , int e, int w)
+void	inside_north(t_stuffs *stuffs, int e, int w)
 {
-	t_p2d coo;
-	t_p2d where;
+	t_p2d	coo;
+	t_p2d	where;
 	float	*elv;
 	float	*elv2;
 
@@ -98,8 +98,8 @@ void	inside_north(t_stuffs *stuffs , int e, int w)
 
 void	inside_south(t_stuffs *stuffs, int e, int w)
 {
-	t_p2d coo;
-	t_p2d where;
+	t_p2d	coo;
+	t_p2d	where;
 	float	*elv;
 	float	*elv2;
 

@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void	draw_water(t_stuffs *s, t_p2d cheat, t_p2d p)
+void	draw_water(t_stuffs *s, t_p2d cheat, t_p2d p, int color)
 {
 	t_p2d	temp;
 
@@ -24,7 +24,7 @@ void	draw_water(t_stuffs *s, t_p2d cheat, t_p2d p)
 	temp.y -= (s->water->bigmap)[p.x][p.y].elev * s->coef;
 	cheat = temp;
 	cheat.y += temp.elev + 16;
-	line(temp, cheat, s, WATER);
+	line(temp, cheat, s, color);
 }
 
 void	hide_borders(t_stuffs *s, t_p2d p)
@@ -49,7 +49,7 @@ void	hide_borders(t_stuffs *s, t_p2d p)
 	}
 }
 
-void	draw_dot(t_stuffs *s, t_p2d p)
+void	draw_dot(t_stuffs *s, t_p2d p, int color)
 {
 	int		is_water;
 	t_p2d	cheat;
@@ -62,5 +62,5 @@ void	draw_dot(t_stuffs *s, t_p2d p)
 	line((s->bigmap)[p.x][p.y], cheat, s,
 	get_color_by_altitude(s->bigmap[p.x][p.y].elev));
 	if (is_water && (s->bigmap)[p.x][p.y].y)
-		draw_water(s, cheat, p);
+		draw_water(s, cheat, p, color);
 }
