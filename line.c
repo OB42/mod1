@@ -6,7 +6,7 @@
 /*   By: pcluchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 05:50:59 by pcluchet          #+#    #+#             */
-/*   Updated: 2017/02/17 07:54:28 by pcluchet         ###   ########.fr       */
+/*   Updated: 2018/09/12 13:15:52 by pcluchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int			line_count(t_p2d p1, t_p2d p2)
 	return (ct);
 }
 
+/*
 void		line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 {
 	t_li					val;
@@ -44,6 +45,34 @@ void		line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 		next_pt_line(&val, &p1);
 	}
 }
+*/
+
+void		line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
+{
+	t_li					val;
+	static	unsigned	int rain = 1;
+	char	first;
+
+	first = 1;
+
+	init_line_stuffs(&val, p1, p2);
+
+	while (1)
+	{
+
+		if (first && color == 0x8000ccff)
+			set_pixel(s->img.x + p1.x, s->img.y + p1.y, 0x0099FF, s);
+		else
+			set_pixel(s->img.x + p1.x, s->img.y + p1.y, color, s);
+
+		rain++;
+		if (p1.x == p2.x && p1.y == p2.y)
+			break ;
+		next_pt_line(&val, &p1);
+		first = 0;
+	}
+}
+
 
 void		special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 {
