@@ -6,7 +6,7 @@
 #    By: pcluchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 10:47:39 by pcluchet          #+#    #+#              #
-#    Updated: 2018/09/12 16:05:25 by pcluchet         ###   ########.fr        #
+#    Updated: 2018/09/12 17:49:13 by pcluchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,18 +47,20 @@ ft_triangle.c \
 spread_inside.c \
 watermap.c
 
-C_FILES = $(addprefix utils/, $(UTILS)) \
-$(addprefix file/, $(FILE)) \
-$(addprefix scenarios/, $(SCENARIOS)) \
-$(addprefix points/, $(POINTS)) \
-$(addprefix water/, $(WATER)) \
-main.c \
+SRC = main.c \
 line.c \
 hook.c \
 setters.c \
 coef_inside.c \
 coef_between.c \
 bigmap.c
+
+C_FILES = $(addprefix utils/, $(UTILS)) \
+$(addprefix file/, $(FILE)) \
+$(addprefix scenarios/, $(SCENARIOS)) \
+$(addprefix points/, $(POINTS)) \
+$(addprefix water/, $(WATER)) \
+$(addprefix src/, $(SRC)) \
 
 LIBFT_DIR = ./libft/
 
