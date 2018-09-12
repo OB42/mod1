@@ -426,7 +426,7 @@ int get_mouse_button(NSEventType eventtype)
 	       size_x, size_y, 0,           /* width, height, border */
 	       GL_BGRA, GL_UNSIGNED_BYTE,   /* external format, type */
 	       pixtexbuff                   /* pixels */
-	       );
+	      );
   //      printf("pix tex err? 0x%x\n", glGetError());
 
   if (mlx_shaders(&glsl))

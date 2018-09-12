@@ -32,7 +32,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 		w = 0;
 		while (w < (stuffs->size_y * stuffs->linelen))
 		{
-			if ((stuffs->bigmap)[e][w].elev >= 0 )
+			if ((stuffs->bigmap)[e][w].elev >= 0)
 			{
 				water = (stuffs->water && stuffs->water->bigmap && stuffs->water->bigmap[e][w].elev > 0.1);
 				color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
@@ -40,7 +40,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 
 				//disp lignes
 				//
-				//if ( (e % 100 == 0) || (w % 100 == 0))
+				//if ((e % 100 == 0) || (w % 100 == 0))
 				//	color = 0xFF0000;
 				/////////////////////////////////
 
@@ -73,7 +73,7 @@ void	connect_fne_dots(t_stuffs *stuffs)
 					cheat = temp;
 				//	printf("%i\n", stuffs->water->bigmap[e][w].elev);
 					cheat.y += temp.elev + 16;
-					line(temp, cheat, stuffs, 0x00ccff );
+					line(temp, cheat, stuffs, 0x00ccff);
 				}
 				/*
 				else if (e < (stuffs->size_x * stuffs->linelen) && w < (stuffs->size_y * stuffs->linelen))

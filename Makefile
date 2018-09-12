@@ -36,10 +36,13 @@ gen_point.c \
 connect_dots.c\
 connect_water_dots.c
 
-SCENARIOS = raining.c
+SCENARIOS = raining.c \
+rising_water.c \
+wave.c
 
 WATER = spread_water.c \
-gen_watermap.c
+gen_watermap.c \
+point_inside_triangle.c
 
 C_FILES = $(addprefix utils/, $(UTILS)) \
 $(addprefix file/, $(FILE)) \

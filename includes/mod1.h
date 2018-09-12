@@ -183,5 +183,8 @@ void			set_water(t_stuffs *stuffs);
 void    		connect_water_dots(t_stuffs *stuffs);
 void			raining(t_stuffs *stuffs);
 void			gen_watermap(t_stuffs *stuffs, char mode);
-
+void			spread_water(t_stuffs *stuffs);
+void			rain_effect(t_stuffs *stuffs);
+void			wave(t_stuffs * stuffs);
+void			rising_water(t_stuffs * stuffs);
 #endif

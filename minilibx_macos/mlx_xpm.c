@@ -160,7 +160,7 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
   if (!(line = f(info,&pos,info_size)) ||
       !(tab = mlx_int_str_to_wordtab(line)) || !(width = atoi(tab[0])) ||
       !(height = atoi(tab[1])) || !(nc = atoi(tab[2])) ||
-      !(cpp = atoi(tab[3])) )
+      !(cpp = atoi(tab[3])))
     RETURN;
   free(tab);
   tab = 0;
@@ -182,7 +182,7 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
   while (i--)
     {
       if (!(line = f(info,&pos,info_size)) ||
-	  !(tab = mlx_int_str_to_wordtab(line+cpp)) )
+	  !(tab = mlx_int_str_to_wordtab(line+cpp)))
 	RETURN;
       j = 0;
       while (tab[j] && strcmp(tab[j++],"c"));
@@ -197,7 +197,7 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
 	  if (!(clip_data = malloc(4*width*height)) ||   // ok, nice size ..
 	      !(clip_img = XCreateImage(xvar->display, xvar->visual,
 					1, XYPixmap, 0, clip_data,
-					width, height, 8, (width+7)/8)) )
+					width, height, 8, (width+7)/8)))
 	    RETURN;
 	  memset(clip_data, 0xFF, 4*width*height);
 	}
@@ -258,7 +258,7 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
   if (clip_data)
     {
       if (!(clip_pix = XCreatePixmap(xvar->display, xvar->root,
-					   width, height, 1)) )
+					   width, height, 1)))
 	RETURN;
       img->gc = XCreateGC(xvar->display, clip_pix, 0, &xgcv);
       XPutImage(xvar->display, clip_pix, img->gc, clip_img,

@@ -12,7 +12,7 @@
 
 #include "mod1.h"
 
-int		line_count(t_p2d p1, t_p2d p2)
+int			line_count(t_p2d p1, t_p2d p2)
 {
 	t_li	val;
 	int		ct;
@@ -29,10 +29,9 @@ int		line_count(t_p2d p1, t_p2d p2)
 	return (ct);
 }
 
-
-void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
+void		line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 {
-	t_li    val;
+	t_li					val;
 	static	unsigned	int rain = 1;
 
 	init_line_stuffs(&val, p1, p2);
@@ -46,9 +45,9 @@ void             line(t_p2d p1, t_p2d p2, t_stuffs *s, int color)
 	}
 }
 
-void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
+void		special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 {
-	t_li    val;
+	t_li	val;
 	int		cpt;
 	float	whereami;
 
@@ -57,7 +56,7 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 	init_line_stuffs(&val, p1, p2);
 	if (s->linelen == -1)
 	{
-		s->linelen = line_count(p1,p2);
+		s->linelen = line_count(p1, p2);
 		malloc_bigmap(s);
 	}
 	cpt = 0;
@@ -72,7 +71,7 @@ void             special_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 	}
 }
 
-void             special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
+void		special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 {
 	t_li	val;
 	int		cpt;
@@ -87,7 +86,6 @@ void             special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co)
 	{
 		whereami = (float)cpt / (float)s->linelen;
 		dpoint = gen_point(p1, p2, whereami);
-		//printf("%f %f %f %f\n", p1.x, p2.x, p1.y, p2.y);
 		f_fill_bigmap(s, co, whereami, dpoint);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
