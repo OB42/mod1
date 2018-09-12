@@ -23,10 +23,10 @@ void	init_watermap(t_stuffs *stuffs)
 		w = 1;
 		while (w <= stuffs->size_y)
 		{
-			stuffs->watermap[e][w].N_elev = 0;
-			stuffs->watermap[e][w].W_elev = 0;
-			stuffs->watermap[e][w].E_elev = 0;
-			stuffs->watermap[e][w].S_elev = 0;
+			stuffs->watermap[e][w].n_elev = 0;
+			stuffs->watermap[e][w].w_elev = 0;
+			stuffs->watermap[e][w].e_elev = 0;
+			stuffs->watermap[e][w].s_elev = 0;
 			stuffs->watermap[e][w].x = 0;
 			stuffs->watermap[e][w].y = 0;
 			w++;

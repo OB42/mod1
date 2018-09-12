@@ -18,22 +18,22 @@ t_cardinals	to_calc_between(t_stuffs *stuffs, int e, int w)
 
 	cars = (t_cardinals){.n = 0, .s = 0, .e = 0, .w = 0};
 	if (w + 1 <= stuffs->size_y
-		&& stuffs->watermap[e][w + 1].N_elev < stuffs->watermap[e][w].S_elev)
+		&& stuffs->watermap[e][w + 1].n_elev < stuffs->watermap[e][w].s_elev)
 	{
 		cars.s = 1;
 	}
 	if (w - 1 > 0
-		&& stuffs->watermap[e][w - 1].S_elev < stuffs->watermap[e][w].N_elev)
+		&& stuffs->watermap[e][w - 1].s_elev < stuffs->watermap[e][w].n_elev)
 	{
 		cars.n = 1;
 	}
 	if (e + 1 < stuffs->size_x &&
-		stuffs->watermap[e + 1][w].E_elev < stuffs->watermap[e][w].W_elev)
+		stuffs->watermap[e + 1][w].e_elev < stuffs->watermap[e][w].w_elev)
 	{
 		cars.w = 1;
 	}
 	if (e - 1 > 0 && e != stuffs->size_x
-		&& stuffs->watermap[e - 1][w].W_elev < stuffs->watermap[e][w].E_elev)
+		&& stuffs->watermap[e - 1][w].w_elev < stuffs->watermap[e][w].e_elev)
 		cars.e = 1;
 	return (cars);
 }
@@ -50,14 +50,14 @@ void		between_vertical(t_stuffs *stuffs, int e, int w, char dir)
 	if (dir == 'S')
 	{
 		cc = 1;
-		c1 = &(stuffs->watermap[e][w + cc].N_elev);
-		c2 = &(stuffs->watermap[e][w].S_elev);
+		c1 = &(stuffs->watermap[e][w + cc].n_elev);
+		c2 = &(stuffs->watermap[e][w].s_elev);
 	}
 	if (dir == 'N')
 	{
 		cc = -1;
-		c1 = &(stuffs->watermap[e][w + cc].S_elev);
-		c2 = &(stuffs->watermap[e][w].N_elev);
+		c1 = &(stuffs->watermap[e][w + cc].s_elev);
+		c2 = &(stuffs->watermap[e][w].n_elev);
 	}
 	*(c1) += *(c2) * coef_between(stuffs, coo, dir, *(c2));
 	if (*(c1) > *(c2))
@@ -76,14 +76,14 @@ void		between_horiz(t_stuffs *stuffs, int e, int w, char dir)
 	if (dir == 'W')
 	{
 		cc = 1;
-		c1 = &(stuffs->watermap[e + cc][w].E_elev);
-		c2 = &(stuffs->watermap[e][w].W_elev);
+		c1 = &(stuffs->watermap[e + cc][w].e_elev);
+		c2 = &(stuffs->watermap[e][w].w_elev);
 	}
 	if (dir == 'E')
 	{
 		cc = -1;
-		c1 = &(stuffs->watermap[e + cc][w].W_elev);
-		c2 = &(stuffs->watermap[e][w].E_elev);
+		c1 = &(stuffs->watermap[e + cc][w].w_elev);
+		c2 = &(stuffs->watermap[e][w].e_elev);
 	}
 	*(c1) += *(c2) * coef_between(stuffs, coo, dir, *(c2));
 	if (*(c1) > *(c2))

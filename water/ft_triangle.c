@@ -42,15 +42,15 @@ void	ft_triangle(t_stuffs *s, int e, int w)
 	h = s->water->bigmap[e][w].elev;
 	if (point_in_triangle((t_p2d){.x = e, .y = w}, tmp_a,
 				(t_p2d){.x = (e + (l - (e % l))), .y = (w - (w % l))}, tmp_c))
-		h = s->watermap[(e / l) + 1][(w / l) + 1].N_elev - s->bigmap[e][w].elev;
+		h = s->watermap[(e / l) + 1][(w / l) + 1].n_elev - s->bigmap[e][w].elev;
 	else if (point_in_triangle((t_p2d){.x = e, .y = w}, tmp_b,
 				(t_p2d){.x = e + (l - (e % l)), .y = w + (l - (w % l))}, tmp_c))
-		h = s->watermap[(e / l) + 1][(w / l) + 1].S_elev - s->bigmap[e][w].elev;
+		h = s->watermap[(e / l) + 1][(w / l) + 1].s_elev - s->bigmap[e][w].elev;
 	else if (point_in_triangle((t_p2d){.x = e, .y = w}, tmp_a, tmp_b, tmp_c))
-		h = s->watermap[(e / l) + 1][(w / l) + 1].E_elev - s->bigmap[e][w].elev;
+		h = s->watermap[(e / l) + 1][(w / l) + 1].e_elev - s->bigmap[e][w].elev;
 	else if (point_in_triangle((t_p2d){.x = e, .y = w},
 				(t_p2d){.x = e + (l - (e % l)), .y = (w - (w % l))},
 				(t_p2d){.x = e + (l - (e % l)), .y = w + (l - (w % l))}, tmp_c))
-		h = s->watermap[(e / l) + 1][(w / l) + 1].W_elev - s->bigmap[e][w].elev;
+		h = s->watermap[(e / l) + 1][(w / l) + 1].w_elev - s->bigmap[e][w].elev;
 	s->water->bigmap[e][w].elev = h;
 }

@@ -21,22 +21,22 @@ void	inside_west(t_stuffs *stuffs, int e, int w)
 
 	coo.y = 'W';
 	where = (t_p2d){.x = e, .y = w};
-	elv = &(stuffs->watermap[e][w].W_elev);
-	if (*(elv) < stuffs->watermap[e][w].N_elev)
+	elv = &(stuffs->watermap[e][w].w_elev);
+	if (*(elv) < stuffs->watermap[e][w].n_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].N_elev);
+		elv2 = &(stuffs->watermap[e][w].n_elev);
 		coo.x = 'N';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].N_elev)
-			*(elv) = stuffs->watermap[e][w].N_elev;
+		if (*(elv) > stuffs->watermap[e][w].n_elev)
+			*(elv) = stuffs->watermap[e][w].n_elev;
 	}
-	if (*(elv) < stuffs->watermap[e][w].S_elev)
+	if (*(elv) < stuffs->watermap[e][w].s_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].S_elev);
+		elv2 = &(stuffs->watermap[e][w].s_elev);
 		coo.x = 'S';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].S_elev)
-			*(elv) = stuffs->watermap[e][w].S_elev;
+		if (*(elv) > stuffs->watermap[e][w].s_elev)
+			*(elv) = stuffs->watermap[e][w].s_elev;
 	}
 }
 
@@ -49,22 +49,22 @@ void	inside_east(t_stuffs *stuffs, int e, int w)
 
 	coo.y = 'E';
 	where = (t_p2d){.x = e, .y = w};
-	elv = &(stuffs->watermap[e][w].E_elev);
-	if (*(elv) < stuffs->watermap[e][w].N_elev)
+	elv = &(stuffs->watermap[e][w].e_elev);
+	if (*(elv) < stuffs->watermap[e][w].n_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].N_elev);
+		elv2 = &(stuffs->watermap[e][w].n_elev);
 		coo.x = 'N';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].N_elev)
-			*(elv) = stuffs->watermap[e][w].N_elev;
+		if (*(elv) > stuffs->watermap[e][w].n_elev)
+			*(elv) = stuffs->watermap[e][w].n_elev;
 	}
-	if (*(elv) < stuffs->watermap[e][w].S_elev)
+	if (*(elv) < stuffs->watermap[e][w].s_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].S_elev);
+		elv2 = &(stuffs->watermap[e][w].s_elev);
 		coo.x = 'S';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].S_elev)
-			*(elv) = stuffs->watermap[e][w].S_elev;
+		if (*(elv) > stuffs->watermap[e][w].s_elev)
+			*(elv) = stuffs->watermap[e][w].s_elev;
 	}
 }
 
@@ -77,22 +77,22 @@ void	inside_north(t_stuffs *stuffs, int e, int w)
 
 	coo.y = 'N';
 	where = (t_p2d){.x = e, .y = w};
-	elv = &(stuffs->watermap[e][w].N_elev);
-	if (*(elv) < stuffs->watermap[e][w].E_elev)
+	elv = &(stuffs->watermap[e][w].n_elev);
+	if (*(elv) < stuffs->watermap[e][w].e_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].E_elev);
+		elv2 = &(stuffs->watermap[e][w].e_elev);
 		coo.x = 'E';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].E_elev)
-			*(elv) = stuffs->watermap[e][w].E_elev;
+		if (*(elv) > stuffs->watermap[e][w].e_elev)
+			*(elv) = stuffs->watermap[e][w].e_elev;
 	}
-	if (*(elv) < stuffs->watermap[e][w].W_elev)
+	if (*(elv) < stuffs->watermap[e][w].w_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].W_elev);
+		elv2 = &(stuffs->watermap[e][w].w_elev);
 		coo.x = 'W';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].W_elev)
-			*(elv) = stuffs->watermap[e][w].W_elev;
+		if (*(elv) > stuffs->watermap[e][w].w_elev)
+			*(elv) = stuffs->watermap[e][w].w_elev;
 	}
 }
 
@@ -105,22 +105,22 @@ void	inside_south(t_stuffs *stuffs, int e, int w)
 
 	coo.y = 'S';
 	where = (t_p2d){.x = e, .y = w};
-	elv = &(stuffs->watermap[e][w].S_elev);
-	if (*(elv) < stuffs->watermap[e][w].E_elev)
+	elv = &(stuffs->watermap[e][w].s_elev);
+	if (*(elv) < stuffs->watermap[e][w].e_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].E_elev);
+		elv2 = &(stuffs->watermap[e][w].e_elev);
 		coo.x = 'E';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].E_elev)
-			*(elv) = stuffs->watermap[e][w].E_elev;
+		if (*(elv) > stuffs->watermap[e][w].e_elev)
+			*(elv) = stuffs->watermap[e][w].e_elev;
 	}
-	if (*(elv) < stuffs->watermap[e][w].W_elev)
+	if (*(elv) < stuffs->watermap[e][w].w_elev)
 	{
-		elv2 = &(stuffs->watermap[e][w].W_elev);
+		elv2 = &(stuffs->watermap[e][w].w_elev);
 		coo.x = 'W';
 		*(elv) += (*(elv2) * coef_inside(stuffs, where, coo, *(elv2)));
-		if (*(elv) > stuffs->watermap[e][w].W_elev)
-			*(elv) = stuffs->watermap[e][w].W_elev;
+		if (*(elv) > stuffs->watermap[e][w].w_elev)
+			*(elv) = stuffs->watermap[e][w].w_elev;
 	}
 }
 

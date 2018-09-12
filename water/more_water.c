@@ -22,16 +22,16 @@ void		more_water(t_stuffs *stuffs, char mode)
 	{
 		if (mode == 'R')
 		{
-			stuffs->watermap[e][1].N_elev += 0.15;
-			stuffs->watermap[e][stuffs->size_y - 1].S_elev += 0.15;
+			stuffs->watermap[e][1].n_elev += 0.15;
+			stuffs->watermap[e][stuffs->size_y - 1].s_elev += 0.15;
 		}
 		else
-			stuffs->watermap[e][1].N_elev += 0.8;
+			stuffs->watermap[e][1].n_elev += 0.8;
 		w = 1;
 		while (w <= stuffs->size_y && mode == 'R')
 		{
-			stuffs->watermap[1][w].E_elev += 0.15;
-			stuffs->watermap[stuffs->size_x - 1][w].E_elev += 0.15;
+			stuffs->watermap[1][w].e_elev += 0.15;
+			stuffs->watermap[stuffs->size_x - 1][w].e_elev += 0.15;
 			w++;
 		}
 		e++;
