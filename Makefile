@@ -34,11 +34,18 @@ file_helper.c
 POINTS = set_dots.c \
 gen_point.c \
 connect_dots.c\
-connect_water_dots.c\
+connect_water_dots.c
+
+SCENARIOS = raining.c
+
+WATER = spread_water.c \
+gen_watermap.c
 
 C_FILES = $(addprefix utils/, $(UTILS)) \
 $(addprefix file/, $(FILE)) \
+$(addprefix scenarios/, $(SCENARIOS)) \
 $(addprefix points/, $(POINTS)) \
+$(addprefix water/, $(WATER)) \
 main.c \
 line.c \
 hook.c \

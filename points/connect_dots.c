@@ -15,39 +15,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void	rain_effect(t_stuffs *stuffs)
-{
-	int	r;
-	int	l;
-	int	e;
-	int	w;
-	int	i;
 
-	e = 0;
-	while (e < (stuffs->size_x * stuffs->linelen))
-	{
-		w = 0;
-		while (w < (stuffs->size_y * stuffs->linelen))
-		{
-			if (stuffs->img.y + stuffs->bigmap[e][w].y)
-			{
-				if (w && rand() % stuffs->raining_intensity == 0)
-				{
-					r = rand() % (int)(stuffs->img.y + stuffs->bigmap[e][w].y);
-					l = rand() % 7 + 3;
-					i = 0;
-					while (i < l)
-					{
-						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, r - i, 0x00ccff, stuffs);
-						i++;
-					}
-				}
-			}
-			w++;
-		}
-		e++;
-	}
-}
 void	connect_fne_dots(t_stuffs *stuffs)
 {
 	int		e;

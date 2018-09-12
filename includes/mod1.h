@@ -130,15 +130,19 @@ typedef struct	s_stuffs
 }				t_stuffs;
 
 
-void    gen_watermap(t_stuffs *stuffs, char mode);
-void    more_water(t_stuffs *stuffs, char mode);
-char 	point_inside_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c);
-float coef_between(t_stuffs *stuffs, t_p2d coords, char dir, int water_lvl);
-float coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto, int water_lvl);
+void    		gen_watermap(t_stuffs *stuffs, char mode);
+void			more_water(t_stuffs *stuffs, char mode);
+char			point_inside_triangle(t_p2d s, t_p2d a, t_p2d b, t_p2d c);
+float			coef_between(t_stuffs *stuffs, t_p2d coords, char dir,
+	int water_lvl);
+float			coef_inside(t_stuffs *stuffs, t_p2d coords, t_p2d fromto,
+	int water_lvl);
 int     		get_pixel(int x, int y, t_stuffs *stuffs);
 void			malloc_bigmap(t_stuffs *s);
-void			fill_bigmap(t_stuffs *s, t_coords co, float whereami,t_p2d pt);
-void			f_fill_bigmap(t_stuffs *s, t_coords co, float whereami,t_p2d pt);
+void			fill_bigmap(t_stuffs *s, t_coords co, float whereami,
+	t_p2d pt);
+void			f_fill_bigmap(t_stuffs *s, t_coords co, float whereami,
+	t_p2d pt);
 int				get_color_by_altitude(int n);
 int				initialize(int *linenb, int *gnl, char *filename, int *fd);
 float			get_max_elev(t_stuffs *stuffs);
@@ -177,4 +181,7 @@ void			special_fine_line(t_p2d p1, t_p2d p2, t_stuffs *s, t_coords co);
 t_p2d			gen_point(t_p2d p1, t_p2d p2, float whereami);
 void			set_water(t_stuffs *stuffs);
 void    		connect_water_dots(t_stuffs *stuffs);
+void			raining(t_stuffs *stuffs);
+void			gen_watermap(t_stuffs *stuffs, char mode);
+
 #endif
