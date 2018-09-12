@@ -171,7 +171,7 @@ int				hook(int keycode, void *stuffs);
 int				exit_msg(int ret_code);
 void			init_line_stuffs(t_li *li, t_p2d p1, t_p2d p2);
 void			next_pt_line(t_li *li, t_p2d *p1);
-int				*acquire_elev(char **fields, int nbfields, int is_water);
+int				*acquire_elev(char **fields, int nbfields, int water, int side);
 int				nb_fields(char **fields);
 void			free_fields(char **fields, void *to_free);
 void			set_pixel(int x, int y, int color, t_stuffs *stuffs);

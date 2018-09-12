@@ -20,7 +20,7 @@ void	raining(t_stuffs *s)
 	static int	r = 0;
 
 	i = 0;
-	while (i++ < 100)
+	while (i++ < 200)
 		spread_water(s);
 	e = 0;
 	{

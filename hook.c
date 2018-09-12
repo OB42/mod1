@@ -55,18 +55,6 @@ int		hook(int keycode, void *stuffs)
 		((t_stuffs*)stuffs)->img.y += POS_INCREMENT;
 	else if (keycode == 0x7E)
 		((t_stuffs*)stuffs)->img.y -= POS_INCREMENT;
-	else if (keycode == 0x45)
-	{
-		((t_stuffs*)stuffs)->raining_intensity -= RAIN_INCREMENT;
-		if (((t_stuffs*)stuffs)->raining_intensity < RAIN_INCREMENT)
-			((t_stuffs*)stuffs)->raining_intensity = RAIN_INCREMENT;
-	}
-	else if (keycode == 0x4E)
-	{
-		((t_stuffs*)stuffs)->raining_intensity += RAIN_INCREMENT;
-		if (((t_stuffs*)stuffs)->raining_intensity > 100)
-			((t_stuffs*)stuffs)->raining_intensity = 100;
-	}
 	return (0);
 }
 
