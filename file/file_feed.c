@@ -70,19 +70,23 @@ int				file_feed(char *filename, t_stuffs *stu)
 	char	**fields;
 	int		*elevs;
 	int		i[4];
+	int		y;
 
 	i[0] = open(filename, O_RDONLY);
 	if ((i[1] = file_test(filename, stu)))
 		return (i[1]);
 	malloc_ec(stu);
 	i[3] = 1;
+	y = 0;
 	while (get_next_line(i[0], &line))
 	{
 		fields = ft_strsplit(line, ' ');
-		elevs = acquire_elev(fields, stu->size_y, !(stu->water));
+		elevs = acquire_elev(fields, stu->size_y, !(stu->water),
+		!y || (y + 1) == stu->size_x);
 		fill_ec(stu, &elevs, i[3]++);
 		free_fields(fields, line);
 		free(elevs);
+		y++;
 	}
 	free(line);
 	close(i[0]);

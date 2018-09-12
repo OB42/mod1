@@ -22,7 +22,7 @@ int				nb_fields(char **fields)
 	return (i);
 }
 
-int				*acquire_elev(char **fields, int nbfields, int water)
+int				*acquire_elev(char **fields, int nbfields, int water, int side)
 {
 	int i;
 	int *ret;
@@ -30,7 +30,10 @@ int				*acquire_elev(char **fields, int nbfields, int water)
 	ret = (int*)pr_malloc(sizeof(int) * (nbfields + 1));
 	i = 0;
 	while (fields[i])
-		ret[i++] = water ? 0 : ft_atoi(fields[i]);
+	{
+		ret[i++] = (water || nbfields == (i + 1) || side) ?
+		0 : ft_atoi(fields[i]);
+	}
 	return (ret);
 }
 
