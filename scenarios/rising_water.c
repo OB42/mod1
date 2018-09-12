@@ -20,6 +20,7 @@ void	rising_water(t_stuffs *stuffs)
 	t_p2d	tmp_b;
 	t_p2d	tmp_c;
 
+	usleep(50000);
 	e = 0;
 	gen_watermap(stuffs, 'R');
 	while (e < ((stuffs->size_x) * stuffs->linelen))
