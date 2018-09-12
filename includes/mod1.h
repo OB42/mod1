@@ -28,6 +28,7 @@
 # define	WAVE 0
 # define	RAIN 1
 # define	RISING_WATER 2
+# define	WATER 0x00ccff
 
 typedef struct s_cardinals
 {

@@ -80,7 +80,7 @@ int				file_feed(char *filename, t_stuffs *stu)
 	{
 		fields = ft_strsplit(line, ' ');
 		elevs = acquire_elev(fields, stu->size_y, !(stu->water));
-		fill_ec(stu,&elevs, i[3]++);
+		fill_ec(stu, &elevs, i[3]++);
 		free_fields(fields, line);
 		free(elevs);
 	}

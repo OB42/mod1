@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void	w_rain_effect(t_stuffs *stuffs)
+void	w_rain_effect(t_stuffs *s)
 {
 	int	r;
 	int	l;
@@ -24,21 +24,21 @@ void	w_rain_effect(t_stuffs *stuffs)
 	int	i;
 
 	e = 0;
-	while (e < (stuffs->size_x * stuffs->linelen))
+	while (e < (s->size_x * s->linelen))
 	{
 		w = 0;
-		while (w < (stuffs->size_y * stuffs->linelen))
+		while (w < (s->size_y * s->linelen))
 		{
-			if (stuffs->img.y + stuffs->bigmap[e][w].y)
+			if (s->img.y + s->bigmap[e][w].y)
 			{
-				if (w && rand() % stuffs->raining_intensity == 0)
+				if (w && rand() % s->raining_intensity == 0)
 				{
-					r = rand() % (int)(stuffs->img.y + stuffs->bigmap[e][w].y);
+					r = rand() % (int)(s->img.y + s->bigmap[e][w].y);
 					l = rand() % 7 + 3;
 					i = 0;
 					while (i < l)
 					{
-						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, r - i, WATER, stuffs);
+						set_pixel(s->img.x + s->bigmap[e][w].x, r - i, WATER, s);
 						i++;
 					}
 				}
@@ -49,66 +49,48 @@ void	w_rain_effect(t_stuffs *stuffs)
 	}
 }
 
-void	w_connect_fne_dots(t_stuffs *stuffs)
+void	w_connect_fne_dots(t_stuffs *s)
 {
 	int		e;
 	int		w;
-	int		color;
 	int		i;
-	static	int rain = 0;
 	int		water;
+	t_p2d	cheat;
 
 	e = 0;
 	ft_printf("Rendering fine dots..\n");
-	while (e < (stuffs->size_x * stuffs->linelen))
+	while (e < (s->size_x * s->linelen))
 	{
 		w = 0;
-		while (w < (stuffs->size_y * stuffs->linelen))
+		while (w < (s->size_y * s->linelen))
 		{
-			if ((stuffs->bigmap)[e][w].elev >= 0)
+			if ((s->bigmap)[e][w].elev >= 0)
 			{
-				water = (stuffs->water && stuffs->water->bigmap && stuffs->water->bigmap[e][w].elev > 0.1);
-				color = get_color_by_altitude(stuffs->bigmap[e][w].elev);
-				t_p2d cheat;
-				cheat = stuffs->bigmap[e][w];
-				if ((e + 1 < stuffs->size_x * stuffs->linelen && !(stuffs->bigmap[e + 1][w].x)) ||
-						(w + 1 < stuffs->size_y * stuffs->linelen && !(stuffs->bigmap[e][w +1 ].x)))
+				water = (s->water && s->water->bigmap && s->water->bigmap[e][w].elev > 0.1);
+				cheat = s->bigmap[e][w];
+				if ((e + 1 < s->size_x * s->linelen && !(s->bigmap[e + 1][w].x)) ||
+						(w + 1 < s->size_y * s->linelen && !(s->bigmap[e][w +1 ].x)))
 				{
 					i = 1;
 					while (i < 100)
 					{
-						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x - 1, stuffs->img.y + stuffs->bigmap[e][w].y + i, 0, stuffs);
-						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x + 1, stuffs->img.y + stuffs->bigmap[e][w].y + i, 0, stuffs);
-						set_pixel(stuffs->img.x + stuffs->bigmap[e][w].x, stuffs->img.y + stuffs->bigmap[e][w].y + i, 0, stuffs);
+						set_pixel(s->img.x + s->bigmap[e][w].x - 1, s->img.y + s->bigmap[e][w].y + i, 0, s);
+						set_pixel(s->img.x + s->bigmap[e][w].x + 1, s->img.y + s->bigmap[e][w].y + i, 0, s);
+						set_pixel(s->img.x + s->bigmap[e][w].x, s->img.y + s->bigmap[e][w].y + i, 0, s);
 						i++;
 					}
 				}
+				cheat.y += 16;
+				line((s->bigmap)[e][w], cheat, s, get_color_by_altitude(s->bigmap[e][w].elev));
+				if (water && (s->bigmap)[e][w].y)
 				{
-					cheat.y += 16;
-					line((stuffs->bigmap)[e][w], cheat, stuffs, color);
-				}
-
-				if (water && (stuffs->bigmap)[e][w].y)
-				{
-					t_p2d temp = (stuffs->bigmap)[e][w];
-					temp.elev += (stuffs->water->bigmap)[e][w].elev;
-					temp.y -= (stuffs->water->bigmap)[e][w].elev * stuffs->coef;
+					t_p2d temp = (s->bigmap)[e][w];
+					temp.elev += (s->water->bigmap)[e][w].elev;
+					temp.y -= (s->water->bigmap)[e][w].elev * s->coef;
 					cheat = temp;
-					//	printf("%i\n", stuffs->water->bigmap[e][w].elev);
 					cheat.y += temp.elev + 16;
-					line(temp, cheat, stuffs, 0x8000ccff);
+					line(temp, cheat, s, 0x8000ccff);
 				}
-				/*
-				   else if (e < (stuffs->size_x * stuffs->linelen) && w < (stuffs->size_y * stuffs->linelen))
-				   {
-				   cheat.y += 16;
-				   line((stuffs->bigmap)[e][w], cheat, stuffs, color);
-				   }
-				   */
-				// else {
-				// 	cheat.y += 16;
-				// 	line((stuffs->bigmap)[e][w], cheat, stuffs, 0);
-				// }
 			}
 			w++;
 		}
@@ -116,50 +98,50 @@ void	w_connect_fne_dots(t_stuffs *stuffs)
 	}
 	w = 0;
 
-	if (stuffs->scenario == RAIN)
-		w_rain_effect(stuffs);
+	if (s->scenario == RAIN)
+		w_rain_effect(s);
 }
 
-int	w_get_next(int val, t_stuffs *stuffs)
+int	w_get_next(int val, t_stuffs *s)
 {
-	return (val + stuffs->linelen - (val % stuffs->linelen));
+	return (val + s->linelen - (val % s->linelen));
 }
 
-void	w_check_and_connect(t_stuffs *stuffs, int e, int w, char direction)
+void	w_check_and_connect(t_stuffs *s, int e, int w, char direction)
 {
 	t_p2d point_from;
 	t_p2d point_to;
 	t_coords co;
 	int		temp;
 
-	point_from = (stuffs->bigmap)[e][w];
+	point_from = (s->bigmap)[e][w];
 
 	if (direction == 'y')
 	{
-		temp = w_get_next(w, stuffs);
-		if (temp < (stuffs->size_y * stuffs->linelen))
+		temp = w_get_next(w, s);
+		if (temp < (s->size_y * s->linelen))
 		{
-			point_to = (stuffs->bigmap)[e][w_get_next(w, stuffs)];
-			co = (t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = w_get_next(w, stuffs)};
+			point_to = (s->bigmap)[e][w_get_next(w, s)];
+			co = (t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = w_get_next(w, s)};
 			if (point_from.x != 0 && point_to.x > 0)
-				special_fine_line(point_from, point_to, stuffs,co);
+				special_fine_line(point_from, point_to, s,co);
 		}
 	}
 	else
 	{
-		temp = w_get_next(e, stuffs);
-		if (temp < (stuffs->size_x * stuffs->linelen))
+		temp = w_get_next(e, s);
+		if (temp < (s->size_x * s->linelen))
 		{
-			point_to = (stuffs->bigmap)[w_get_next(e, stuffs)][w];
-			co = (t_coords){.x1 = e, .y1 = w, .x2 = w_get_next(e, stuffs), .y2 = w};
+			point_to = (s->bigmap)[w_get_next(e, s)][w];
+			co = (t_coords){.x1 = e, .y1 = w, .x2 = w_get_next(e, s), .y2 = w};
 			if (point_from.x != 0 && point_to.x > 0)
-				special_fine_line(point_from, point_to, stuffs,co);
+				special_fine_line(point_from, point_to, s,co);
 		}
 	}
 }
 
 
-void	w_connect_fine_dots(t_stuffs *stuffs)
+void	w_connect_fine_dots(t_stuffs *s)
 {
 
 	/*
@@ -169,27 +151,27 @@ void	w_connect_fine_dots(t_stuffs *stuffs)
 	e = 0;
 
 	ft_printf("Rendering water fine dots...\n");
-	ft_printf("water_lvl : %d\n", stuffs->water_lvl);
+	ft_printf("water_lvl : %d\n", s->water_lvl);
 	//not sure
-	while (e < ((stuffs->size_x) * stuffs->linelen))
+	while (e < ((s->size_x) * s->linelen))
 	{
 		w = 0;
 		//not sure
-		while ((w < (stuffs->size_y) * stuffs->linelen))
+		while ((w < (s->size_y) * s->linelen))
 		{
-			if (stuffs->water->bigmap[e][w].elev > 1 &&
-			 stuffs->water->bigmap[e][w].elev +100 < stuffs->water_lvl)
+			if (s->water->bigmap[e][w].elev > 1 &&
+			 s->water->bigmap[e][w].elev +100 < s->water_lvl)
 			{
-				if (w < (stuffs->size_y * stuffs->linelen))
+				if (w < (s->size_y * s->linelen))
 				{
 					// printf("a\n");
-					w_check_and_connect(stuffs, e, w, 'y');
+					w_check_and_connect(s, e, w, 'y');
 					// printf("b\n");
 				}
-				if (e < (stuffs->size_x * stuffs->linelen))
+				if (e < (s->size_x * s->linelen))
 				{
 					// printf("c\n");
-					w_check_and_connect(stuffs, e, w, 'x');
+					w_check_and_connect(s, e, w, 'x');
 					// printf("d\n");
 				}
 			}
@@ -199,29 +181,29 @@ void	w_connect_fine_dots(t_stuffs *stuffs)
 	}
 	ft_printf("Done !\n\n");
 */
-	w_connect_fne_dots(stuffs);
+	w_connect_fne_dots(s);
 }
 
-void	connect_water_dots(t_stuffs *stuffs)
+void	connect_water_dots(t_stuffs *s)
 {
 	int e;
 	int w;
 
 	e = 1;
 	ft_printf("Rendering dots...\n");
-	while (e <= stuffs->size_x)
+	while (e <= s->size_x)
 	{
 		w = 1;
-		while (w <= stuffs->size_y)
+		while (w <= s->size_y)
 		{
-			if (w != stuffs->size_y)
+			if (w != s->size_y)
 			{
-				special_line((stuffs->map)[e][w], (stuffs->map)[e][w + 1], stuffs,
+				special_line((s->map)[e][w], (s->map)[e][w + 1], s,
 						(t_coords){.x1 = e, .y1 = w, .x2 = e, .y2 = w + 1});
 			}
-			if (e != stuffs->size_x)
+			if (e != s->size_x)
 			{
-				special_line((stuffs->map)[e][w], (stuffs->map)[e + 1][w], stuffs,
+				special_line((s->map)[e][w], (s->map)[e + 1][w], s,
 						(t_coords){.x1 = e, .y1 = w, .x2 = e + 1, .y2 = w });
 			}
 			w++;
@@ -229,6 +211,6 @@ void	connect_water_dots(t_stuffs *stuffs)
 		e++;
 	}
 	ft_printf("Done !\n\n");
-	w_connect_fine_dots(stuffs);
-	w = (stuffs->size_y * stuffs->linelen);
+	w_connect_fine_dots(s);
+	w = (s->size_y * s->linelen);
 }
