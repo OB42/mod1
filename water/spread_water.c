@@ -111,11 +111,10 @@ void	spread_water(t_stuffs *s)
 	static float	**now = 0;
 
 	gen_current_elev_map(&now, s);
-	e = 0;
-	while (e < ((s->size_x) * s->linelen))
+	while (e < ((s->size_x - 1) * (s->linelen)) - 1)
 	{
 		w = 0;
-		while (w < (s->size_y) * s->linelen)
+		while (w < (s->size_y) * (s->linelen))
 		{
 			if (s->water->bigmap[e][w].elev > 0.99)
 			{
