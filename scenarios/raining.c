@@ -19,6 +19,7 @@ void	raining(t_stuffs *s)
 	int			w;
 
 	i = 0;
+	usleep(s->raining_intensity);
 	while (i++ < 200)
 		spread_water(s);
 	e = 0;

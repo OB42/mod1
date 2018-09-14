@@ -48,6 +48,16 @@ int		hook(int keycode, void *stuffs)
 {
 	if (keycode == 53)
 		free_stuffs(stuffs);
+	else if (keycode == 0x45)
+	{
+		((t_stuffs*)stuffs)->raining_intensity -= SPEED_INCREMENT;
+		if (((t_stuffs*)stuffs)->raining_intensity < 0)
+			((t_stuffs*)stuffs)->raining_intensity = 0;
+	}
+	else if (keycode == 0x4E)
+	{
+		((t_stuffs*)stuffs)->raining_intensity += SPEED_INCREMENT;
+	}
 	return (0);
 }
 

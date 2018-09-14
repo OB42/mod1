@@ -57,7 +57,7 @@ void	w_connect_fine_dots(t_stuffs *s)
 		while (w < (s->size_y * s->linelen))
 		{
 			if ((s->bigmap)[e][w].elev >= 0)
-				draw_dot(s, (t_p2d){.x = e, .y = w}, 0x00ccff);
+				draw_dot(s, (t_p2d){.x = e, .y = w}, 0x2900ccff);
 			w++;
 		}
 		e++;

@@ -19,6 +19,7 @@ void	wave(t_stuffs *stuffs)
 	int	w;
 
 	e = 0;
+	usleep(stuffs->raining_intensity);
 	gen_watermap(stuffs, 'W');
 	while (e < ((stuffs->size_x) * stuffs->linelen))
 	{

@@ -25,6 +25,7 @@
 # define WINY 1000
 # define POS_INCREMENT 42
 # define RAIN_INCREMENT 10
+# define SPEED_INCREMENT 25000
 # define WAVE 0
 # define RAIN 1
 # define RISING_WATER 2
