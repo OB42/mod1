@@ -22,6 +22,7 @@ void	redraw(t_stuffs *stu)
 
 void	redraw_water(t_stuffs *stu)
 {
+	clear(stu);
 	set_dots(stu);
 	connect_water_dots(stu);
 	mlx_put_image_to_window(stu->co, stu->win, stu->img.ptr, 0, 0);

@@ -25,6 +25,8 @@ void	set_props(t_stuffs *stu)
 	lenx = 391 / (float)stu->size_x;
 	len = (len < lenx) ? len : lenx;
 	leny2 = (leny < leny2) ? leny : leny2;
+	len = 40;
+	leny2 = 20;
 	stu->props = (t_f2d){.x = len, .y = leny2};
 }
 

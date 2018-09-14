@@ -16,7 +16,7 @@ t_p2d g_neighbor[4] = {
 	(t_p2d){.x = 1, .y = 0}, (t_p2d){.x = 0, .y = -1},
 	(t_p2d){.x = 0, .y = 1}, (t_p2d){.x = -1, .y = 0}};
 
-void	move_water(t_stuffs *s, t_p2d *from, t_p2d *to, float quantity)
+void	move_water(t_p2d *from, t_p2d *to, float quantity)
 {
 	from->elev -= quantity;
 	to->elev += quantity;
@@ -95,7 +95,7 @@ t_p2d	move_to_lowest_point(t_stuffs *s, float **now, t_p2d p, t_p2d max)
 				temp = (s->bigmap[p.x][p.y].elev + now[p.x][p.y])
 				- (s->bigmap[x][y].elev + now[x][y]);
 				if (temp > max.elev * 0.99)
-					move_water(s, &(s->water->bigmap[p.x][p.y]),
+					move_water(&(s->water->bigmap[p.x][p.y]),
 					&(s->water->bigmap[x][y]), 1);
 			}
 		}
@@ -112,7 +112,7 @@ void	spread_water(t_stuffs *s)
 
 	gen_current_elev_map(&now, s);
 	e = 0;
-	while (e < ((s->size_x) * s->linelen))
+	while (e < ((s->size_x - 1) * s->linelen - 1))
 	{
 		w = 0;
 		while (w < (s->size_y) * s->linelen)

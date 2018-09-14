@@ -12,28 +12,31 @@
 
 #include "mod1.h"
 
-void		more_water(t_stuffs *stuffs, char mode)
+void		more_water(t_stuffs *s, char mode)
 {
-	int e;
-	int w;
+	int	i;
 
-	e = 1;
-	while (e <= stuffs->size_x)
+	i = 1;
+	if (mode == 'R')
 	{
-		if (mode == 'R')
+		while (i <= s->size_x)
 		{
-			stuffs->watermap[e][1].n_elev += 0.15;
-			stuffs->watermap[e][stuffs->size_y - 1].s_elev += 0.15;
+			s->watermap[i][1].n_elev += 2;
+			s->watermap[i][s->size_y - 1].s_elev += 2;
+			i++;
 		}
-		else
-			stuffs->watermap[e][1].n_elev += 0.8;
-		w = 1;
-		while (w <= stuffs->size_y && mode == 'R')
+		i = 1;
+		while (i <= s->size_y)
 		{
-			stuffs->watermap[1][w].e_elev += 0.15;
-			stuffs->watermap[stuffs->size_x - 1][w].e_elev += 0.15;
-			w++;
+			s->watermap[1][i].e_elev += 2;
+			s->watermap[s->size_x - 1][i].w_elev += 2;
+			i++;
 		}
-		e++;
+	}
+	else
+	{
+		i = 1;
+		while (i <= s->size_y)
+			s->watermap[s->size_x - 1][i++].s_elev += 2;
 	}
 }

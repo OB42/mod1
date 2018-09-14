@@ -48,13 +48,30 @@ int		init(t_stuffs *stuffs, char *path)
 	return (0);
 }
 
-int		water_loop(void *stuffs)
+int		water_loop(void *s)
 {
-	if (((t_stuffs *)stuffs)->scenario == WAVE)
+	t_stuffs	*stuffs;
+	int			e;
+	int			w;
+
+	stuffs = (t_stuffs *)s;
+	e = 0;
+	while (e < (stuffs->size_x * stuffs->linelen))
+	{
+		w = 0;
+		while (w < (stuffs->size_y * stuffs->linelen))
+		{
+			if (stuffs->bigmap[e][w].elev <= 2.1)
+				stuffs->bigmap[e][w].elev = 0;
+			w++;
+		}
+		e++;
+	}
+	if (stuffs->scenario == WAVE)
 		wave(stuffs);
-	else if (((t_stuffs *)stuffs)->scenario == RAIN)
+	else if (stuffs->scenario == RAIN)
 		raining(stuffs);
-	else if (((t_stuffs *)stuffs)->scenario == RISING_WATER)
+	else if (stuffs->scenario == RISING_WATER)
 		rising_water(stuffs);
 	return (0);
 }
@@ -91,7 +108,7 @@ int		main(int argc, char **argv)
 	water = (t_stuffs){.water = 0, .co = stuffs.co, .win = stuffs.win};
 	if (init(&stuffs, argv[1]) || init(&water, argv[1]))
 		return (1);
-	mlx_put_image_to_window(stuffs.co, stuffs.win, stuffs.img.ptr, 0, 0);
+	mlx_put_image_to_window(stuffs.co, stuffs.win, stuffs.img.ptr, 100, 1100);
 	mlx_loop_hook(stuffs.co, water_loop, &stuffs);
 	mlx_key_hook(stuffs.win, hook, &stuffs);
 	mlx_loop(stuffs.co);

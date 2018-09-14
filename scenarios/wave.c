@@ -28,7 +28,7 @@ void	wave(t_stuffs *stuffs)
 		e++;
 	}
 	i = 0;
-	while (i++ < 50)
+	while (i++ < 100)
 		spread_water(stuffs);
 	redraw_water(stuffs);
 }

@@ -17,7 +17,6 @@ void	raining(t_stuffs *s)
 	int			i;
 	int			e;
 	int			w;
-	static int	r = 0;
 
 	i = 0;
 	while (i++ < 200)

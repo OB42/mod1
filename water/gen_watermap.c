@@ -109,8 +109,6 @@ void		gen_watermap(t_stuffs *stuffs, char mode)
 {
 	int		e;
 	int		w;
-	float	oldelev;
-	float	temp;
 
 	e = 1;
 	more_water(stuffs, mode);
