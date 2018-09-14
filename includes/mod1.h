@@ -30,7 +30,7 @@
 # define RAIN 1
 # define RISING_WATER 2
 # define WATER 0x00ccff
-
+# define INPUT_EXTENSION ".mod1"
 typedef struct	s_cardinals
 {
 	int			n;

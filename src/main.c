@@ -78,7 +78,7 @@ int		water_loop(void *s)
 
 void	usage(void)
 {
-	ft_printf("Usage : ./ mod1 ./ path / to / map / map.mod1 [scenario]\n");
+	ft_printf("Usage : ./ mod1 ./path/to/map.mod1 [scenario]\n");
 	ft_printf("Scenarios:\n");
 	ft_printf("0: Wave\n");
 	ft_printf("1: Rain\n");
@@ -93,7 +93,8 @@ int		main(int argc, char **argv)
 	t_stuffs	water;
 
 	stuffs = (t_stuffs){.water = &water, .water_lvl = 0};
-	if (argc != 3)
+	if (argc != 3 || ft_strcmp(INPUT_EXTENSION, argv[1] + ft_strlen(argv[1])
+											- ft_strlen(INPUT_EXTENSION)))
 		usage();
 	if (argv[2][0] == '0')
 		stuffs.scenario = WAVE;
