@@ -48,14 +48,6 @@ int		hook(int keycode, void *stuffs)
 {
 	if (keycode == 53)
 		free_stuffs(stuffs);
-	if (keycode == 0x7C)
-		((t_stuffs*)stuffs)->img.x += POS_INCREMENT;
-	else if (keycode == 0x7B)
-		((t_stuffs*)stuffs)->img.x -= POS_INCREMENT;
-	else if (keycode == 0x7D)
-		((t_stuffs*)stuffs)->img.y += POS_INCREMENT;
-	else if (keycode == 0x7E)
-		((t_stuffs*)stuffs)->img.y -= POS_INCREMENT;
 	return (0);
 }
 

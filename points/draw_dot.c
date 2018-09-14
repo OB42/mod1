@@ -36,7 +36,7 @@ void	hide_borders(t_stuffs *s, t_p2d p)
 	|| (p.y + 1 < s->size_y * s->linelen && !(s->bigmap[p.x][p.y + 1].x)))
 	{
 		i = 1;
-		while (i < 100)
+		while (i < 32)
 		{
 			set_pixel(s->img.x + s->bigmap[p.x][p.y].x - 1,
 				s->img.y + s->bigmap[p.x][p.y].y + i, 0, s);
@@ -57,10 +57,10 @@ void	draw_dot(t_stuffs *s, t_p2d p, int color)
 	is_water = (s->water && s->water->bigmap
 		&& s->water->bigmap[p.x][p.y].elev > 0.1);
 	cheat = s->bigmap[p.x][p.y];
-	hide_borders(s, p);
 	cheat.y += 16;
 	line((s->bigmap)[p.x][p.y], cheat, s,
 	get_color_by_altitude(s->bigmap[p.x][p.y].elev));
 	if (is_water && (s->bigmap)[p.x][p.y].y)
 		draw_water(s, cheat, p, color);
+	hide_borders(s, p);
 }

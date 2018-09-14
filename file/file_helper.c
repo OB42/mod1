@@ -12,7 +12,7 @@
 
 #include "mod1.h"
 
-void	free_fields(char **fields, void *to_free)
+void	free_fields(char **fields, void *to_free, void *elevs)
 {
 	int i;
 
@@ -21,6 +21,7 @@ void	free_fields(char **fields, void *to_free)
 		free(fields[i++]);
 	free(fields);
 	free(to_free);
+	free(elevs);
 }
 
 int		initialize(int *linenb, int *gnl, char *filename, int *fd)

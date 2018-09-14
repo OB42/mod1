@@ -17,7 +17,7 @@ void	rising_water(t_stuffs *stuffs)
 	int		e;
 	int		w;
 
-	usleep(100000);
+	// usleep(100000);
 	e = 0;
 	gen_watermap(stuffs, 'R');
 	while (e < ((stuffs->size_x) * stuffs->linelen))
@@ -28,7 +28,7 @@ void	rising_water(t_stuffs *stuffs)
 		e++;
 	}
 	e = 0;
-	while (e++ < 50)
+	while (e++ < 100)
 		spread_water(stuffs);
 	redraw_water(stuffs);
 }

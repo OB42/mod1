@@ -170,7 +170,7 @@ void			init_line_stuffs(t_li *li, t_p2d p1, t_p2d p2);
 void			next_pt_line(t_li *li, t_p2d *p1);
 int				*acquire_elev(char **fields, int nbfields, int water, int side);
 int				nb_fields(char **fields);
-void			free_fields(char **fields, void *to_free);
+void			free_fields(char **fields, void *to_free, void *elevs);
 void			set_pixel(int x, int y, int color, t_stuffs *stuffs);
 void			connect_dots(t_stuffs *stuffs);
 void			line(t_p2d p1, t_p2d p2, t_stuffs *s, int color);

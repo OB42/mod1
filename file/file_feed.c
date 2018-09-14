@@ -32,7 +32,7 @@ int				file_test(char *filename, t_stuffs *stu)
 		if (stu->size_y != nb_fields(fields))
 			return (linenb);
 		stu->size_x = linenb++;
-		free_fields(fields, line);
+		free_fields(fields, line, 0);
 	}
 	if (gnl == -1)
 		print_error("gnl error\n");
@@ -69,26 +69,26 @@ int				file_feed(char *filename, t_stuffs *stu)
 	char	*line;
 	char	**fields;
 	int		*elevs;
-	int		i[4];
-	int		y;
+	int		i[6];
 
 	i[0] = open(filename, O_RDONLY);
-	if ((i[1] = file_test(filename, stu)))
-		return (i[1]);
+	if (i[0] == -1 || (i[1] = file_test(filename, stu)))
+		return (-1);
 	malloc_ec(stu);
 	i[3] = 1;
-	y = 0;
-	while (get_next_line(i[0], &line))
+	i[4] = 0;
+	line = 0;
+	while ((i[5] = get_next_line(i[0], &line)) > 0)
 	{
 		fields = ft_strsplit(line, ' ');
-		elevs = acquire_elev(fields, stu->size_y, !(stu->water),
-		!y || (y + 1) == stu->size_x);
+		elevs = acquire_elev(fields, stu->size_y, !(stu->water), !(i[4]++)
+		|| (i[4]) == stu->size_x);
 		fill_ec(stu, &elevs, i[3]++);
-		free_fields(fields, line);
-		free(elevs);
-		y++;
+		free_fields(fields, line, elevs);
 	}
 	free(line);
+	if (i[5] < 0)
+		return (i[5]);
 	close(i[0]);
 	return (i[1]);
 }
