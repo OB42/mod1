@@ -21,15 +21,15 @@ void		more_water(t_stuffs *s, char mode)
 	{
 		while (i <= s->size_x)
 		{
-			s->watermap[i][1].n_elev += 4;
-			s->watermap[i][s->size_y - 1].s_elev += 4;
+			s->watermap[i][1].n_elev += 1;
+			s->watermap[i][s->size_y - 1].s_elev += 1;
 			i++;
 		}
 		i = 1;
 		while (i <= s->size_y)
 		{
-			s->watermap[1][i].e_elev += 4;
-			s->watermap[s->size_x - 1][i].w_elev += 4;
+			s->watermap[1][i].e_elev += 1;
+			s->watermap[s->size_x - 1][i].w_elev += 1;
 			i++;
 		}
 	}

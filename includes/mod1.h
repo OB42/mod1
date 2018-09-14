@@ -111,6 +111,7 @@ typedef struct	s_stuffs
 {
 	int					raining_intensity;
 	int					scenario;
+	int					speed;
 	int					raining;
 	t_f2d				props;
 	void				*co;
