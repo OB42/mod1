@@ -57,7 +57,10 @@ void	wave(t_stuffs *stuffs)
 	}
 	i = 0;
 	int ig = ignore(stuffs);
+	spread_water(stuffs);
 	while (i++ < 42)
 		spread_wave(stuffs, ig);
+	spread_water(stuffs);
+
 	redraw_water(stuffs);
 }
