@@ -28,7 +28,8 @@ color_utils.c \
 parse_utils.c \
 point_utils.c \
 
-FILE = file_helper.c
+FILE = file_helper.c \
+gen_map.c
 
 POINTS = set_dots.c \
 gen_point.c \

@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <unistd.h>
-# define WINX 2000
+# define WINX 1000
 # define WINY 1000
 # define POS_INCREMENT 42
 # define RAIN_INCREMENT 10
@@ -31,6 +31,7 @@
 # define RISING_WATER 2
 # define WATER 0x00ccff
 # define INPUT_EXTENSION ".mod1"
+
 typedef struct	s_cardinals
 {
 	int			n;
@@ -189,4 +190,5 @@ void			rising_water(t_stuffs *stuffs);
 void			ft_triangle(t_stuffs *s, int e, int w);
 void			draw_dot(t_stuffs *s, t_p2d p, int color);
 void			more_water(t_stuffs *stuffs, char mode);
+void			gen_map(char *filename, t_stuffs *stuffs);
 #endif
