@@ -35,7 +35,8 @@ t_list	*parse_points(int fd, char **line, t_stuffs *stuffs)
 		s = ft_strsplit(*line, ' ');
 		if (!s[0] || !s[1] || !s[2] || s[3])
 			print_error("invalid map\n");
-		tmp = (t_p2d){ft_atoi(s[0]), ft_atoi(s[1]), (float)ft_atoi(s[2])};
+		tmp = (t_p2d){ft_atoi(s[0]) + 1, ft_atoi(s[1]) + 1,
+			(float)ft_atoi(s[2])};
 		if (tmp.x >= stuffs->size_x || tmp.y >= stuffs->size_y
 			|| !(tmp.x) || !(tmp.y))
 			print_error("invalid map\n");

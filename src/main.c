@@ -28,7 +28,7 @@ void	init_img(t_stuffs *stuffs)
 int		init(t_stuffs *stuffs, char *path)
 {
 	stuffs->raining_intensity = 64;
-	stuffs->speed = 100000;
+	stuffs->speed = 0;
 	stuffs->coef = 1;
 	stuffs->raining = 0;
 	stuffs->linelen = -1;

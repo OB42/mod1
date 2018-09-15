@@ -37,6 +37,6 @@ void		more_water(t_stuffs *s, char mode)
 	{
 		i = 1;
 		while (i <= s->size_y)
-			s->watermap[s->size_x - 1][i++].s_elev += 1;
+			s->watermap[s->size_x - 1][i++].s_elev += 0.5;
 	}
 }
