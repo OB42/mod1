@@ -16,7 +16,7 @@ SRC_DIR = ./
 
 CC = gcc
 
-EXTRAFLAGS = -Ofast -Wall -Wextra -Werror #-fsanitize=address
+EXTRAFLAGS = -Ofast #-Wall -Wextra -Werror #-fsanitize=address
 
 CFLAGS = -I$(LIBFT_DIR)includes/ -I$(H_DIR) -I$(MLX_DIR) $(EXTRAFLAGS)
 
@@ -28,8 +28,7 @@ color_utils.c \
 parse_utils.c \
 point_utils.c \
 
-FILE = file_feed.c \
-file_helper.c
+FILE = file_helper.c
 
 POINTS = set_dots.c \
 gen_point.c \

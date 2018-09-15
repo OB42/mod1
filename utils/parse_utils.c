@@ -31,7 +31,7 @@ int				*acquire_elev(char **fields, int nbfields, int water, int side)
 	i = 0;
 	while (fields[i])
 	{
-		if (ft_atoi(fields[i]) > 300 || ft_atoi(fields[i]) < 0)
+		if (ft_atoi(fields[i]) > 200 || ft_atoi(fields[i]) < 0)
 		{
 			ft_printf("Invalid height.(too large/too small)\n");
 			exit(1);

@@ -149,7 +149,6 @@ float			get_max_elev(t_stuffs *stuffs);
 void			malloc_buffer(int x, int y, t_stuffs *stu);
 void			init_buffer(int x, int y, t_stuffs *stu);
 int				line_count(t_p2d p1, t_p2d p2);
-int				file_feed(char *filename, t_stuffs *stu);
 void			print_point(t_p2d point);
 int				line_count(t_p2d p1, t_p2d p2);
 void			line_col_usr(t_p2d p1, t_p2d p2, t_stuffs *stuffs);
