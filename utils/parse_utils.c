@@ -36,7 +36,7 @@ int				*acquire_elev(char **fields, int nbfields, int water, int side)
 			ft_printf("Invalid height.(too large/too small)\n");
 			exit(1);
 		}
-		ret[i++] = (water || nbfields == (i + 1) || side) ?
+		ret[i++] = (water || nbfields == (i + 1) || side || !i) ?
 		0 : ft_atoi(fields[i]);
 	}
 	return (ret);
