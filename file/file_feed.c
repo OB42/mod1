@@ -41,16 +41,6 @@ int				file_test(char *filename, t_stuffs *stu)
 	return (0);
 }
 
-void			malloc_ec(t_stuffs *stu)
-{
-	int i;
-
-	ft_printf("Parsing file...\n");
-	stu->elevs = (int**)pr_malloc((stu->size_x + 1) * sizeof(int*));
-	i = 1;
-	while (i < stu->size_x + 1)
-		(stu->elevs)[i++] = (int*)pr_malloc((stu->size_y + 1) * sizeof(int));
-}
 
 void			fill_ec(t_stuffs *stu, int **elevs, int id)
 {

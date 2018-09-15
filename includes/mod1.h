@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <unistd.h>
-# define WINX 2000
+# define WINX 1600
 # define WINY 1000
 # define POS_INCREMENT 42
 # define RAIN_INCREMENT 10

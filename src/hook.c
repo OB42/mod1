@@ -58,6 +58,7 @@ int		hook(int keycode, void *stuffs)
 	{
 		((t_stuffs*)stuffs)->speed += SPEED_INCREMENT;
 	}
+	printf("%i\n", ((t_stuffs*)stuffs)->speed); 
 	return (0);
 }
 
