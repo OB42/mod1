@@ -191,4 +191,6 @@ void			ft_triangle(t_stuffs *s, int e, int w);
 void			draw_dot(t_stuffs *s, t_p2d p, int color);
 void			more_water(t_stuffs *stuffs, char mode);
 void			gen_map(char *filename, t_stuffs *stuffs);
+void			spread_wave(t_stuffs *s, int ig);
+void			gen_current_elev_map(float ***now, t_stuffs *s);
 #endif

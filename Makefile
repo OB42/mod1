@@ -16,7 +16,7 @@ SRC_DIR = ./
 
 CC = gcc
 
-EXTRAFLAGS = -Ofast #-Wall -Wextra -Werror #-fsanitize=address
+EXTRAFLAGS = -Ofast #-Wall -Wextra -Werror -fsanitize=address
 
 CFLAGS = -I$(LIBFT_DIR)includes/ -I$(H_DIR) -I$(MLX_DIR) $(EXTRAFLAGS)
 
@@ -46,7 +46,8 @@ gen_watermap.c \
 ft_triangle.c \
 spread_inside.c \
 more_water.c \
-watermap.c
+watermap.c \
+gen_current_elev_map.c
 
 SRC = main.c \
 line.c \

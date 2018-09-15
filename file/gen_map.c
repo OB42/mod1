@@ -23,12 +23,11 @@ void	free_line(char **coor, char *line)
 	free(line);
 }
 
-t_list	*parse_points(int fd, char **line, t_stuffs *stuffs)
+void	parse_points(int fd, char **line, t_stuffs *stuffs)
 {
 	char	**s;
 	int		g;
 	t_p2d	tmp;
-	t_list	*points;
 
 	while ((g = get_next_line(fd, line)) > 0)
 	{
@@ -41,19 +40,16 @@ t_list	*parse_points(int fd, char **line, t_stuffs *stuffs)
 			|| (tmp.x < 2) || (tmp.y < 2))
 			print_error("invalid map\n");
 		stuffs->elevs[tmp.x][tmp.y] = !stuffs->water ? 0 : (int)tmp.elev;
-		printf("%i %i %f \n", tmp.x, tmp.y, tmp.elev);
 		free_line(s, *line);
 	}
 	free(*line);
 	if (g < 0)
 		print_error("gnl error\n");
-	return (points);
 }
 
-t_p2d	parse_dimensions(int fd, char **line, t_stuffs *stuffs)
+void	parse_dimensions(int fd, char **line, t_stuffs *stuffs)
 {
 	char	**s;
-	t_p2d	dim;
 
 	if (get_next_line(fd, line) < 1)
 		print_error("gnl error\n");
@@ -65,7 +61,6 @@ t_p2d	parse_dimensions(int fd, char **line, t_stuffs *stuffs)
 	if (stuffs->size_y > 25 || stuffs->size_y > 25)
 		print_error("the map is too big\n");
 	free_line(s, *line);
-	return (dim);
 }
 
 void	malloc_ec(t_stuffs *stu)
@@ -87,8 +82,6 @@ void	gen_map(char *filename, t_stuffs *stuffs)
 {
 	char	*line;
 	int		fd;
-	t_list	*points;
-	float	**map;
 
 	if ((fd = open(filename, O_RDONLY)) == -1)
 		print_error("error can't open file\n");

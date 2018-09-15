@@ -11,13 +11,11 @@
 /* ************************************************************************** */
 
 #include "mod1.h"
-void	spread_wave(t_stuffs *s, int ig);
 
-int	ignore(t_stuffs *s)
+int		ignore(t_stuffs *s)
 {
 	int				e;
 	int				w;
-	t_p2d			max;
 	static float	**now = 0;
 
 	gen_current_elev_map(&now, s);
@@ -29,7 +27,7 @@ int	ignore(t_stuffs *s)
 		{
 			if (s->water->bigmap[e][w].elev > 0.1)
 			{
-				return e + 42;
+				return (e + 42);
 			}
 			w++;
 		}
@@ -38,10 +36,10 @@ int	ignore(t_stuffs *s)
 	return (((s->size_x - 1) * s->linelen - 1));
 }
 
-
 void	wave(t_stuffs *stuffs)
 {
 	int	i;
+	int	ig;
 	int	e;
 	int	w;
 
@@ -56,11 +54,10 @@ void	wave(t_stuffs *stuffs)
 		e++;
 	}
 	i = 0;
-	int ig = ignore(stuffs);
+	ig = ignore(stuffs);
 	spread_water(stuffs);
 	while (i++ < 42)
 		spread_wave(stuffs, ig);
 	spread_water(stuffs);
-
 	redraw_water(stuffs);
 }

@@ -22,32 +22,6 @@ void	move_water(t_p2d *from, t_p2d *to, float quantity)
 	to->elev += quantity;
 }
 
-void	gen_current_elev_map(float ***now, t_stuffs *s)
-{
-	int				e;
-	int				w;
-
-	if (!(*now))
-	{
-		*now = pr_malloc(sizeof(float*) * (s->size_x * s->linelen + 1));
-		e = 0;
-		while (e < ((s->size_x) * s->linelen))
-			(*now)[e++] = pr_malloc(sizeof(float) *
-											(s->size_y * s->linelen + 1));
-	}
-	e = 0;
-	while (e < ((s->size_x) * s->linelen))
-	{
-		w = 0;
-		while ((w < (s->size_y) * s->linelen))
-		{
-			(*now)[e][w] = s->water->bigmap[e][w].elev;
-			w++;
-		}
-		e++;
-	}
-}
-
 t_p2d	get_lowest_adjacent_point(t_stuffs *s, float **now, int e, int w)
 {
 	t_p2d			max;
@@ -127,6 +101,7 @@ void	spread_water(t_stuffs *s)
 		e++;
 	}
 }
+
 void	spread_wave(t_stuffs *s, int ig)
 {
 	int				e;
