@@ -17,7 +17,7 @@ void	rising_water(t_stuffs *stuffs)
 	int		e;
 	int		w;
 
-	usleep(stuffs->raining_intensity);
+	usleep(stuffs->speed);
 	e = 0;
 	gen_watermap(stuffs, 'R');
 	while (e < ((stuffs->size_x) * stuffs->linelen))
