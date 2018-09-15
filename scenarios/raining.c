@@ -20,7 +20,7 @@ void	raining(t_stuffs *s)
 
 	i = 0;
 	usleep(s->speed);
-	while (i++ < 200)
+	while (i++ < 42)
 		spread_water(s);
 	e = 0;
 	{

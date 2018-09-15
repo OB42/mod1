@@ -127,3 +127,27 @@ void	spread_water(t_stuffs *s)
 		e++;
 	}
 }
+void	spread_wave(t_stuffs *s, int ig)
+{
+	int				e;
+	int				w;
+	t_p2d			max;
+	static float	**now = 0;
+
+	gen_current_elev_map(&now, s);
+	e = 0;
+	while (e < ((s->size_x - 1) * s->linelen - 1) && e < ig)
+	{
+		w = 0;
+		while (w < (s->size_y) * s->linelen)
+		{
+			if (s->water->bigmap[e][w].elev > 0.99)
+			{
+				max = get_lowest_adjacent_point(s, now, e, w);
+				move_to_lowest_point(s, now, (t_p2d){.x = e, .y = w}, max);
+			}
+			w++;
+		}
+		e++;
+	}
+}

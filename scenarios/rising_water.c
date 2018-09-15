@@ -19,10 +19,10 @@ void	rising_water(t_stuffs *stuffs)
 	static	int	wait = 0;
 
 	usleep(stuffs->speed);
-	if (!wait)
+	if (wait < 5)
 	{
 		redraw_water(stuffs);
-		usleep(300000);
+		usleep(5000);
 		wait++;
 		return ;
 	}
@@ -36,7 +36,7 @@ void	rising_water(t_stuffs *stuffs)
 		e++;
 	}
 	e = 0;
-	while (e++ < 100)
+	while (e++ < 30)
 		spread_water(stuffs);
 	redraw_water(stuffs);
 }
