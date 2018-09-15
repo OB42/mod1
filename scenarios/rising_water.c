@@ -14,10 +14,18 @@
 
 void	rising_water(t_stuffs *stuffs)
 {
-	int		e;
-	int		w;
+	int			e;
+	int			w;
+	static	int	wait = 0;
 
 	usleep(stuffs->speed);
+	if (!wait)
+	{
+		redraw_water(stuffs);
+		usleep(300000);
+		wait++;
+		return ;
+	}
 	e = 0;
 	gen_watermap(stuffs, 'R');
 	while (e < ((stuffs->size_x) * stuffs->linelen))
