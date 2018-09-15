@@ -1,0 +1,8 @@
+- map size 1 1 -> no map ?
+- map size 0 ok
+- size negatives
+- crash sur neg2.mod1 (forbid negatives maybe ?)
+- points above 200 not implemented
+- neg elev -> bug
+- intmax
+- 
