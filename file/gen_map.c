@@ -58,8 +58,8 @@ void	parse_dimensions(int fd, char **line, t_stuffs *stuffs)
 		print_error("invalid map\n");
 	stuffs->size_x = ft_atoi(s[0]);
 	stuffs->size_y = ft_atoi(s[1]);
-	if (stuffs->size_y > 25 || stuffs->size_y > 25
-		|| stuffs->size_y < 2 || stuffs->size_y < 2)
+	if (stuffs->size_x > 25 || stuffs->size_y > 25
+		|| stuffs->size_x < 2 || stuffs->size_y < 2)
 		print_error("the map is invalid\n");
 	free_line(s, *line);
 }
