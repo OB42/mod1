@@ -37,7 +37,7 @@ void	parse_points(int fd, char **line, t_stuffs *stuffs)
 		tmp = (t_p2d){ft_atoi(s[0]) + 1, ft_atoi(s[1]) + 1,
 			(float)ft_atoi(s[2])};
 		if (tmp.x >= stuffs->size_x || tmp.y >= stuffs->size_y
-			|| (tmp.x < 2) || (tmp.y < 2) || tmp.elev > 200)
+			|| (tmp.x < 2) || (tmp.y < 2) || tmp.elev > 200 || tmp.elev < 0)
 			print_error("invalid map\n");
 		stuffs->elevs[tmp.x][tmp.y] = !stuffs->water ? 0 : (int)tmp.elev;
 		free_line(s, *line);
