@@ -26,9 +26,7 @@ int		ignore(t_stuffs *s)
 		while (w < (s->size_y) * s->linelen)
 		{
 			if (s->water->bigmap[e][w].elev > 0.1)
-			{
 				return (e + 42);
-			}
 			w++;
 		}
 		e++;
@@ -43,6 +41,7 @@ void	wave(t_stuffs *stuffs)
 	int			e;
 	int			w;
 	static	int	delay = 0;
+
 	e = 0;
 	usleep(stuffs->speed);
 	gen_watermap(stuffs, 'W');

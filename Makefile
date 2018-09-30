@@ -16,7 +16,7 @@ SRC_DIR = ./
 
 CC = gcc
 
-EXTRAFLAGS = -Ofast #-Wall -Wextra -Werror -fsanitize=address
+EXTRAFLAGS = -Ofast -Wall -Wextra -Werror #-fsanitize=address
 
 CFLAGS = -I$(LIBFT_DIR)includes/ -I$(H_DIR) -I$(MLX_DIR) $(EXTRAFLAGS)
 
