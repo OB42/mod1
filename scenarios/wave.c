@@ -32,7 +32,7 @@ void	wave(t_stuffs *stuffs)
 	i = 0;
 	while (i++ < 42)
 		spread_water(stuffs);
-	if (delay > 10)
+	if (delay > 5)
 		redraw_water(stuffs);
 	else
 		delay++;
