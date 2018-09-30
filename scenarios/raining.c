@@ -23,19 +23,17 @@ void	raining(t_stuffs *s)
 	while (i++ < 42)
 		spread_water(s);
 	e = 0;
+	while (e < ((s->size_x) * s->linelen))
 	{
-		while (e < ((s->size_x) * s->linelen))
+		w = 0;
+		while ((w < (s->size_y) * s->linelen))
 		{
-			w = 0;
-			while ((w < (s->size_y) * s->linelen))
-			{
-				if (s->raining_intensity
-				&& rand() % (s->raining_intensity / 2 + 1) == 0)
-					s->water->bigmap[e][w].elev += 1;
-				w++;
-			}
-			e++;
+			if (s->raining_intensity
+			&& rand() % (s->raining_intensity / 2 + 1) == 0)
+				s->water->bigmap[e][w].elev += 1;
+			w++;
 		}
+		e++;
 	}
 	redraw(s);
 }

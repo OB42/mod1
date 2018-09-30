@@ -38,11 +38,11 @@ int		ignore(t_stuffs *s)
 
 void	wave(t_stuffs *stuffs)
 {
-	int	i;
-	int	ig;
-	int	e;
-	int	w;
-
+	int			i;
+	int			ig;
+	int			e;
+	int			w;
+	static	int	delay = 0;
 	e = 0;
 	usleep(stuffs->speed);
 	gen_watermap(stuffs, 'W');
@@ -54,11 +54,11 @@ void	wave(t_stuffs *stuffs)
 		e++;
 	}
 	i = 0;
-	// ig = ignore(stuffs);
-	// spread_water(stuffs);
+	ig = ignore(stuffs);
 	while (i++ < 42)
 		spread_water(stuffs);
-		// spread_wave(stuffs, ig);
-	// spread_water(stuffs);
-	redraw_water(stuffs);
+	if (delay > 10)
+		redraw_water(stuffs);
+	else
+		delay++;
 }
