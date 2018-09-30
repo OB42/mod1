@@ -15,9 +15,9 @@
 t_cardinals	to_calc_between(t_stuffs *stuffs, int e, int w)
 {
 	t_cardinals cars;
+
 	cars = (t_cardinals){.n = 0, .s = 0, .e = 0, .w = 0};
-	if ((stuffs->scenario != WAVE || stuffs->size_x >= e)
-	&& w + 1 <= stuffs->size_y
+	if (stuffs->scenario != WAVE && w + 1 <= stuffs->size_y
 		&& stuffs->watermap[e][w + 1].n_elev < stuffs->watermap[e][w].s_elev)
 	{
 		cars.s = 1;
